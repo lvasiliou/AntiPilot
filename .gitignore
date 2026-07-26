@@ -1,0 +1,26 @@
+# Build output
+bin/
+obj/
+build/
+
+# Signing material. The signing key itself lives in Cert:\CurrentUser\My and is never written
+# here, but keep this in place so an exported key can never be committed by accident.
+*.pfx
+*.p12
+*.snk
+*.cer
+*.crt
+
+# Packages, wherever they land
+*.msix
+*.msixbundle
+*.msixupload
+*.appx
+*.appxbundle
+*.appxupload
+
+# Editor / tool local state
+*.user
+.vs/
+.idea/
+.claude/settings.local.json

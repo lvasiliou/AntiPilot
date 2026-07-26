@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap3 rescap">
+
+  <!-- Publisher must match the subject of the signing certificate exactly (see build.ps1). -->
+  <Identity
+    Name="AntiPilot"
+    Publisher="CN=AntiPilot Development"
+    Version="1.0.0.0"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>AntiPilot</DisplayName>
+    <PublisherDisplayName>Lambros Vasiliou</PublisherDisplayName>
+    <Description>Point the Windows 11 Copilot key at an app, file or link of your choice — or turn it back into the Menu key. Full listing copy lives in packaging\store-listing.md.</Description>
+    <Logo>Images\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <!-- Copilot hardware key providers are supported from build 22621 onwards. -->
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22621.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <!--
+    Three entry points share one executable. Windows launches a Copilot key provider by AUMID
+    with no command line, so the app works out what it was started for from
+    GetCurrentApplicationUserModelId().
+      AntiPilot  - the key target; carries out the configured action. MUST stay in the app list:
+                   hiding it with AppListEntry="none" also drops it from the "Customize Copilot key"
+                   picker in Settings, even though the app extension is still registered and the
+                   already-stored choice keeps working. Tested the hard way.
+      Settings   - opens the settings window
+      Tray       - hidden entry, target of the sign-in shortcut, owns the notification-area icon
+  -->
+  <Applications>
+    <Application Id="AntiPilot" Executable="AntiPilot.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="AntiPilot"
+        Description="Runs whatever you have set the Copilot key to do."
+        BackgroundColor="#0F172A"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png">
+        <uap:DefaultTile
+          Square71x71Logo="Images\Square71x71Logo.png"
+          Square310x310Logo="Images\Square310x310Logo.png"
+          Wide310x150Logo="Images\Wide310x150Logo.png"
+          ShortName="AntiPilot" />
+      </uap:VisualElements>
+
+      <Extensions>
+        <!-- Windows activates Copilot key providers through this URI scheme. -->
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="antipilot-key">
+            <uap:DisplayName>AntiPilot key activation</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+
+        <!-- This is what puts the app in the "Customize Copilot key" picker in Settings. -->
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension
+            Name="com.microsoft.windows.copilotkeyprovider"
+            Id="AntiPilot"
+            DisplayName="AntiPilot"
+            Description="Sends the key to an app of your choice, or makes it the Menu key"
+            PublicFolder="Public">
+            <uap3:Properties>
+              <SingleTap>antipilot-key://?state=Tap</SingleTap>
+              <PressAndHoldStart>antipilot-key://?state=Down</PressAndHoldStart>
+              <PressAndHoldStop>antipilot-key://?state=Up</PressAndHoldStop>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+
+    <Application Id="Settings" Executable="AntiPilot.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="AntiPilot Settings"
+        Description="Choose what the Copilot key and Win+C do: launch an app, a file or a link, or act as the Menu key."
+        BackgroundColor="#0F172A"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png">
+        <uap:DefaultTile
+          Square71x71Logo="Images\Square71x71Logo.png"
+          Square310x310Logo="Images\Square310x310Logo.png"
+          Wide310x150Logo="Images\Wide310x150Logo.png"
+          ShortName="AntiPilot Settings" />
+      </uap:VisualElements>
+    </Application>
+
+    <Application Id="Tray" Executable="AntiPilot.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        AppListEntry="none"
+        DisplayName="AntiPilot tray icon"
+        Description="Keeps the AntiPilot icon in the notification area."
+        BackgroundColor="#0F172A"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png" />
+      <!--
+        No windows.startupTask extension here on purpose. StartupTask.GetAsync resolves the task
+        against the running <Application> entry, so the settings window (entry "Settings") could
+        never see a task declared on this one. AntiPilot writes a Startup-folder shortcut instead —
+        see TrayStartup.cs — which every entry point can read and write.
+      -->
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>
