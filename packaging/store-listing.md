@@ -97,7 +97,10 @@ MIT licensed. The full licence text ships in the app under About.
 9. Shows whether the Copilot key currently points at AntiPilot, and links straight to that setting
 10. Open source, MIT licensed
 
-## Search terms  *(up to 7, max 30 characters each)*
+## Keywords / search terms  *(up to 7, max 40 characters each, and no more than 21 words in total)*
+
+Store listings → language → **Additional information** → *Keywords* (called *Search terms* in the
+older UI). Never shown to customers; they only feed Store search. These seven use 17 of the 21 words.
 
 - copilot key
 - remap copilot key
@@ -115,10 +118,17 @@ MIT licensed. The full licence text ships in the app under About.
 - Dark theme support throughout, and a new icon set.
 - About window with version, package identity and the MIT licence.
 
-## Copyright and trademark info
+## Copyright and trademark info  *(max 200 — this is 178)*
 
-Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 and Microsoft Copilot are trademarks of
-Microsoft Corporation. AntiPilot is not affiliated with or endorsed by Microsoft.
+Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 and Microsoft Copilot are trademarks of Microsoft Corporation. AntiPilot is not affiliated with or endorsed by Microsoft.
+
+Keep the disclaimer: the listing names Copilot repeatedly, so saying plainly that this is not a
+Microsoft product removes the obvious certification objection.
+
+## Developed by  *(max 255 — leave blank)*
+
+Blank. Windows always shows **Published by** with your publisher display name ("Lambros Vasiliou"),
+whether or not this field is filled, so filling it in just prints the same name twice.
 
 ## Privacy policy URL  *(required — Partner Center asks for it because the package declares runFullTrust)*
 
