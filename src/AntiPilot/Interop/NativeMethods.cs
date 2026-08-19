@@ -15,10 +15,15 @@ internal static unsafe partial class NativeMethods
     public const int VK_LMENU = 0xA4;
     public const int VK_RMENU = 0xA5;
 
+    public const int VK_MENU = 0x12;
+    public const int VK_SHIFT = 0x10;
+
     public const uint INPUT_KEYBOARD = 1;
     public const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
     public const uint KEYEVENTF_KEYUP = 0x0002;
     public const uint KEYEVENTF_SCANCODE = 0x0008;
+
+    public const uint MAPVK_VK_TO_VSC = 0;
 
     [StructLayout(LayoutKind.Sequential)]
     public struct KEYBDINPUT
@@ -78,6 +83,8 @@ internal static unsafe partial class NativeMethods
     public static partial bool SetForegroundWindow(nint hWnd);
 
     public const int SW_RESTORE = 9;
+    public const int SW_MINIMIZE = 6;
+    public const int SW_SHOW = 5;
 
     [LibraryImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -86,6 +93,125 @@ internal static unsafe partial class NativeMethods
     [LibraryImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool IsIconic(nint hWnd);
+
+    [LibraryImport("user32.dll")]
+    public static partial uint MapVirtualKeyW(uint uCode, uint uMapType);
+
+    // ---- window and process plumbing, for launch-or-focus and per-app rules ------------------
+
+    public const int GWL_EXSTYLE = -20;
+    public const int WS_EX_TOOLWINDOW = 0x00000080;
+    public const int GW_OWNER = 4;
+
+    [LibraryImport("user32.dll")]
+    public static partial uint GetWindowThreadProcessId(nint hWnd, out uint lpdwProcessId);
+
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool IsWindowVisible(nint hWnd);
+
+    [LibraryImport("user32.dll")]
+    public static partial int GetWindowTextLengthW(nint hWnd);
+
+    [LibraryImport("user32.dll")]
+    public static partial int GetWindowTextW(nint hWnd, char* lpString, int nMaxCount);
+
+    /// <summary>Window caption, or an empty string when it has none.</summary>
+    public static string GetWindowText(nint hWnd)
+    {
+        int length = GetWindowTextLengthW(hWnd);
+        if (length <= 0)
+        {
+            return string.Empty;
+        }
+
+        var buffer = new char[length + 1];
+        int copied;
+        fixed (char* p = buffer)
+        {
+            copied = GetWindowTextW(hWnd, p, buffer.Length);
+        }
+
+        return copied <= 0 ? string.Empty : new string(buffer, 0, copied);
+    }
+
+    [LibraryImport("user32.dll")]
+    public static partial nint GetWindow(nint hWnd, uint uCmd);
+
+    [LibraryImport("user32.dll", EntryPoint = "GetWindowLongPtrW")]
+    public static partial nint GetWindowLongPtr(nint hWnd, int nIndex);
+
+    /// <summary>Return false to stop the enumeration.</summary>
+    public delegate bool EnumWindowsProc(nint hWnd, nint lParam);
+
+    // DllImport rather than LibraryImport: the source generator will not marshal a delegate, and a
+    // function pointer would mean threading state through lParam by hand for no benefit here.
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, nint lParam);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool EnumChildWindows(nint hWndParent, EnumWindowsProc lpEnumFunc, nint lParam);
+
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool AttachThreadInput(uint idAttach, uint idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
+
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool BringWindowToTop(nint hWnd);
+
+    [LibraryImport("kernel32.dll")]
+    public static partial uint GetCurrentThreadId();
+
+    public const uint PROCESS_QUERY_LIMITED_INFORMATION = 0x1000;
+
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    public static partial nint OpenProcess(uint dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, uint dwProcessId);
+
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool CloseHandle(nint hObject);
+
+    [LibraryImport("kernel32.dll", EntryPoint = "GetApplicationUserModelId")]
+    private static partial int GetApplicationUserModelIdRaw(nint hProcess, uint* length, char* buffer);
+
+    /// <summary>
+    /// AUMID of another running process, or null when it has no package identity. This is how an
+    /// already-running Store app is matched back to the AUMID stored in the config.
+    /// </summary>
+    public static string? GetApplicationUserModelId(uint processId)
+    {
+        nint handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, processId);
+        if (handle == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            uint length = 0;
+            const int ERROR_INSUFFICIENT_BUFFER = 122;
+            if (GetApplicationUserModelIdRaw(handle, &length, null) != ERROR_INSUFFICIENT_BUFFER || length == 0)
+            {
+                return null;
+            }
+
+            var buffer = new char[length];
+            int rc;
+            fixed (char* p = buffer)
+            {
+                rc = GetApplicationUserModelIdRaw(handle, &length, p);
+            }
+
+            return rc == 0 ? new string(buffer, 0, (int)length).TrimEnd('\0') : null;
+        }
+        finally
+        {
+            CloseHandle(handle);
+        }
+    }
 
     [LibraryImport("kernel32.dll", EntryPoint = "GetCurrentPackageFamilyName")]
     private static partial int GetCurrentPackageFamilyNameRaw(uint* packageFamilyNameLength, char* packageFamilyName);
