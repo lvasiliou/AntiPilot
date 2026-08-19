@@ -25,7 +25,7 @@ public sealed class AboutDialog : Form
 
     public AboutDialog()
     {
-        Text = "About AntiPilot";
+        Text = Strings.AboutTitle;
         ClientSize = new Size(520, 480);
         MinimumSize = new Size(460, 420);
         StartPosition = FormStartPosition.CenterParent;
@@ -53,9 +53,10 @@ public sealed class AboutDialog : Form
         layout.Controls.Add(BuildIdentity(), 0, 0);
         layout.Controls.Add(new Label
         {
-            Text = "Makes the Copilot key launch an app of your choice, or act as the Menu key.",
+            Text = Strings.AboutTagline,
             AutoSize = true,
             ForeColor = Theme.SecondaryText,
+            Tag = Theme.SecondaryTag,
             Margin = new Padding(0, 10, 0, 8),
         }, 0, 1);
 
@@ -70,7 +71,7 @@ public sealed class AboutDialog : Form
         _licence.Margin = new Padding(0, 0, 0, 12);
         layout.Controls.Add(_licence, 0, 2);
 
-        _close.Text = "Close";
+        _close.Text = Strings.Close;
         _close.AutoSize = true;
         _close.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         _close.Padding = new Padding(18, 5, 18, 5);
@@ -82,6 +83,8 @@ public sealed class AboutDialog : Form
 
         AcceptButton = _close;
         CancelButton = _close;
+
+        Theme.Watch(this);
     }
 
     protected override void OnShown(EventArgs e)
@@ -134,7 +137,7 @@ public sealed class AboutDialog : Form
         panel.SetRowSpan(logo, 3);
         panel.Controls.Add(new Label
         {
-            Text = "AntiPilot",
+            Text = Strings.AppName,
             Font = new Font(Font.FontFamily, 15f),
             AutoSize = true,
             Margin = new Padding(0, 0, 0, 2),
@@ -142,16 +145,18 @@ public sealed class AboutDialog : Form
 
         panel.Controls.Add(new Label
         {
-            Text = version is null ? "Version unknown" : $"Version {version.Major}.{version.Minor}.{version.Build}",
+            Text = version is null ? Strings.AboutVersionUnknown : Strings.Format(Strings.AboutVersion, $"{version.Major}.{version.Minor}.{version.Build}"),
             AutoSize = true,
             ForeColor = Theme.SecondaryText,
+            Tag = Theme.SecondaryTag,
         }, 1, 1);
 
         panel.Controls.Add(new Label
         {
-            Text = identity ?? "Running unpackaged",
+            Text = identity ?? Strings.AboutUnpackaged,
             AutoSize = true,
             ForeColor = Theme.SecondaryText,
+            Tag = Theme.SecondaryTag,
         }, 1, 2);
 
         return panel;

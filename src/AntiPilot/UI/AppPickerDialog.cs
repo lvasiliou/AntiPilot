@@ -21,7 +21,7 @@ public sealed class AppPickerDialog : Form
     {
         _preselect = preselectParsingName;
 
-        Text = "Choose an app";
+        Text = Strings.PickerTitle;
         StartPosition = FormStartPosition.CenterParent;
         MinimizeBox = false;
         MaximizeBox = false;
@@ -38,7 +38,7 @@ public sealed class AppPickerDialog : Form
         _icons.ImageSize = new Size(iconSize, iconSize);
         _icons.ColorDepth = ColorDepth.Depth32Bit;
 
-        _search.PlaceholderText = "Search apps";
+        _search.PlaceholderText = Strings.PickerSearch;
         _search.Dock = DockStyle.Top;
         _search.Margin = new Padding(0, 0, 0, 8);
         _search.TextChanged += (_, _) => ApplyFilter();
@@ -53,17 +53,17 @@ public sealed class AppPickerDialog : Form
         _list.BackColor = Theme.ListBackground;
         _list.ForeColor = Theme.Text;
         _list.BorderStyle = BorderStyle.FixedSingle;
-        _list.Columns.Add("App");
+        _list.Columns.Add(Strings.PickerColumnApp);
         _list.Resize += (_, _) => FitColumn();
         _list.DoubleClick += (_, _) => Accept();
         _list.SelectedIndexChanged += (_, _) => _ok.Enabled = _list.SelectedItems.Count > 0;
 
         _status.Dock = DockStyle.Bottom;
         _status.Height = 24;
-        _status.Text = "Loading installed apps…";
+        _status.Text = Strings.PickerLoading;
         _status.ForeColor = Theme.SecondaryText;
 
-        _ok.Text = "Select";
+        _ok.Text = Strings.PickerSelect;
         _ok.DialogResult = DialogResult.None;
         _ok.Enabled = false;
         _ok.Size = new Size(100, 30);
@@ -71,7 +71,7 @@ public sealed class AppPickerDialog : Form
 
         var cancel = new Button
         {
-            Text = "Cancel",
+            Text = Strings.Cancel,
             DialogResult = DialogResult.Cancel,
             Size = new Size(100, 30),
         };
@@ -93,6 +93,7 @@ public sealed class AppPickerDialog : Form
         root.Controls.Add(_search);
 
         Controls.Add(root);
+        Theme.Watch(this);
         AcceptButton = _ok;
         CancelButton = cancel;
 
@@ -109,12 +110,12 @@ public sealed class AppPickerDialog : Form
         catch (Exception ex)
         {
             Log.Write($"Enumerating apps failed: {ex}");
-            _status.Text = "Could not read the list of installed apps.";
+            _status.Text = Strings.PickerFailed;
             return;
         }
 
         ApplyFilter();
-        _status.Text = $"{_all.Count} apps";
+        _status.Text = Strings.Format(Strings.PickerCount, _all.Count);
         StartIconLoad();
     }
 
