@@ -114,6 +114,39 @@ public static class ShellApps
     private static object? Invoke(object target, string member, params object[] args) =>
         target.GetType().InvokeMember(member, BindingFlags.InvokeMethod | BindingFlags.GetProperty, null, target, args);
 
+    /// <summary>
+    /// True when the shell can still resolve this Apps-folder entry, i.e. the app is installed.
+    /// Cheaper than enumerating the whole folder, which is what makes it usable on a Save.
+    /// </summary>
+    public static bool Exists(string parsingName)
+    {
+        if (string.IsNullOrWhiteSpace(parsingName))
+        {
+            return false;
+        }
+
+        object? item = null;
+        try
+        {
+            var riid = typeof(IShellItemImageFactory).GUID;
+            SHCreateItemFromParsingName($"shell:AppsFolder\\{parsingName}", 0, ref riid, out item);
+            return item is not null;
+        }
+        catch (Exception)
+        {
+            // SHCreateItemFromParsingName throws rather than returning a failed HRESULT here,
+            // because the import is declared PreserveSig = false.
+            return false;
+        }
+        finally
+        {
+            if (item is not null && Marshal.IsComObject(item))
+            {
+                Marshal.FinalReleaseComObject(item);
+            }
+        }
+    }
+
     // ---- icons -------------------------------------------------------------
 
     /// <summary>Asks the shell for the icon of an Apps-folder entry. Returns null when unavailable.</summary>
