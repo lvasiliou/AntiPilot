@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # Windows only, and not just because the app is: the project targets net10.0-windows and the
+    # packaging steps below need makeappx and makepri from the Windows SDK.
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Check the string tables
+        shell: pwsh
+        run: ./tools/Update-Strings.ps1 -CheckOnly
+
+      - name: Check the generated strings are up to date
+        shell: pwsh
+        run: |
+          ./tools/Update-Strings.ps1
+          git diff --exit-code -- src/AntiPilot/Resources src/AntiPilot/Strings.g.cs
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "::error::Resources\Strings*.resx or Strings.g.cs is stale. Run tools\Update-Strings.ps1 and commit the result."
+            exit 1
+          }
+
+      - name: Restore
+        run: dotnet restore AntiPilot.sln
+
+      - name: Build
+        run: dotnet build AntiPilot.sln -c Release --no-restore
+
+      - name: Test
+        run: dotnet test AntiPilot.sln -c Release --no-build --verbosity normal
+
+  package:
+    # The MSIX is what actually gets installed, and it can break in ways a dotnet build never
+    # sees — a manifest typo, a logo missing from the layout — so it is built on every run.
+    needs: build
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build the Store package
+        shell: pwsh
+        run: ./build.ps1 -Target Store
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AntiPilot.Store
+          path: build/out/*.msixbundle
+          if-no-files-found: error
+          retention-days: 30
