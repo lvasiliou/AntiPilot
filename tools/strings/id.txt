@@ -1,0 +1,181 @@
+# Indonesian. 1.3% of installs.
+
+AppName = AntiPilot
+Nothing = Tidak ada
+NoApp = (tidak ada aplikasi)
+NoAppChosen = (belum ada aplikasi yang dipilih)
+Ok = OK
+Cancel = Batal
+Save = Simpan
+Remove = Hapus
+Add = Tambah
+Close = Tutup
+Edit = Ubah
+
+MenuKeyShort = Tombol Menu
+PaletteShort = Palet peluncur cepat
+HotkeyShort = Pintasan keyboard
+
+SettingsTitle = AntiPilot
+SettingsTagline = Tentukan apa yang sebenarnya dilakukan tombol Copilot (dan Win+C).
+OpenWindowsSettings = Buka pengaturan Windows
+TabSinglePress = Sekali tekan
+TabDoublePress = Dua kali tekan
+TabPerApp = Per aplikasi
+TabPalette = Palet
+DoThis = Lakukan ini:
+TestIt = Coba
+OpenLog = Buka log
+About = Tentang
+ImportExport = Impor / ekspor
+NothingHintTap = Tombol tidak melakukan apa pun. Pilih sesuatu di atas.
+NothingHintDouble = Dua kali tekan melakukan hal yang sama dengan sekali tekan.
+ShowTrayAndStart = Tampilkan ikon di area notifikasi, dan jalankan saat saya masuk
+TrayNeedsInstall = Ikon saat masuk (perlu versi terpasang)
+TrayBlocked = Ikon saat masuk (dimatikan di Task Manager)
+SaveBeforeClosing = Simpan perubahan sebelum menutup?
+CouldNotSave = Tidak dapat menyimpan pengaturan.
+NothingConfiguredYet = Belum ada yang diatur.
+MenuKeyTestHint = Tindakan tombol Menu hanya bisa dicoba dari keyboard: tutup jendela ini, fokuskan ke hal lain, lalu tekan tombolnya.
+HotkeyTestHint = Pintasan keyboard hanya bisa dicoba dari keyboard: tutup jendela ini, fokuskan ke hal lain, lalu tekan tombolnya.
+Language = Bahasa
+LanguageSystem = Sama dengan Windows
+LanguageRestartHint = Bahasa baru akan tampil saat jendela dibuka lagi.
+
+StatusUnpackaged = Build debug — Windows hanya melihat MSIX yang terpasang.
+StatusActive = Tombol Copilot dan Win+C menjalankan AntiPilot.
+StatusSearch = Tombol Copilot membuka Pencarian — pilih AntiPilot →
+StatusOtherApp = Tombol Copilot membuka aplikasi lain — pilih AntiPilot →
+StatusDefault = Tombol Copilot masih melakukan hal bawaannya →
+
+ModeNothing = Tidak ada
+ModeShellApp = Jalankan aplikasi terpasang  (menu Start atau Microsoft Store)
+ModeFile = Buka program, berkas, folder, atau tautan
+ModeMenuKey = Berperan sebagai tombol Menu  (tombol menu konteks lama)
+ModeHotkey = Kirim pintasan keyboard
+ModePalette = Tampilkan palet peluncur cepat
+ChooseApp = Pilih aplikasi…
+Browse = Telusuri…
+AppHint = Apa pun yang ada di daftar aplikasi menu Start bisa dipakai, termasuk aplikasi Microsoft Store.
+FileCaptionPath = Program, berkas, folder, atau tautan
+FileCaptionArgs = Argumen (opsional)
+FileCaptionWorkDir = Mulai di (opsional)
+FileHint = Variabel lingkungan seperti %USERPROFILE% akan diuraikan.
+FilePlaceholder = C:\Windows\System32\notepad.exe   atau   https://example.com
+FileDialogTitle = Pilih program atau berkas
+FileDialogFilter = Program dan pintasan|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|Semua berkas|*.*
+MenuKeyBody = Tombol ini mengirim tombol Menu (VK_APPS), jadi menu konteks dari apa pun yang sedang fokus akan terbuka — persis seperti klik kanan.
+ElevatedHint = Windows memblokir masukan sintetis yang ditujukan ke jendela yang berjalan sebagai administrator, jadi ini tidak melakukan apa pun selama jendela seperti itu berada di depan.
+PaletteBody = Tombol ini membuka daftar singkat berisi entri palet Anda. Ketik untuk menyaring, tekan 1-9 untuk menjalankan entri, dan Esc untuk menutup.
+PaletteEmptyWarning = Palet belum berisi entri. Tambahkan di tab Palet.
+WhenAlreadyRunning = Jika sudah berjalan:
+BehaviourAlways = Jalankan satu salinan lagi
+BehaviourFocus = Bawa jendela yang ada ke depan
+BehaviourToggle = Bawa ke depan, atau perkecil jika sudah di depan
+BehaviourHint = Untuk membawa jendela yang ada ke depan, aplikasi tersebut harus berjalan sebagai Anda, bukan sebagai administrator.
+
+HotkeyCaption = Pintasan yang dikirim
+HotkeyPlaceholder = Klik di sini, lalu tekan pintasannya
+HotkeyRecording = Tekan pintasannya sekarang…
+HotkeyClear = Bersihkan
+HotkeyHint = Dikirim ke apa pun yang sedang fokus. Tombol pengubah saja belum jadi pintasan — tambahkan satu tombol biasa.
+HotkeyPresets = Prasetel:
+HotkeyInvalid = Itu bukan pintasan yang bisa dikirim AntiPilot.
+PresetTaskManager = Task Manager
+PresetClipboard = Riwayat papan klip
+PresetSnip = Potongan layar
+PresetExplorer = File Explorer
+PresetEmoji = Panel emoji
+PresetPrintScreen = Print screen
+PresetLock = Kunci PC
+PresetShowDesktop = Tampilkan desktop
+PresetPlayPause = Putar / jeda
+PresetMute = Bisukan
+
+PickerTitle = Pilih aplikasi
+PickerSearch = Cari aplikasi
+PickerLoading = Membaca daftar aplikasi…
+PickerCount = {0} aplikasi
+PickerNoMatch = Tidak ada yang cocok.
+PickerColumnApp = Aplikasi
+PickerSelect = Pilih
+PickerFailed = Tidak dapat membaca daftar aplikasi yang terpasang.
+
+PerAppIntro = Beri tombol ini tugas lain selama aplikasi tertentu berada di depan. Aturan diperiksa dari atas ke bawah; yang tidak cocok akan memakai tindakan sekali tekan.
+PerAppColumnApp = Saat ini yang di depan
+PerAppColumnAction = Tombol melakukan ini
+PerAppAdd = Tambah aturan…
+PerAppEditAction = Ubah tindakan…
+PerAppProcess = Nama proses
+PerAppProcessHint = Nama berkas yang dijalankan, dengan atau tanpa .exe — misalnya chrome atau devenv.
+PerAppPickRunning = Pilih aplikasi yang sedang berjalan…
+PerAppNoRules = Belum ada aturan. Tombol melakukan hal yang sama di mana saja.
+PerAppDuplicate = Sudah ada aturan untuk aplikasi itu.
+
+PaletteIntro = Entri yang ditawarkan saat sebuah tindakan diatur ke "Tampilkan palet peluncur cepat". Sembilan yang pertama bisa dijalankan dengan menekan 1-9.
+PaletteColumnLabel = Nama
+PaletteColumnAction = Menjalankan
+PaletteAdd = Tambah entri…
+PaletteMoveUp = Naikkan
+PaletteMoveDown = Turunkan
+PaletteNoEntries = Belum ada entri.
+PaletteLabelCaption = Nama (opsional)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = Ketik untuk menyaring…
+PaletteNoMatch = Tidak ada yang cocok.
+
+DoubleTapEnable = Beri tindakan tersendiri untuk dua tekanan cepat
+DoubleTapCostWarning = Sekali tekan harus menunggu {0} ms untuk tahu apakah tekanan kedua akan datang, jadi setiap tekanan terasa selambat itu. Biarkan mati kecuali Anda memang menginginkan tindakan keduanya.
+DoubleTapWindow = Tunggu tekanan kedua selama
+DoubleTapMilliseconds = {0} ms
+DoubleTapDisabledHint = Dua tekanan cepat hanya menjalankan tindakan sekali tekan sebanyak dua kali.
+
+ExportTitle = Ekspor pengaturan AntiPilot
+ImportTitle = Impor pengaturan AntiPilot
+ConfigFilter = Pengaturan AntiPilot|*.json|Semua berkas|*.*
+ExportDone = Pengaturan diekspor.
+ImportFailed = Berkas itu bukan berkas pengaturan AntiPilot yang bisa dibaca.
+ImportConfirm = Ganti pengaturan Anda saat ini dengan yang ada di berkas ini?
+ImportDone = Pengaturan diimpor.
+ExportButton = Ekspor…
+ImportButton = Impor…
+
+TraySettings = Pengaturan…
+TrayRunAction = Jalankan tindakan tombol
+TrayRunNamed = Jalankan: {0}
+TrayNothingConfigured = Belum ada yang diatur
+TrayCustomiseKey = Sesuaikan tombol Copilot di Windows…
+TrayStartWithSignIn = Jalankan saat saya masuk
+TrayStartBlocked = Jalankan saat saya masuk (mati di Task Manager)
+TrayAbout = Tentang AntiPilot…
+TrayExit = Keluar
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = belum diatur
+TrayIntroTitle = AntiPilot ada di area notifikasi
+TrayIntroBody = Windows menyembunyikan ikon baru: klik tanda ^ di samping jam, lalu seret AntiPilot ke taskbar agar tetap terlihat.
+TrayMenuKeyOnly = Tindakan tombol Menu hanya masuk akal saat Anda sendiri yang menekan tombolnya.
+TrayStartupBlockedBody = Windows mengingat bahwa ini pernah dimatikan di Task Manager, dan hanya Anda yang bisa menyalakannya lagi: Task Manager → Aplikasi startup → "AntiPilot tray icon".
+TrayStartupFailed = Windows tidak mengizinkan tugas startup diaktifkan.
+TrayCouldNotStart = Tidak dapat menjalankan ikon area notifikasi.
+
+ActionFailedTitle = AntiPilot tidak dapat menjalankan tindakan
+ActionFailedBody = {0}
+TargetMissingApp = Aplikasi itu sudah tidak terpasang.
+TargetMissingFile = Berkas atau folder itu sudah tidak ada.
+ValidationTitle = Periksa ini sebelum menyimpan
+ValidationContinue = Tetap simpan
+
+AboutTitle = Tentang AntiPilot
+AboutVersion = Versi {0}
+AboutVersionUnknown = Versi tidak diketahui
+AboutUnpackaged = Berjalan tanpa paket
+AboutTagline = Membuat tombol Copilot membuka aplikasi pilihan Anda, mengirim pintasan, atau berperan sebagai tombol Menu.
+
+# Added with the Fluent redesign.
+TabGeneral = Umum
+GeneralGroupBehaviour = Startup dan bahasa
+GeneralGroupTransfer = Berkas pengaturan
+GeneralGroupAbout = Tentang
+OpenLogDescription = Setiap tekanan tombol, dan alasan apa pun yang gagal
+TrayDescription = Cara kembali ke jendela ini tanpa lewat menu Start
+DoubleTapEnableDescription = Tekanan kedua dalam rentang waktu di bawah menjalankan tindakan yang diatur di bagian bawah halaman ini.

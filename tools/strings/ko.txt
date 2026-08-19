@@ -1,0 +1,181 @@
+# Korean. 1.4% of installs.
+
+AppName = AntiPilot
+Nothing = 없음
+NoApp = (앱 없음)
+NoAppChosen = (선택한 앱 없음)
+Ok = 확인
+Cancel = 취소
+Save = 저장
+Remove = 제거
+Add = 추가
+Close = 닫기
+Edit = 편집
+
+MenuKeyShort = 메뉴 키
+PaletteShort = 빠른 실행 팔레트
+HotkeyShort = 키보드 단축키
+
+SettingsTitle = AntiPilot
+SettingsTagline = Copilot 키(및 Win+C)가 실제로 무엇을 할지 정하세요.
+OpenWindowsSettings = Windows 설정 열기
+TabSinglePress = 한 번 누르기
+TabDoublePress = 두 번 누르기
+TabPerApp = 앱별
+TabPalette = 팔레트
+DoThis = 이 작업 수행:
+TestIt = 테스트
+OpenLog = 로그 열기
+About = 정보
+ImportExport = 가져오기 / 내보내기
+NothingHintTap = 키가 아무 동작도 하지 않습니다. 위에서 선택하세요.
+NothingHintDouble = 두 번 누르기는 한 번 누르기와 동일하게 동작합니다.
+ShowTrayAndStart = 알림 영역 아이콘을 표시하고 로그인할 때 시작
+TrayNeedsInstall = 로그인 시 아이콘(설치된 버전 필요)
+TrayBlocked = 로그인 시 아이콘(작업 관리자에서 해제됨)
+SaveBeforeClosing = 닫기 전에 변경 내용을 저장할까요?
+CouldNotSave = 설정을 저장할 수 없습니다.
+NothingConfiguredYet = 아직 설정된 것이 없습니다.
+MenuKeyTestHint = 메뉴 키 동작은 키보드로만 테스트할 수 있습니다. 이 창을 닫고 다른 곳에 포커스를 준 다음 키를 누르세요.
+HotkeyTestHint = 키보드 단축키는 키보드로만 테스트할 수 있습니다. 이 창을 닫고 다른 곳에 포커스를 준 다음 키를 누르세요.
+Language = 언어
+LanguageSystem = Windows와 동일
+LanguageRestartHint = 새 언어는 창을 다시 열 때 적용됩니다.
+
+StatusUnpackaged = 디버그 빌드 — Windows는 설치된 MSIX만 인식합니다.
+StatusActive = Copilot 키와 Win+C가 AntiPilot을 실행합니다.
+StatusSearch = Copilot 키가 검색을 엽니다 — AntiPilot을 선택하세요 →
+StatusOtherApp = Copilot 키가 다른 앱을 엽니다 — AntiPilot을 선택하세요 →
+StatusDefault = Copilot 키가 아직 기본 동작을 합니다 →
+
+ModeNothing = 없음
+ModeShellApp = 설치된 앱 실행  (시작 메뉴 또는 Microsoft Store)
+ModeFile = 프로그램, 파일, 폴더 또는 링크 열기
+ModeMenuKey = 메뉴 키로 동작  (예전 상황에 맞는 메뉴 키)
+ModeHotkey = 키보드 단축키 보내기
+ModePalette = 빠른 실행 팔레트 표시
+ChooseApp = 앱 선택…
+Browse = 찾아보기…
+AppHint = 시작 메뉴 앱 목록에 있는 것이면 Microsoft Store 앱을 포함해 무엇이든 지정할 수 있습니다.
+FileCaptionPath = 프로그램, 파일, 폴더 또는 링크
+FileCaptionArgs = 인수(선택 사항)
+FileCaptionWorkDir = 시작 위치(선택 사항)
+FileHint = %USERPROFILE% 같은 환경 변수는 확장됩니다.
+FilePlaceholder = C:\Windows\System32\notepad.exe   또는   https://example.com
+FileDialogTitle = 프로그램 또는 파일 선택
+FileDialogFilter = 프로그램 및 바로 가기|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|모든 파일|*.*
+MenuKeyBody = 키가 메뉴 키(VK_APPS)를 보내므로 마우스 오른쪽 단추 클릭과 똑같이 포커스가 있는 대상의 상황에 맞는 메뉴가 열립니다.
+ElevatedHint = Windows는 관리자 권한으로 실행 중인 창을 향한 합성 입력을 차단하므로, 그런 창이 앞에 있는 동안에는 아무 일도 일어나지 않습니다.
+PaletteBody = 키를 누르면 팔레트 항목의 짧은 목록이 열립니다. 입력하면 필터링되고, 1-9로 항목을 실행하며, Esc로 닫습니다.
+PaletteEmptyWarning = 팔레트에 아직 항목이 없습니다. 팔레트 탭에서 추가하세요.
+WhenAlreadyRunning = 이미 실행 중일 때:
+BehaviourAlways = 하나 더 실행
+BehaviourFocus = 기존 창을 앞으로 가져오기
+BehaviourToggle = 앞으로 가져오고, 이미 앞에 있으면 최소화
+BehaviourHint = 기존 창을 앞으로 가져오려면 해당 앱이 관리자가 아니라 사용자 권한으로 실행 중이어야 합니다.
+
+HotkeyCaption = 보낼 단축키
+HotkeyPlaceholder = 여기를 클릭한 다음 단축키를 누르세요
+HotkeyRecording = 지금 단축키를 누르세요…
+HotkeyClear = 지우기
+HotkeyHint = 포커스가 있는 대상으로 전송됩니다. 한정 키만으로는 단축키가 되지 않습니다 — 일반 키를 추가하세요.
+HotkeyPresets = 사전 설정:
+HotkeyInvalid = AntiPilot이 보낼 수 있는 단축키가 아닙니다.
+PresetTaskManager = 작업 관리자
+PresetClipboard = 클립보드 기록
+PresetSnip = 화면 캡처
+PresetExplorer = 파일 탐색기
+PresetEmoji = 이모지 패널
+PresetPrintScreen = 화면 인쇄
+PresetLock = PC 잠금
+PresetShowDesktop = 바탕 화면 표시
+PresetPlayPause = 재생 / 일시 중지
+PresetMute = 음소거
+
+PickerTitle = 앱 선택
+PickerSearch = 앱 검색
+PickerLoading = 앱 목록을 읽는 중…
+PickerCount = 앱 {0}개
+PickerNoMatch = 일치하는 항목이 없습니다.
+PickerColumnApp = 앱
+PickerSelect = 선택
+PickerFailed = 설치된 앱 목록을 읽을 수 없습니다.
+
+PerAppIntro = 특정 앱이 앞에 있는 동안 키에 다른 역할을 부여합니다. 규칙은 위에서 아래로 확인되며, 일치하는 것이 없으면 한 번 누르기 동작으로 넘어갑니다.
+PerAppColumnApp = 이것이 앞에 있을 때
+PerAppColumnAction = 키가 하는 일
+PerAppAdd = 규칙 추가…
+PerAppEditAction = 동작 변경…
+PerAppProcess = 프로세스 이름
+PerAppProcessHint = 실행 파일 이름이며 .exe는 있어도 없어도 됩니다 — 예: chrome 또는 devenv.
+PerAppPickRunning = 실행 중인 앱에서 선택…
+PerAppNoRules = 아직 규칙이 없습니다. 키는 어디서나 같은 동작을 합니다.
+PerAppDuplicate = 해당 앱에 대한 규칙이 이미 있습니다.
+
+PaletteIntro = 동작이 "빠른 실행 팔레트 표시"로 설정되어 있을 때 제공되는 항목입니다. 처음 아홉 개는 1-9를 눌러 실행할 수 있습니다.
+PaletteColumnLabel = 이름
+PaletteColumnAction = 실행 대상
+PaletteAdd = 항목 추가…
+PaletteMoveUp = 위로 이동
+PaletteMoveDown = 아래로 이동
+PaletteNoEntries = 아직 항목이 없습니다.
+PaletteLabelCaption = 이름(선택 사항)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = 입력하여 필터링…
+PaletteNoMatch = 일치하는 항목이 없습니다.
+
+DoubleTapEnable = 빠르게 두 번 누르기에 별도의 동작 지정
+DoubleTapCostWarning = 한 번 누르기는 두 번째가 올지 확인하기 위해 {0}밀리초를 기다려야 하므로 모든 누름이 그만큼 느리게 느껴집니다. 두 번째 동작이 필요하지 않다면 꺼 두세요.
+DoubleTapWindow = 두 번째 누름 대기 시간
+DoubleTapMilliseconds = {0}밀리초
+DoubleTapDisabledHint = 빠르게 두 번 누르면 한 번 누르기 동작이 두 번 실행될 뿐입니다.
+
+ExportTitle = AntiPilot 설정 내보내기
+ImportTitle = AntiPilot 설정 가져오기
+ConfigFilter = AntiPilot 설정|*.json|모든 파일|*.*
+ExportDone = 설정을 내보냈습니다.
+ImportFailed = 읽을 수 있는 AntiPilot 설정 파일이 아닙니다.
+ImportConfirm = 현재 설정을 이 파일의 설정으로 바꿀까요?
+ImportDone = 설정을 가져왔습니다.
+ExportButton = 내보내기…
+ImportButton = 가져오기…
+
+TraySettings = 설정…
+TrayRunAction = 키 동작 실행
+TrayRunNamed = 실행: {0}
+TrayNothingConfigured = 설정된 것 없음
+TrayCustomiseKey = Windows에서 Copilot 키 사용자 지정…
+TrayStartWithSignIn = 로그인할 때 시작
+TrayStartBlocked = 로그인할 때 시작(작업 관리자에서 해제됨)
+TrayAbout = AntiPilot 정보…
+TrayExit = 종료
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = 아직 설정되지 않음
+TrayIntroTitle = AntiPilot이 알림 영역에 있습니다
+TrayIntroBody = Windows는 새 아이콘을 숨깁니다. 시계 옆의 ^를 클릭하고 AntiPilot을 작업 표시줄로 끌어다 놓으면 계속 표시됩니다.
+TrayMenuKeyOnly = 메뉴 키 동작은 직접 키를 누를 때만 의미가 있습니다.
+TrayStartupBlockedBody = Windows는 이것이 작업 관리자에서 해제되었음을 기억하며, 다시 켤 수 있는 것은 사용자뿐입니다: 작업 관리자 → 시작 앱 → "AntiPilot tray icon".
+TrayStartupFailed = Windows가 시작 작업을 사용하도록 설정하지 않았습니다.
+TrayCouldNotStart = 알림 영역 아이콘을 시작할 수 없습니다.
+
+ActionFailedTitle = AntiPilot이 동작을 실행하지 못했습니다
+ActionFailedBody = {0}
+TargetMissingApp = 해당 앱이 더 이상 설치되어 있지 않습니다.
+TargetMissingFile = 해당 파일 또는 폴더가 더 이상 없습니다.
+ValidationTitle = 저장하기 전에 확인하세요
+ValidationContinue = 그래도 저장
+
+AboutTitle = AntiPilot 정보
+AboutVersion = 버전 {0}
+AboutVersionUnknown = 버전 알 수 없음
+AboutUnpackaged = 패키지 없이 실행 중
+AboutTagline = Copilot 키로 원하는 앱을 열거나, 단축키를 보내거나, 메뉴 키처럼 사용할 수 있게 합니다.
+
+# Added with the Fluent redesign.
+TabGeneral = 일반
+GeneralGroupBehaviour = 시작 및 언어
+GeneralGroupTransfer = 설정 파일
+GeneralGroupAbout = 정보
+OpenLogDescription = 모든 키 입력과, 무언가 실패한 이유
+TrayDescription = 시작 메뉴를 거치지 않고 이 창으로 돌아오는 방법
+DoubleTapEnableDescription = 아래 시간 안에 두 번째로 누르면 이 페이지 아래쪽에서 설정한 동작이 실행됩니다.

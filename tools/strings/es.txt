@@ -1,0 +1,181 @@
+# Spanish. 6.3% of installs, spread across twelve countries — neutral Latin American Spanish.
+
+AppName = AntiPilot
+Nothing = Nada
+NoApp = (sin aplicación)
+NoAppChosen = (no se eligió ninguna aplicación)
+Ok = Aceptar
+Cancel = Cancelar
+Save = Guardar
+Remove = Quitar
+Add = Agregar
+Close = Cerrar
+Edit = Editar
+
+MenuKeyShort = Tecla Menú
+PaletteShort = Paleta de inicio rápido
+HotkeyShort = Atajo de teclado
+
+SettingsTitle = AntiPilot
+SettingsTagline = Decide qué hace realmente la tecla Copilot (y Win+C).
+OpenWindowsSettings = Abrir la configuración de Windows
+TabSinglePress = Una pulsación
+TabDoublePress = Doble pulsación
+TabPerApp = Por aplicación
+TabPalette = Paleta
+DoThis = Hacer esto:
+TestIt = Probar
+OpenLog = Abrir el registro
+About = Acerca de
+ImportExport = Importar / exportar
+NothingHintTap = La tecla no hace nada. Elige algo arriba.
+NothingHintDouble = Una doble pulsación hace lo mismo que una sola.
+ShowTrayAndStart = Mostrar el icono en el área de notificación e iniciarlo al iniciar sesión
+TrayNeedsInstall = Icono al iniciar sesión (requiere la versión instalada)
+TrayBlocked = Icono al iniciar sesión (desactivado en el Administrador de tareas)
+SaveBeforeClosing = ¿Guardar los cambios antes de cerrar?
+CouldNotSave = No se pudo guardar la configuración.
+NothingConfiguredYet = Todavía no hay nada configurado.
+MenuKeyTestHint = La acción de tecla Menú solo puede probarse desde el teclado: cierra esta ventana, pon el foco en otra cosa y pulsa la tecla.
+HotkeyTestHint = Un atajo de teclado solo puede probarse desde el teclado: cierra esta ventana, pon el foco en otra cosa y pulsa la tecla.
+Language = Idioma
+LanguageSystem = El mismo que Windows
+LanguageRestartHint = El nuevo idioma aparecerá la próxima vez que se abra la ventana.
+
+StatusUnpackaged = Compilación de depuración: Windows solo ve el MSIX instalado.
+StatusActive = La tecla Copilot y Win+C ejecutan AntiPilot.
+StatusSearch = La tecla Copilot abre la Búsqueda: elige AntiPilot →
+StatusOtherApp = La tecla Copilot abre otra aplicación: elige AntiPilot →
+StatusDefault = La tecla Copilot sigue haciendo lo de siempre →
+
+ModeNothing = Nada
+ModeShellApp = Abrir una aplicación instalada  (menú Inicio o Microsoft Store)
+ModeFile = Abrir un programa, archivo, carpeta o enlace
+ModeMenuKey = Actuar como la tecla Menú  (la antigua tecla de menú contextual)
+ModeHotkey = Enviar un atajo de teclado
+ModePalette = Mostrar la paleta de inicio rápido
+ChooseApp = Elegir aplicación…
+Browse = Examinar…
+AppHint = Sirve cualquier cosa de la lista de aplicaciones del menú Inicio, incluidas las de Microsoft Store.
+FileCaptionPath = Programa, archivo, carpeta o enlace
+FileCaptionArgs = Argumentos (opcional)
+FileCaptionWorkDir = Iniciar en (opcional)
+FileHint = Las variables de entorno como %USERPROFILE% se expanden.
+FilePlaceholder = C:\Windows\System32\notepad.exe   o   https://example.com
+FileDialogTitle = Elige un programa o archivo
+FileDialogFilter = Programas y accesos directos|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|Todos los archivos|*.*
+MenuKeyBody = La tecla envía la tecla Menú (VK_APPS), así que se abre el menú contextual de lo que tenga el foco, igual que con el clic derecho.
+ElevatedHint = Windows bloquea la entrada sintética dirigida a ventanas que se ejecutan como administrador, así que esto no hace nada mientras una de ellas está en primer plano.
+PaletteBody = La tecla abre una lista breve con las entradas de tu paleta. Escribe para filtrar, pulsa 1-9 para ejecutar una entrada y Esc para descartarla.
+PaletteEmptyWarning = La paleta todavía no tiene entradas. Agrega algunas en la pestaña Paleta.
+WhenAlreadyRunning = Cuando ya se está ejecutando:
+BehaviourAlways = Abrir otra copia
+BehaviourFocus = Traer al frente la ventana existente
+BehaviourToggle = Traerla al frente, o minimizarla si ya está ahí
+BehaviourHint = Para traer al frente una ventana existente, la aplicación debe ejecutarse con tu cuenta, no como administrador.
+
+HotkeyCaption = Atajo que se enviará
+HotkeyPlaceholder = Haz clic aquí y pulsa el atajo
+HotkeyRecording = Pulsa el atajo ahora…
+HotkeyClear = Borrar
+HotkeyHint = Se envía a lo que tenga el foco. Los modificadores por sí solos no son un atajo: agrega una tecla normal.
+HotkeyPresets = Preajustes:
+HotkeyInvalid = Ese no es un atajo que AntiPilot pueda enviar.
+PresetTaskManager = Administrador de tareas
+PresetClipboard = Historial del portapapeles
+PresetSnip = Recorte de pantalla
+PresetExplorer = Explorador de archivos
+PresetEmoji = Panel de emojis
+PresetPrintScreen = Imprimir pantalla
+PresetLock = Bloquear el equipo
+PresetShowDesktop = Mostrar el escritorio
+PresetPlayPause = Reproducir / pausar
+PresetMute = Silenciar
+
+PickerTitle = Elige una aplicación
+PickerSearch = Buscar aplicaciones
+PickerLoading = Leyendo la lista de aplicaciones…
+PickerCount = {0} aplicaciones
+PickerNoMatch = No hay coincidencias.
+PickerColumnApp = Aplicación
+PickerSelect = Seleccionar
+PickerFailed = No se pudo leer la lista de aplicaciones instaladas.
+
+PerAppIntro = Dale a la tecla otra función mientras una aplicación concreta está en primer plano. Las reglas se prueban de arriba abajo; lo que no coincida usa la acción de una pulsación.
+PerAppColumnApp = Cuando esto esté al frente
+PerAppColumnAction = La tecla hace esto
+PerAppAdd = Agregar regla…
+PerAppEditAction = Cambiar la acción…
+PerAppProcess = Nombre del proceso
+PerAppProcessHint = El nombre del ejecutable, con o sin .exe; por ejemplo chrome o devenv.
+PerAppPickRunning = Elegir una aplicación abierta…
+PerAppNoRules = Todavía no hay reglas. La tecla hace lo mismo en todas partes.
+PerAppDuplicate = Ya existe una regla para esa aplicación.
+
+PaletteIntro = Entradas que se ofrecen cuando una acción está configurada como «Mostrar la paleta de inicio rápido». Las primeras nueve se ejecutan pulsando 1-9.
+PaletteColumnLabel = Nombre
+PaletteColumnAction = Ejecuta
+PaletteAdd = Agregar entrada…
+PaletteMoveUp = Subir
+PaletteMoveDown = Bajar
+PaletteNoEntries = Todavía no hay entradas.
+PaletteLabelCaption = Nombre (opcional)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = Escribe para filtrar…
+PaletteNoMatch = No hay coincidencias.
+
+DoubleTapEnable = Dar a dos pulsaciones rápidas su propia acción
+DoubleTapCostWarning = Una sola pulsación tiene que esperar {0} ms para saber si viene una segunda, así que cada pulsación se siente así de lenta. Déjalo desactivado salvo que quieras la segunda acción.
+DoubleTapWindow = Esperar la segunda pulsación durante
+DoubleTapMilliseconds = {0} ms
+DoubleTapDisabledHint = Dos pulsaciones rápidas simplemente ejecutan dos veces la acción de una pulsación.
+
+ExportTitle = Exportar la configuración de AntiPilot
+ImportTitle = Importar la configuración de AntiPilot
+ConfigFilter = Configuración de AntiPilot|*.json|Todos los archivos|*.*
+ExportDone = Configuración exportada.
+ImportFailed = Ese archivo no es un archivo de configuración de AntiPilot legible.
+ImportConfirm = ¿Reemplazar tu configuración actual por la de este archivo?
+ImportDone = Configuración importada.
+ExportButton = Exportar…
+ImportButton = Importar…
+
+TraySettings = Configuración…
+TrayRunAction = Ejecutar la acción de la tecla
+TrayRunNamed = Ejecutar: {0}
+TrayNothingConfigured = No hay nada configurado
+TrayCustomiseKey = Personalizar la tecla Copilot en Windows…
+TrayStartWithSignIn = Iniciar al iniciar sesión
+TrayStartBlocked = Iniciar al iniciar sesión (desactivado en el Administrador de tareas)
+TrayAbout = Acerca de AntiPilot…
+TrayExit = Salir
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = todavía sin configurar
+TrayIntroTitle = AntiPilot está en el área de notificación
+TrayIntroBody = Windows oculta los iconos nuevos: haz clic en el ^ junto al reloj y arrastra AntiPilot a la barra de tareas para mantenerlo visible.
+TrayMenuKeyOnly = La acción de tecla Menú solo tiene sentido cuando pulsas la tecla tú mismo.
+TrayStartupBlockedBody = Windows recuerda que esto se desactivó en el Administrador de tareas y solo tú puedes volver a activarlo: Administrador de tareas → Aplicaciones de inicio → «AntiPilot tray icon».
+TrayStartupFailed = Windows no permitió activar el inicio automático.
+TrayCouldNotStart = No se pudo iniciar el icono del área de notificación.
+
+ActionFailedTitle = AntiPilot no pudo ejecutar la acción
+ActionFailedBody = {0}
+TargetMissingApp = Esa aplicación ya no está instalada.
+TargetMissingFile = Ese archivo o carpeta ya no está ahí.
+ValidationTitle = Revisa esto antes de guardar
+ValidationContinue = Guardar de todos modos
+
+AboutTitle = Acerca de AntiPilot
+AboutVersion = Versión {0}
+AboutVersionUnknown = Versión desconocida
+AboutUnpackaged = Ejecutándose sin paquete
+AboutTagline = Hace que la tecla Copilot abra la aplicación que elijas, envíe un atajo o actúe como la tecla Menú.
+
+# Added with the Fluent redesign.
+TabGeneral = General
+GeneralGroupBehaviour = Inicio e idioma
+GeneralGroupTransfer = Archivo de configuración
+GeneralGroupAbout = Acerca de
+OpenLogDescription = Cada pulsación de la tecla, y por qué falló lo que falló
+TrayDescription = Una forma de volver a esta ventana sin pasar por el menú Inicio
+DoubleTapEnableDescription = Una segunda pulsación dentro de la ventana de abajo ejecuta la acción configurada al final de esta página.

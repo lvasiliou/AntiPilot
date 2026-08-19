@@ -1,0 +1,181 @@
+# Simplified Chinese. 5.2% of installs.
+
+AppName = AntiPilot
+Nothing = 无
+NoApp = (无应用)
+NoAppChosen = (未选择应用)
+Ok = 确定
+Cancel = 取消
+Save = 保存
+Remove = 移除
+Add = 添加
+Close = 关闭
+Edit = 编辑
+
+MenuKeyShort = 菜单键
+PaletteShort = 快速启动面板
+HotkeyShort = 键盘快捷键
+
+SettingsTitle = AntiPilot
+SettingsTagline = 决定 Copilot 键（以及 Win+C）到底做什么。
+OpenWindowsSettings = 打开 Windows 设置
+TabSinglePress = 单次按键
+TabDoublePress = 双次按键
+TabPerApp = 按应用
+TabPalette = 面板
+DoThis = 执行：
+TestIt = 测试
+OpenLog = 打开日志
+About = 关于
+ImportExport = 导入 / 导出
+NothingHintTap = 此键不执行任何操作。请在上方选择。
+NothingHintDouble = 双次按键与单次按键执行相同的操作。
+ShowTrayAndStart = 显示通知区域图标，并在登录时启动
+TrayNeedsInstall = 登录时显示图标（需要已安装的版本）
+TrayBlocked = 登录时显示图标（已在任务管理器中关闭）
+SaveBeforeClosing = 关闭前保存更改吗？
+CouldNotSave = 无法保存设置。
+NothingConfiguredYet = 尚未配置任何内容。
+MenuKeyTestHint = 菜单键操作只能通过键盘测试：关闭此窗口，切换到别处，然后按下该键。
+HotkeyTestHint = 键盘快捷键只能通过键盘测试：关闭此窗口，切换到别处，然后按下该键。
+Language = 语言
+LanguageSystem = 与 Windows 相同
+LanguageRestartHint = 新语言将在下次打开窗口时生效。
+
+StatusUnpackaged = 调试版本 — Windows 只能看到已安装的 MSIX。
+StatusActive = Copilot 键和 Win+C 会运行 AntiPilot。
+StatusSearch = Copilot 键会打开搜索 — 请选择 AntiPilot →
+StatusOtherApp = Copilot 键会打开其他应用 — 请选择 AntiPilot →
+StatusDefault = Copilot 键仍执行其默认操作 →
+
+ModeNothing = 无
+ModeShellApp = 启动已安装的应用（“开始”菜单或 Microsoft Store）
+ModeFile = 启动程序、文件、文件夹或链接
+ModeMenuKey = 用作菜单键（旧的上下文菜单键）
+ModeHotkey = 发送键盘快捷键
+ModePalette = 显示快速启动面板
+ChooseApp = 选择应用…
+Browse = 浏览…
+AppHint = “开始”菜单应用列表中的任何项目都可以，包括 Microsoft Store 应用。
+FileCaptionPath = 程序、文件、文件夹或链接
+FileCaptionArgs = 参数（可选）
+FileCaptionWorkDir = 起始位置（可选）
+FileHint = 会展开 %USERPROFILE% 之类的环境变量。
+FilePlaceholder = C:\Windows\System32\notepad.exe   或   https://example.com
+FileDialogTitle = 选择程序或文件
+FileDialogFilter = 程序和快捷方式|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|所有文件|*.*
+MenuKeyBody = 此键会发送菜单键 (VK_APPS)，因此会打开当前焦点所在位置的上下文菜单，与右键单击完全一样。
+ElevatedHint = Windows 会阻止发往以管理员身份运行的窗口的模拟输入，因此当此类窗口位于前台时不会有任何反应。
+PaletteBody = 此键会打开一个包含面板条目的小列表。输入可筛选，按 1-9 可运行条目，按 Esc 可关闭。
+PaletteEmptyWarning = 面板中还没有条目。请在“面板”选项卡中添加。
+WhenAlreadyRunning = 当它已在运行时：
+BehaviourAlways = 再启动一个副本
+BehaviourFocus = 将现有窗口置于前台
+BehaviourToggle = 将其置于前台；如果已在前台则最小化
+BehaviourHint = 要将现有窗口置于前台，该应用必须以你的身份运行，而不是以管理员身份运行。
+
+HotkeyCaption = 要发送的快捷键
+HotkeyPlaceholder = 单击此处，然后按下快捷键
+HotkeyRecording = 现在按下快捷键…
+HotkeyClear = 清除
+HotkeyHint = 发送到当前有焦点的窗口。单独的修饰键不算快捷键 — 请再加一个普通按键。
+HotkeyPresets = 预设：
+HotkeyInvalid = AntiPilot 无法发送该快捷键。
+PresetTaskManager = 任务管理器
+PresetClipboard = 剪贴板历史记录
+PresetSnip = 屏幕截图
+PresetExplorer = 文件资源管理器
+PresetEmoji = 表情符号面板
+PresetPrintScreen = 打印屏幕
+PresetLock = 锁定电脑
+PresetShowDesktop = 显示桌面
+PresetPlayPause = 播放 / 暂停
+PresetMute = 静音
+
+PickerTitle = 选择应用
+PickerSearch = 搜索应用
+PickerLoading = 正在读取应用列表…
+PickerCount = {0} 个应用
+PickerNoMatch = 没有匹配项。
+PickerColumnApp = 应用
+PickerSelect = 选择
+PickerFailed = 无法读取已安装应用的列表。
+
+PerAppIntro = 当某个应用位于前台时，让此键执行不同的操作。规则按从上到下的顺序匹配；未匹配的情况会回退到单次按键操作。
+PerAppColumnApp = 当它位于前台时
+PerAppColumnAction = 此键执行
+PerAppAdd = 添加规则…
+PerAppEditAction = 更改操作…
+PerAppProcess = 进程名
+PerAppProcessHint = 可执行文件名，可带或不带 .exe，例如 chrome 或 devenv。
+PerAppPickRunning = 选择正在运行的应用…
+PerAppNoRules = 尚无规则。此键在任何地方都执行相同的操作。
+PerAppDuplicate = 该应用已有规则。
+
+PaletteIntro = 当操作设置为“显示快速启动面板”时提供的条目。前九个可以按 1-9 运行。
+PaletteColumnLabel = 名称
+PaletteColumnAction = 运行
+PaletteAdd = 添加条目…
+PaletteMoveUp = 上移
+PaletteMoveDown = 下移
+PaletteNoEntries = 尚无条目。
+PaletteLabelCaption = 名称（可选）
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = 输入以筛选…
+PaletteNoMatch = 没有匹配项。
+
+DoubleTapEnable = 为两次快速按键设置单独的操作
+DoubleTapCostWarning = 单次按键必须等待 {0} 毫秒才能确定是否还有第二次按键，因此每次按键都会慢这么多。除非你确实需要第二个操作，否则请保持关闭。
+DoubleTapWindow = 等待第二次按键
+DoubleTapMilliseconds = {0} 毫秒
+DoubleTapDisabledHint = 两次快速按键只会把单次按键的操作执行两遍。
+
+ExportTitle = 导出 AntiPilot 设置
+ImportTitle = 导入 AntiPilot 设置
+ConfigFilter = AntiPilot 设置|*.json|所有文件|*.*
+ExportDone = 设置已导出。
+ImportFailed = 该文件不是可读取的 AntiPilot 设置文件。
+ImportConfirm = 用此文件中的设置替换你当前的设置吗？
+ImportDone = 设置已导入。
+ExportButton = 导出…
+ImportButton = 导入…
+
+TraySettings = 设置…
+TrayRunAction = 运行此键的操作
+TrayRunNamed = 运行：{0}
+TrayNothingConfigured = 尚未配置
+TrayCustomiseKey = 在 Windows 中自定义 Copilot 键…
+TrayStartWithSignIn = 登录时启动
+TrayStartBlocked = 登录时启动（已在任务管理器中关闭）
+TrayAbout = 关于 AntiPilot…
+TrayExit = 退出
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = 尚未设置
+TrayIntroTitle = AntiPilot 已在通知区域中
+TrayIntroBody = Windows 会隐藏新图标：单击时钟旁边的 ^，然后将 AntiPilot 拖到任务栏上即可让它保持可见。
+TrayMenuKeyOnly = 菜单键操作只有在你亲自按键时才有意义。
+TrayStartupBlockedBody = Windows 记住了它曾在任务管理器中被关闭，只有你才能重新开启：任务管理器 → 启动应用 → “AntiPilot tray icon”。
+TrayStartupFailed = Windows 不允许启用登录时启动。
+TrayCouldNotStart = 无法启动通知区域图标。
+
+ActionFailedTitle = AntiPilot 无法执行该操作
+ActionFailedBody = {0}
+TargetMissingApp = 该应用已不再安装。
+TargetMissingFile = 该文件或文件夹已不存在。
+ValidationTitle = 保存前请检查
+ValidationContinue = 仍然保存
+
+AboutTitle = 关于 AntiPilot
+AboutVersion = 版本 {0}
+AboutVersionUnknown = 版本未知
+AboutUnpackaged = 正在以非打包方式运行
+AboutTagline = 让 Copilot 键启动你选择的应用、发送快捷键，或用作菜单键。
+
+# Added with the Fluent redesign.
+TabGeneral = 常规
+GeneralGroupBehaviour = 启动与语言
+GeneralGroupTransfer = 设置文件
+GeneralGroupAbout = 关于
+OpenLogDescription = 每一次按键，以及失败的原因
+TrayDescription = 无需经过“开始”菜单即可回到此窗口的方式
+DoubleTapEnableDescription = 在下方时间窗口内按下的第二次会执行本页底部设置的操作。

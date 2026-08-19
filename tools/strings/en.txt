@@ -1,0 +1,202 @@
+# AntiPilot user-visible strings — source of truth.
+#
+# Format:  Key = text
+# Lines starting with # are comments; blank lines are ignored. Text runs to the end of the
+# line; use \n for a line break. Generate the .resx files and the Strings accessor with:
+#
+#     .\tools\Update-Strings.ps1
+#
+# A translation file (tools/strings/<tag>.txt) only needs the keys it actually translates;
+# anything missing falls back to the English below.
+
+# ---- shared -----------------------------------------------------------------
+AppName = AntiPilot
+Nothing = Nothing
+NoApp = (no app)
+NoAppChosen = (no app chosen)
+Ok = OK
+Cancel = Cancel
+Save = Save
+Remove = Remove
+Add = Add
+Close = Close
+Edit = Edit
+
+# ---- action descriptions ----------------------------------------------------
+MenuKeyShort = Menu key
+PaletteShort = Quick-launch palette
+HotkeyShort = Keyboard shortcut
+
+# ---- settings window --------------------------------------------------------
+SettingsTitle = AntiPilot
+SettingsTagline = Decide what the Copilot key (and Win+C) actually does.
+OpenWindowsSettings = Open Windows settings
+TabSinglePress = Single press
+TabDoublePress = Double press
+TabPerApp = Per-app
+TabPalette = Palette
+TabGeneral = General
+GeneralGroupBehaviour = Startup and language
+GeneralGroupTransfer = Settings file
+GeneralGroupAbout = About
+OpenLogDescription = Every key press, and why anything that failed did
+TrayDescription = A way back to this window that does not need the Start menu
+DoThis = Do this:
+TestIt = Test it
+OpenLog = Open log
+About = About
+ImportExport = Import / export
+NothingHintTap = The key does nothing at all. Pick something above.
+NothingHintDouble = A double press does the same as a single one.
+ShowTrayAndStart = Show the tray icon, and start it when I sign in
+TrayNeedsInstall = Tray icon at sign-in (needs the installed version)
+TrayBlocked = Tray icon at sign-in (switched off in Task Manager)
+SaveBeforeClosing = Save your changes before closing?
+CouldNotSave = Could not save settings.
+NothingConfiguredYet = Nothing is configured yet.
+MenuKeyTestHint = The Menu key action can only be tested from the keyboard: close this window, focus something else and press the key.
+HotkeyTestHint = A keyboard shortcut can only be tested from the keyboard: close this window, focus something else and press the key.
+Language = Language
+LanguageSystem = Same as Windows
+LanguageRestartHint = The new language appears the next time the window opens.
+
+# ---- key status -------------------------------------------------------------
+StatusUnpackaged = Debug build — Windows only sees the installed MSIX.
+StatusActive = The Copilot key and Win+C run AntiPilot.
+StatusSearch = The Copilot key opens Search — pick AntiPilot →
+StatusOtherApp = The Copilot key opens another app — pick AntiPilot →
+StatusDefault = The Copilot key still does its default thing →
+
+# ---- action editor ----------------------------------------------------------
+ModeNothing = Nothing
+ModeShellApp = Launch an installed app  (Start menu or Microsoft Store)
+ModeFile = Launch a program, file, folder or link
+ModeMenuKey = Act as the Menu key  (the old context-menu key)
+ModeHotkey = Send a keyboard shortcut
+ModePalette = Show the quick-launch palette
+ChooseApp = Choose app…
+Browse = Browse…
+AppHint = Anything in the Start menu's app list works here, including Microsoft Store apps.
+FileCaptionPath = Program, file, folder or link
+FileCaptionArgs = Arguments (optional)
+FileCaptionWorkDir = Start in (optional)
+FileHint = Environment variables such as %USERPROFILE% are expanded.
+FilePlaceholder = C:\Windows\System32\notepad.exe   or   https://example.com
+FileDialogTitle = Pick a program or file
+FileDialogFilter = Programs and shortcuts|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|All files|*.*
+MenuKeyBody = The key sends the Menu key (VK_APPS), so the context menu of whatever is focused opens — exactly like a right-click.
+ElevatedHint = Windows blocks synthetic input aimed at windows running as administrator, so this does nothing while an elevated app is in the foreground.
+PaletteBody = The key opens a small list of your palette entries. Type to filter, press 1-9 to run an entry, Esc to dismiss.
+PaletteEmptyWarning = The palette has no entries yet. Add some on the Palette tab.
+WhenAlreadyRunning = When it is already running:
+BehaviourAlways = Start another copy
+BehaviourFocus = Bring the existing window to the front
+BehaviourToggle = Bring it to the front, or minimise it if it is already there
+BehaviourHint = Focusing an existing window needs the app to be running as you, not as administrator.
+
+# ---- hotkey capture ---------------------------------------------------------
+HotkeyCaption = Shortcut to send
+HotkeyPlaceholder = Click here, then press the shortcut
+HotkeyRecording = Press the shortcut now…
+HotkeyClear = Clear
+HotkeyHint = Sent to whatever has focus. Modifiers on their own are not a shortcut — add a normal key.
+HotkeyPresets = Presets:
+HotkeyInvalid = That is not a shortcut AntiPilot can send.
+PresetTaskManager = Task Manager
+PresetClipboard = Clipboard history
+PresetSnip = Screen snip
+PresetExplorer = File Explorer
+PresetEmoji = Emoji panel
+PresetPrintScreen = Print screen
+PresetLock = Lock the PC
+PresetShowDesktop = Show the desktop
+PresetPlayPause = Play / pause
+PresetMute = Mute
+
+# ---- app picker -------------------------------------------------------------
+PickerTitle = Choose an app
+PickerSearch = Search apps
+PickerLoading = Reading the app list…
+PickerCount = {0} apps
+PickerNoMatch = Nothing matches that.
+PickerColumnApp = App
+PickerSelect = Select
+PickerFailed = Could not read the list of installed apps.
+
+# ---- per-app rules ----------------------------------------------------------
+PerAppIntro = Give the key a different job while a particular app is in front. Rules are tried top to bottom; anything that does not match falls through to the single-press action.
+PerAppColumnApp = When this is in front
+PerAppColumnAction = The key does this
+PerAppAdd = Add rule…
+PerAppEditAction = Change action…
+PerAppProcess = Process name
+PerAppProcessHint = The executable name, with or without .exe — for example chrome or devenv.
+PerAppPickRunning = Pick a running app…
+PerAppNoRules = No rules yet. The key does the same thing everywhere.
+PerAppDuplicate = There is already a rule for that app.
+
+# ---- palette ----------------------------------------------------------------
+PaletteIntro = Entries offered when an action is set to "Show the quick-launch palette". The first nine can be run by pressing 1-9.
+PaletteColumnLabel = Name
+PaletteColumnAction = Runs
+PaletteAdd = Add entry…
+PaletteMoveUp = Move up
+PaletteMoveDown = Move down
+PaletteNoEntries = No entries yet.
+PaletteLabelCaption = Name (optional)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = Type to filter…
+PaletteNoMatch = Nothing matches.
+
+# ---- double press -----------------------------------------------------------
+DoubleTapEnable = Give two quick presses their own action
+DoubleTapEnableDescription = A second press inside the window below runs the action set at the bottom of this page.
+DoubleTapCostWarning = A single press has to wait {0} ms to find out whether a second one is coming, so every press feels that much slower. Leave this off unless you want the second action.
+DoubleTapWindow = Wait for the second press for
+DoubleTapMilliseconds = {0} ms
+DoubleTapDisabledHint = Two quick presses just run the single-press action twice.
+
+# ---- import / export --------------------------------------------------------
+ExportTitle = Export AntiPilot settings
+ImportTitle = Import AntiPilot settings
+ConfigFilter = AntiPilot settings|*.json|All files|*.*
+ExportDone = Settings exported.
+ImportFailed = That file is not a readable AntiPilot settings file.
+ImportConfirm = Replace your current settings with the ones in this file?
+ImportDone = Settings imported.
+ExportButton = Export…
+ImportButton = Import…
+
+# ---- tray -------------------------------------------------------------------
+TraySettings = Settings…
+TrayRunAction = Run the key action
+TrayRunNamed = Run: {0}
+TrayNothingConfigured = Nothing configured
+TrayCustomiseKey = Customise the Copilot key in Windows…
+TrayStartWithSignIn = Start when I sign in
+TrayStartBlocked = Start when I sign in (off in Task Manager)
+TrayAbout = About AntiPilot…
+TrayExit = Exit
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = not set up yet
+TrayIntroTitle = AntiPilot is in the notification area
+TrayIntroBody = Windows hides new icons: click the ^ next to the clock and drag AntiPilot onto the taskbar to keep it visible.
+TrayMenuKeyOnly = The Menu key action only makes sense when you press the key yourself.
+TrayStartupBlockedBody = Windows remembers that this was switched off in Task Manager, and only you can switch it back on: Task Manager → Startup apps → "AntiPilot tray icon".
+TrayStartupFailed = Windows would not enable the startup task.
+TrayCouldNotStart = Could not start the tray icon.
+
+# ---- errors -----------------------------------------------------------------
+ActionFailedTitle = AntiPilot could not run the action
+ActionFailedBody = {0}
+TargetMissingApp = That app is no longer installed.
+TargetMissingFile = That file or folder is no longer there.
+ValidationTitle = Check this before saving
+ValidationContinue = Save anyway
+
+# ---- about ------------------------------------------------------------------
+AboutTitle = About AntiPilot
+AboutVersion = Version {0}
+AboutVersionUnknown = Version unknown
+AboutUnpackaged = Running unpackaged
+AboutTagline = Makes the Copilot key launch an app of your choice, send a shortcut, or act as the Menu key.
