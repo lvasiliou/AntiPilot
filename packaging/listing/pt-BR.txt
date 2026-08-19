@@ -1,0 +1,171 @@
+# Brazilian Portuguese listing copy. 3.2% of installs.
+
+[ShortDescription]
+Faça a tecla Copilot fazer algo que você realmente queira. Aponte-a para qualquer aplicativo instalado, um programa, arquivo, pasta ou link, um atalho de teclado à sua escolha, ou devolva a ela o papel da tecla Menu que os teclados perderam. Dois toques rápidos podem fazer algo diferente de um só, e a tecla pode mudar de função conforme o aplicativo que estiver na frente. Nada fica rodando em segundo plano: um toque abre o AntiPilot, ele faz aquela única coisa e encerra.
+
+[Description]
+Sua tecla Copilot. Seu aplicativo.
+
+O Windows 11 permite personalizar a tecla Copilot, mas apenas para um aplicativo empacotado em MSIX, assinado e registrado como provedor de tecla de hardware do Copilot. Quase nenhum se dá ao trabalho, e é por isso que a lista em Configurações > Bluetooth e dispositivos > Teclado costuma estar vazia, tirando o próprio Copilot.
+
+O AntiPilot se dá. Escolha-o uma vez nas Configurações e depois decida o que a tecla faz.
+
+ABRIR UM APLICATIVO INSTALADO
+Qualquer coisa da lista de aplicativos do menu Iniciar, incluindo os da Microsoft Store. Escolha em uma lista com busca e ícones reais, sem caçar caminhos de instalação. Se o aplicativo já estiver aberto, o AntiPilot pode trazer aquela janela para a frente em vez de abrir uma segunda cópia, ou minimizá-la se você já estiver olhando para ela: assim uma tecla vira o jeito de entrar e sair daquilo que você mais usa.
+
+ABRIR UM PROGRAMA, ARQUIVO, PASTA OU LINK
+Qualquer caminho ou URL, com argumentos opcionais e uma pasta inicial. Variáveis de ambiente como %USERPROFILE% são expandidas.
+
+ENVIAR UM ATALHO DE TECLADO
+Qualquer combinação, para o que você estiver usando: Ctrl+Shift+Esc para o Gerenciador de Tarefas, Win+V para o histórico da área de transferência, Print Screen, as teclas de mídia, ou F13 a F24 para softwares de macro que esperam teclas que nenhum teclado tem. Pressione o atalho para capturá-lo, ou use uma das predefinições.
+
+FUNCIONAR COMO A TECLA MENU
+A tecla de menu de contexto que sumiu dos teclados modernos. O AntiPilot envia a tecla de verdade, então o menu de contexto abre para o que estiver em foco, exatamente como um clique com o botão direito.
+
+ABRIR UMA PALETA DE ACESSO RÁPIDO
+Uma lista curta, pensada para o teclado, com as coisas que você mais usa. Digite para filtrar, pressione de 1 a 9 para executar uma entrada na hora, Esc para fechar. A ação é executada depois que a paleta fecha, então um atalho chega na janela que você estava realmente usando.
+
+UMA TECLA, MAIS DE UMA FUNÇÃO
+
+Dois toques rápidos podem executar uma ação diferente de um único toque: uma segunda função na mesma tecla, ao custo de uma breve espera enquanto o AntiPilot descobre qual você quis dizer. Vem desativado e a espera é ajustável, porque esse atraso é real e a escolha de aceitá-lo é sua.
+
+Regras também podem mudar o que a tecla faz conforme o aplicativo que estiver na frente: a tecla Menu dentro do seu editor, um atalho dentro do navegador, seu aplicativo de sempre no resto.
+
+FORA DO SEU CAMINHO
+
+Um toque abre o AntiPilot, ele faz aquela única coisa e encerra. Nada fica na memória esperando uma tecla, e nenhuma janela aparece a menos que você ainda não tenha configurado nada. Se preferir tê-lo por perto, uma chave coloca um ícone na área de notificação e o traz de volta ao entrar. Vem desativada.
+
+A janela de configurações foi feita para combinar com o Windows 11: navegação à esquerda, cartões de ajustes e a sua própria cor de destaque. Ela acompanha os temas claro e escuro conforme você troca, mostra num relance se a tecla está apontada para o AntiPilot e leva direto à página do Windows onde isso é definido. Sua configuração pode ser exportada para um arquivo e importada em outro PC.
+
+NO SEU IDIOMA
+
+Inglês, russo, espanhol, chinês simplificado e tradicional, português do Brasil, turco, japonês, coreano, árabe, indonésio e grego. O AntiPilot segue o idioma do Windows por padrão e, em árabe, espelha a janela inteira em vez de apenas traduzir o texto.
+
+FUNCIONA COM WIN+C TAMBÉM
+
+Sem tecla Copilot no teclado? O Windows envia o mesmo sinal com Win+C, e o AntiPilot também responde a isso.
+
+CÓDIGO ABERTO
+
+Licenciado sob MIT. O texto completo da licença vem no aplicativo, em Sobre.
+
+REQUISITOS
+
+Windows 11, build 22621 ou mais recente. Selecione o AntiPilot uma vez em Configurações > Bluetooth e dispositivos > Teclado > Atalhos e teclas de atalho > Personalizar a tecla Copilot no teclado > Personalizado.
+
+BOM SABER
+
+O Windows bloqueia teclas simuladas destinadas a janelas executadas como administrador, então as ações de tecla Menu e de atalho de teclado não fazem nada enquanto uma delas estiver na frente. É uma regra de segurança do Windows, não algo de que um aplicativo possa abrir mão.
+
+O AntiPilot muda apenas o que a tecla Copilot abre. Ele não remapeia outras teclas e não remove o Copilot do seu PC.
+
+[ReleaseNotes]
+Uma tecla, mais de uma função.
+
+- Envie qualquer atalho de teclado: Ctrl+Shift+Esc, Win+V, Print Screen, as teclas de mídia ou F13 a F24 para softwares de macro. Pressione o atalho para capturá-lo, ou use uma predefinição.
+- Dê aos dois toques rápidos uma ação própria, separada do toque único.
+- Mude o que a tecla faz conforme o aplicativo que estiver na frente.
+- Abra uma paleta de acesso rápido: digite para filtrar, pressione de 1 a 9 para executar, Esc para fechar.
+- Traga para a frente um aplicativo que já esteja aberto em vez de abrir outra cópia, ou minimize-o se você já estiver olhando para ele.
+
+Uma nova janela de configurações, feita para combinar com o Windows 11: navegação à esquerda, cartões de ajustes e a sua própria cor de destaque. Ela acompanha os temas claro e escuro conforme você troca.
+
+Agora em 12 idiomas: inglês, russo, espanhol, chinês simplificado e tradicional, português do Brasil, turco, japonês, coreano, árabe, indonésio e grego, seguindo o idioma do Windows por padrão. Em árabe, o layout é espelhado.
+
+Detalhes menores: exporte e importe sua configuração para levá-la de um PC a outro; uma ação que falha agora avisa com uma notificação em vez de uma caixa de diálogo que rouba seu foco; e cada toque começa um pouco mais rápido.
+
+[CopyrightTrademarkInformation]
+Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 e Microsoft Copilot são marcas da Microsoft Corporation. O AntiPilot não é afiliado à Microsoft nem endossado por ela.
+
+[Feature1]
+Aponte a tecla Copilot para qualquer aplicativo instalado, incluindo os da Microsoft Store
+
+[Feature2]
+Ou para um programa, arquivo, pasta ou link, com argumentos e pasta inicial
+
+[Feature3]
+Ou envie qualquer atalho: Ctrl+Shift+Esc, Win+V, Print Screen, teclas de mídia, F13 a F24
+
+[Feature4]
+Ou devolva a ela o papel da tecla Menu, para o menu de contexto do que estiver em foco
+
+[Feature5]
+Ou abra uma paleta de acesso rápido: digite para filtrar, de 1 a 9 para executar, Esc para fechar
+
+[Feature6]
+Dê aos dois toques rápidos uma ação própria, separada do toque único
+
+[Feature7]
+Mude o que a tecla faz conforme o aplicativo que estiver na frente
+
+[Feature8]
+Traga para a frente um aplicativo já aberto em vez de iniciar uma segunda cópia
+
+[Feature9]
+Responde também a Win+C, para teclados sem tecla Copilot
+
+[Feature10]
+Nada roda em segundo plano: o toque abre, ele age e encerra
+
+[Feature11]
+Ícone opcional na área de notificação, desativado, com início ao entrar
+
+[Feature12]
+Uma janela de configurações no estilo do Windows 11, na sua cor de destaque
+
+[Feature13]
+Acompanha o tema claro e escuro do Windows, e se ajusta quando você troca
+
+[Feature14]
+Disponível em 12 idiomas, seguindo o idioma do Windows por padrão
+
+[Feature15]
+Seletor de aplicativos com busca e ícones reais do Windows
+
+[Feature16]
+Exporte e importe sua configuração para levá-la de um PC a outro
+
+[Feature17]
+Mostra se a tecla Copilot aponta para o AntiPilot e leva a esse ajuste
+
+[Feature18]
+Código aberto, licenciado sob MIT
+
+[DesktopScreenshotCaption1]
+Escolha o que a tecla Copilot faz: um aplicativo, um arquivo ou link, um atalho ou a tecla Menu.
+
+[DesktopScreenshotCaption2]
+Escolha entre todos os aplicativos do menu Iniciar, incluindo os da Microsoft Store.
+
+[DesktopScreenshotCaption3]
+Dê aos dois toques rápidos uma ação própria, com uma espera que você controla.
+
+[DesktopScreenshotCaption4]
+Mude o que a tecla faz conforme o aplicativo que estiver na frente.
+
+[DesktopScreenshotCaption5]
+Uma paleta de acesso rápido: digite para filtrar, pressione de 1 a 9 para executar.
+
+[DesktopScreenshotCaption6]
+Ícone opcional na área de notificação e uma chave para trazê-lo de volta ao entrar.
+
+[SearchTerm1]
+tecla Copilot
+
+[SearchTerm2]
+remapear tecla Copilot
+
+[SearchTerm3]
+tecla Menu
+
+[SearchTerm4]
+menu de contexto
+
+[SearchTerm5]
+atalho de teclado
+
+[SearchTerm6]
+desativar Copilot
+
+[SearchTerm7]
+Copilot key

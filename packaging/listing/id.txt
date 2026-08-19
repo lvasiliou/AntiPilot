@@ -1,0 +1,171 @@
+# Indonesian listing copy. 1.3% of installs.
+
+[ShortDescription]
+Buat tombol Copilot melakukan sesuatu yang benar-benar Anda inginkan. Arahkan ke aplikasi terpasang mana pun, ke program, berkas, folder atau tautan, ke pintasan keyboard pilihan Anda, atau kembalikan perannya sebagai tombol Menu yang hilang dari keyboard. Dua tekanan cepat bisa melakukan hal berbeda dari satu tekanan, dan tombolnya bisa berganti tugas tergantung aplikasi yang sedang di depan. Tidak ada yang berjalan di latar belakang: satu tekanan menjalankan AntiPilot, ia mengerjakan satu hal itu, lalu berhenti.
+
+[Description]
+Tombol Copilot Anda. Aplikasi Anda.
+
+Windows 11 memang mengizinkan Anda menyesuaikan tombol Copilot, tetapi hanya ke aplikasi yang dikemas MSIX, ditandatangani, dan terdaftar sebagai penyedia tombol perangkat keras Copilot. Hampir tidak ada aplikasi yang mau repot, itulah sebabnya daftar di Pengaturan > Bluetooth & perangkat > Keyboard biasanya kosong selain Copilot sendiri.
+
+AntiPilot mau repot. Pilih sekali di Pengaturan, lalu tentukan apa yang dilakukan tombolnya.
+
+MENJALANKAN APLIKASI TERPASANG
+Apa pun yang ada di daftar aplikasi menu Start, termasuk aplikasi Microsoft Store. Pilih dari daftar yang bisa dicari dengan ikon asli, tanpa perlu berburu jalur pemasangan. Jika aplikasinya sudah terbuka, AntiPilot bisa membawa jendela itu ke depan alih-alih menjalankan salinan kedua, atau memperkecilnya jika Anda memang sedang melihatnya. Dengan begitu satu tombol menjadi cara keluar-masuk ke hal yang paling sering Anda pakai.
+
+MEMBUKA PROGRAM, BERKAS, FOLDER ATAU TAUTAN
+Jalur atau URL apa pun, dengan argumen opsional dan folder awal. Variabel lingkungan seperti %USERPROFILE% akan diuraikan.
+
+MENGIRIM PINTASAN KEYBOARD
+Kombinasi apa pun, ke apa pun yang sedang Anda pakai: Ctrl+Shift+Esc untuk Task Manager, Win+V untuk riwayat papan klip, Print Screen, tombol media, atau F13 sampai F24 untuk perangkat lunak makro yang menunggu tombol yang tidak ada di keyboard mana pun. Tekan pintasannya untuk merekamnya, atau ambil salah satu prasetel.
+
+BERPERAN SEBAGAI TOMBOL MENU
+Tombol menu konteks yang lenyap dari keyboard modern. AntiPilot mengirim tombol yang sebenarnya, jadi menu konteks terbuka untuk apa pun yang sedang fokus, persis seperti klik kanan.
+
+MEMBUKA PALET PELUNCUR CEPAT
+Daftar singkat berisi hal-hal yang sering Anda cari, dirancang untuk keyboard. Ketik untuk menyaring, tekan 1 sampai 9 untuk langsung menjalankan entri, Esc untuk menutup. Tindakannya berjalan setelah palet tertutup, jadi sebuah pintasan mendarat di jendela yang benar-benar Anda pakai.
+
+SATU TOMBOL, LEBIH DARI SATU TUGAS
+
+Dua tekanan cepat bisa menjalankan tindakan yang berbeda dari satu tekanan: tugas kedua pada tombol yang sama, dengan imbalan jeda singkat sementara AntiPilot menentukan mana yang Anda maksud. Fitur ini mati secara bawaan dan jedanya bisa diatur, karena jeda itu nyata dan Andalah yang harus memilih untuk menerimanya.
+
+Aturan juga bisa mengubah tugas tombol tergantung aplikasi yang sedang di depan: tombol Menu di dalam editor Anda, sebuah pintasan di dalam peramban, dan aplikasi andalan Anda di tempat lain.
+
+TIDAK MENGGANGGU
+
+Satu tekanan menjalankan AntiPilot, ia mengerjakan satu hal itu, lalu berhenti. Tidak ada yang menetap di memori menunggu tombol ditekan, dan tidak ada jendela yang muncul kecuali Anda belum mengatur apa pun. Kalau Anda ingin menjangkaunya dengan mudah, satu sakelar menaruh ikon di area notifikasi dan menghidupkannya lagi saat Anda masuk. Bawaannya mati.
+
+Jendela pengaturan dibuat agar serasi dengan Windows 11: navigasi di kiri, kartu pengaturan, dan warna aksen Anda sendiri di seluruh tampilan. Ia mengikuti tema terang dan gelap saat Anda menggantinya, menunjukkan sekilas apakah tombolnya sedang mengarah ke AntiPilot, dan membawa Anda langsung ke halaman Windows tempat itu diatur. Konfigurasi Anda bisa diekspor ke berkas dan diimpor di PC lain.
+
+DALAM BAHASA ANDA
+
+Inggris, Rusia, Spanyol, Tionghoa Sederhana dan Tradisional, Portugis Brasil, Turki, Jepang, Korea, Arab, Indonesia, dan Yunani. AntiPilot mengikuti bahasa Windows Anda secara bawaan, dan untuk bahasa Arab ia mencerminkan seluruh jendela, bukan sekadar menerjemahkan teksnya.
+
+BERFUNGSI DENGAN WIN+C JUGA
+
+Keyboard Anda tidak punya tombol Copilot? Windows mengirim sinyal yang sama untuk Win+C, jadi AntiPilot menjawabnya juga.
+
+SUMBER TERBUKA
+
+Berlisensi MIT. Teks lisensi lengkapnya disertakan di dalam aplikasi, di bagian Tentang.
+
+PERSYARATAN
+
+Windows 11, build 22621 atau lebih baru. Pilih AntiPilot sekali di Pengaturan > Bluetooth & perangkat > Keyboard > Pintasan dan tombol pintas > Sesuaikan tombol Copilot pada keyboard > Kustom.
+
+PERLU DIKETAHUI
+
+Windows memblokir ketukan tombol sintetis yang ditujukan ke jendela yang berjalan sebagai administrator, jadi tindakan tombol Menu dan pintasan keyboard tidak melakukan apa pun selama jendela seperti itu berada di depan. Itu aturan keamanan Windows, bukan sesuatu yang bisa dilepas oleh sebuah aplikasi.
+
+AntiPilot hanya mengubah apa yang dijalankan tombol Copilot. Ia tidak memetakan ulang tombol lain, dan tidak menghapus Copilot dari PC Anda.
+
+[ReleaseNotes]
+Satu tombol, lebih dari satu tugas.
+
+- Kirim pintasan keyboard apa pun: Ctrl+Shift+Esc, Win+V, Print Screen, tombol media, atau F13 sampai F24 untuk perangkat lunak makro. Tekan pintasannya untuk merekamnya, atau ambil prasetel.
+- Beri dua tekanan cepat tindakan tersendiri, terpisah dari satu tekanan.
+- Ubah tugas tombol tergantung aplikasi yang sedang di depan.
+- Buka palet peluncur cepat: ketik untuk menyaring, tekan 1 sampai 9 untuk menjalankan, Esc untuk menutup.
+- Bawa aplikasi yang sudah terbuka ke depan alih-alih menjalankan salinan lain, atau perkecil jika Anda memang sedang melihatnya.
+
+Jendela pengaturan baru, dibuat agar serasi dengan Windows 11: navigasi di kiri, kartu pengaturan, dan warna aksen Anda sendiri di seluruh tampilan. Ia mengikuti tema terang dan gelap saat Anda menggantinya.
+
+Kini dalam 12 bahasa: Inggris, Rusia, Spanyol, Tionghoa Sederhana dan Tradisional, Portugis Brasil, Turki, Jepang, Korea, Arab, Indonesia, dan Yunani, mengikuti bahasa Windows Anda secara bawaan. Untuk bahasa Arab, tata letaknya dicerminkan.
+
+Hal-hal kecil: ekspor dan impor konfigurasi untuk memindahkannya antar-PC; tindakan yang gagal kini memberi tahu lewat notifikasi, bukan kotak dialog yang merebut fokus Anda; dan setiap tekanan tombol mulai sedikit lebih cepat.
+
+[CopyrightTrademarkInformation]
+Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11, dan Microsoft Copilot adalah merek dagang Microsoft Corporation. AntiPilot tidak berafiliasi dengan maupun didukung oleh Microsoft.
+
+[Feature1]
+Arahkan tombol Copilot ke aplikasi terpasang mana pun, termasuk aplikasi Microsoft Store
+
+[Feature2]
+Atau ke program, berkas, folder atau tautan, dengan argumen dan folder awal
+
+[Feature3]
+Atau kirim pintasan apa pun: Ctrl+Shift+Esc, Win+V, Print Screen, tombol media, F13-F24
+
+[Feature4]
+Atau kembalikan sebagai tombol Menu, untuk menu konteks dari apa pun yang sedang fokus
+
+[Feature5]
+Atau buka palet peluncur cepat: ketik untuk menyaring, tekan 1-9 untuk menjalankan, Esc menutup
+
+[Feature6]
+Beri dua tekanan cepat tindakan tersendiri, terpisah dari satu tekanan
+
+[Feature7]
+Ubah tugas tombol tergantung aplikasi yang sedang di depan
+
+[Feature8]
+Bawa aplikasi yang sudah terbuka ke depan alih-alih menjalankan salinan kedua
+
+[Feature9]
+Menjawab Win+C juga, untuk keyboard tanpa tombol Copilot
+
+[Feature10]
+Tidak ada yang berjalan di latar belakang: tekanan menjalankannya, ia bertindak, lalu berhenti
+
+[Feature11]
+Ikon area notifikasi opsional, mati secara bawaan, dengan sakelar jalan saat masuk
+
+[Feature12]
+Jendela pengaturan yang serasi dengan Windows 11, dalam warna aksen Anda sendiri
+
+[Feature13]
+Mengikuti tema terang dan gelap Windows, dan menyesuaikan saat Anda menggantinya
+
+[Feature14]
+Tersedia dalam 12 bahasa, mengikuti bahasa Windows Anda secara bawaan
+
+[Feature15]
+Pemilih aplikasi yang bisa dicari dengan ikon Windows asli
+
+[Feature16]
+Ekspor dan impor konfigurasi Anda untuk memindahkannya antar-PC
+
+[Feature17]
+Menunjukkan apakah tombol Copilot mengarah ke AntiPilot, dan menautkan ke pengaturan itu
+
+[Feature18]
+Sumber terbuka, berlisensi MIT
+
+[DesktopScreenshotCaption1]
+Pilih apa yang dilakukan tombol Copilot: aplikasi, berkas atau tautan, pintasan, atau tombol Menu.
+
+[DesktopScreenshotCaption2]
+Pilih dari semua aplikasi di menu Start Anda, termasuk aplikasi Microsoft Store.
+
+[DesktopScreenshotCaption3]
+Beri dua tekanan cepat tindakan tersendiri, dengan jeda yang Anda tentukan.
+
+[DesktopScreenshotCaption4]
+Ubah tugas tombol tergantung aplikasi yang sedang di depan.
+
+[DesktopScreenshotCaption5]
+Palet peluncur cepat: ketik untuk menyaring, tekan 1 sampai 9 untuk menjalankan.
+
+[DesktopScreenshotCaption6]
+Ikon area notifikasi opsional, dan sakelar untuk menghidupkannya saat masuk.
+
+[SearchTerm1]
+tombol Copilot
+
+[SearchTerm2]
+ubah tombol Copilot
+
+[SearchTerm3]
+tombol Menu
+
+[SearchTerm4]
+menu konteks
+
+[SearchTerm5]
+pintasan keyboard
+
+[SearchTerm6]
+matikan Copilot
+
+[SearchTerm7]
+Copilot key

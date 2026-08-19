@@ -1,0 +1,184 @@
+# English listing copy, the source all translations are made from.
+#
+# Format: [FieldName] on its own line, then the value until the next [FieldName].
+# Field names are Partner Center's own, exactly as they appear in a listing export.
+# Generate the importable CSV with:
+#
+#     .\tools\Update-Listing.ps1 -Export <the CSV downloaded from Partner Center>
+#
+# Partner Center renders these as plain text, so no markdown: a line of text is a line of text,
+# and blank lines separate paragraphs.
+
+[ShortDescription]
+Make the Copilot key do something you actually want. Point it at any installed app, a program, file, folder or link, a keyboard shortcut of your choice, or turn it back into the Menu key that keyboards dropped. Two quick presses can do something different from one, and the key can change its job depending on which app is in front. Nothing runs in the background: a press starts AntiPilot, does the one thing, and exits.
+
+[Description]
+Your Copilot key. Your app.
+
+Windows 11 will let you customise the Copilot key, but only to an app that is MSIX packaged, signed, and registered as a Copilot hardware key provider. Almost no app bothers, which is why the picker under Settings > Bluetooth & devices > Keyboard is usually empty apart from Copilot itself.
+
+AntiPilot does bother. Choose it once in Settings, then decide what the key does.
+
+LAUNCH AN INSTALLED APP
+Anything in the Start menu's app list, Microsoft Store apps included. Pick it from a searchable list with real icons, with no hunting for install paths. If the app is already open, AntiPilot can bring that window to the front instead of starting a second copy, or minimise it if you are already looking at it, so one key becomes a way to flick in and out of the thing you use most.
+
+LAUNCH A PROGRAM, FILE, FOLDER OR LINK
+Any path or URL, with optional arguments and a start-in folder. Environment variables like %USERPROFILE% are expanded.
+
+SEND A KEYBOARD SHORTCUT
+Any combination, into whatever you are using: Ctrl+Shift+Esc for Task Manager, Win+V for clipboard history, Print Screen, the media keys, or F13 to F24 for macro software that listens for keys no keyboard has. Press the shortcut to capture it, or take one of the presets.
+
+ACT AS THE MENU KEY
+The context-menu key that vanished from modern keyboards. AntiPilot sends the real thing, so the context menu opens for whatever has focus, exactly like a right-click.
+
+OPEN A QUICK-LAUNCH PALETTE
+A small, keyboard-first list of the things you reach for. Type to filter, press 1 to 9 to run an entry outright, Esc to dismiss. The action runs after the palette closes, so a shortcut lands on the window you were actually using.
+
+ONE KEY, MORE THAN ONE JOB
+
+Two quick presses can run a different action from a single press: a second thing on the same key, for the cost of a short wait while AntiPilot works out which you meant. It is off by default and the wait is adjustable, because that delay is real and you should choose to accept it.
+
+Rules can also change what the key does depending on which app is in front: the Menu key inside your editor, a shortcut inside your browser, your usual app everywhere else.
+
+OUT OF YOUR WAY
+
+A key press starts AntiPilot, does the one thing, and exits. Nothing sits in memory waiting for a keystroke, and no window appears unless you have not set anything up yet. If you would rather have it in reach, one switch puts an icon in the notification area and brings it back at sign-in. It is off by default.
+
+The settings window is built to match Windows 11, with navigation down the left, settings cards, and your own accent colour throughout. It follows light and dark as you switch, tells you at a glance whether the key is currently pointed at AntiPilot, and takes you straight to the Windows page where that is set. Your setup can be exported to a file and imported on another PC.
+
+IN YOUR LANGUAGE
+
+English, Russian, Spanish, Simplified and Traditional Chinese, Brazilian Portuguese, Turkish, Japanese, Korean, Arabic, Indonesian and Greek. AntiPilot follows your Windows language by default, and Arabic mirrors the whole window rather than just translating it.
+
+WORKS WITH WIN+C TOO
+
+No Copilot key on your keyboard? Windows sends the same signal for Win+C, so AntiPilot answers that as well.
+
+OPEN SOURCE
+
+MIT licensed. The full licence text ships in the app under About.
+
+REQUIREMENTS
+
+Windows 11, build 22621 or newer. Select AntiPilot once under Settings > Bluetooth & devices > Keyboard > Shortcuts and hotkeys > Customize Copilot key on keyboard > Custom.
+
+GOOD TO KNOW
+
+Windows blocks simulated keystrokes aimed at windows running as administrator, so the Menu key and keyboard shortcut actions do nothing while an elevated window is in front. That is a Windows security rule, not something an app can opt out of.
+
+AntiPilot changes only what the Copilot key launches. It does not remap other keys, and it does not remove Copilot from your PC.
+
+[ReleaseNotes]
+One key, more than one job.
+
+- Send any keyboard shortcut: Ctrl+Shift+Esc, Win+V, Print Screen, the media keys, or F13 to F24 for macro software. Press the shortcut to capture it, or take a preset.
+- Give two quick presses their own action, separate from a single press.
+- Change what the key does depending on which app is in front.
+- Open a quick-launch palette: type to filter, press 1 to 9 to run an entry, Esc to dismiss.
+- Bring an app you already have open to the front instead of starting another copy, or minimise it if you are already looking at it.
+
+A new settings window, built to match Windows 11: navigation down the left, settings cards, and your own accent colour throughout. It follows light and dark as you switch them.
+
+Now in 12 languages: English, Russian, Spanish, Simplified and Traditional Chinese, Brazilian Portuguese, Turkish, Japanese, Korean, Arabic, Indonesian and Greek, following your Windows language by default. Arabic mirrors the layout.
+
+Smaller things: export and import your setup to move it between PCs; a failed action now tells you with a notification instead of a dialog that steals your focus; and every key press starts a little faster.
+
+[CopyrightTrademarkInformation]
+Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 and Microsoft Copilot are trademarks of Microsoft Corporation. AntiPilot is not affiliated with or endorsed by Microsoft.
+
+[Feature1]
+Point the Copilot key at any installed app, including Microsoft Store apps
+
+[Feature2]
+Or at any program, file, folder or link, with arguments and a start-in folder
+
+[Feature3]
+Or send any keyboard shortcut: Ctrl+Shift+Esc, Win+V, Print Screen, media keys, F13 to F24
+
+[Feature4]
+Or turn the key back into the Menu key, for the context menu of whatever has focus
+
+[Feature5]
+Or open a quick-launch palette: type to filter, press 1 to 9 to run an entry, Esc to dismiss
+
+[Feature6]
+Give two quick presses their own action, separate from a single press
+
+[Feature7]
+Change what the key does depending on which app is in front
+
+[Feature8]
+Bring an app you already have open to the front instead of starting a second copy
+
+[Feature9]
+Answers Win+C as well, for keyboards without a Copilot key
+
+[Feature10]
+Nothing runs in the background: the key press starts it, it acts, it exits
+
+[Feature11]
+Optional notification-area icon, off by default, with a sign-in switch
+
+[Feature12]
+A settings window built to match Windows 11, in your own accent colour
+
+[Feature13]
+Follows the Windows light and dark theme, and keeps up when you switch
+
+[Feature14]
+Available in 12 languages, following your Windows language by default
+
+[Feature15]
+Searchable app picker with real Windows icons
+
+[Feature16]
+Export and import your setup, to move it between PCs
+
+[Feature17]
+Shows whether the Copilot key currently points at AntiPilot, and links to that setting
+
+[Feature18]
+Open source, MIT licensed
+
+[DesktopScreenshotCaption1]
+Choose what the Copilot key does: an app, a file or link, a keyboard shortcut, or the Menu key.
+
+[DesktopScreenshotCaption2]
+Pick from every app in your Start menu, Microsoft Store apps included.
+
+[DesktopScreenshotCaption3]
+Give two quick presses their own action, with a wait you control.
+
+[DesktopScreenshotCaption4]
+Change what the key does depending on which app is in front.
+
+[DesktopScreenshotCaption5]
+A quick-launch palette: type to filter, press 1 to 9 to run an entry.
+
+[DesktopScreenshotCaption6]
+Optional notification-area icon, and a switch to bring it back at sign-in.
+
+# Search terms are never shown to customers; they only feed Store search. They are the one field
+# that must NOT be translated literally: each language needs the words people actually type there.
+# Limits: 7 terms, 40 characters each, 21 words in total across all seven.
+
+[SearchTerm1]
+copilot key
+
+[SearchTerm2]
+remap copilot key
+
+[SearchTerm3]
+menu key
+
+[SearchTerm4]
+context menu key
+
+[SearchTerm5]
+keyboard shortcut
+
+[SearchTerm6]
+disable copilot
+
+[SearchTerm7]
+copilot key launcher
