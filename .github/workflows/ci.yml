@@ -49,8 +49,18 @@ jobs:
 
   package:
     # The MSIX is what actually gets installed, and it can break in ways a dotnet build never
-    # sees — a manifest typo, a logo missing from the layout — so it is built on every run.
+    # sees — a manifest typo, a logo missing from the layout — so it is still built before
+    # anything could be uploaded.
+    #
+    # It is not built on pull requests. This job is two self-contained ReadyToRun publishes, x64
+    # and arm64, and is the overwhelming majority of the run: on a public repository that is only
+    # slow feedback, but on a private one it is most of the Actions minutes. Everything that can
+    # fail on a PR — build, tests, string tables — is already covered by the job above.
     needs: build
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.ref == 'refs/heads/main' ||
+      startsWith(github.ref, 'refs/tags/v')
     runs-on: windows-latest
 
     steps:
