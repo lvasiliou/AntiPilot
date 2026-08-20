@@ -239,9 +239,14 @@ public sealed class SettingsForm : Form
         _saveButton.Width = Math.Max(_saveButton.PreferredWidth, 110);
         _saveButton.Click += (_, _) =>
         {
-            // Always live: a greyed-out Save just reads as a broken button. With nothing to
-            // save it simply closes.
-            if (!_dirty || Save())
+            // Always writes, even with nothing marked dirty. Skipping the write when nothing had
+            // changed looked like a harmless optimisation and was the other half of issue #1: on a
+            // fresh install the action is already "Nothing", so a user who wants exactly that
+            // changes nothing, marks nothing dirty, and their choice was never written. No config
+            // file meant "never set up", so the key went on opening this window forever.
+            //
+            // A button labelled Save should save. The file is a few hundred bytes.
+            if (Save())
             {
                 Close();
             }
