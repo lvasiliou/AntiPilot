@@ -1,0 +1,181 @@
+# Russian. 7.8% of installs — the largest non-English market.
+
+AppName = AntiPilot
+Nothing = Ничего
+NoApp = (нет приложения)
+NoAppChosen = (приложение не выбрано)
+Ok = ОК
+Cancel = Отмена
+Save = Сохранить
+Remove = Удалить
+Add = Добавить
+Close = Закрыть
+Edit = Изменить
+
+MenuKeyShort = Клавиша меню
+PaletteShort = Палитра быстрого запуска
+HotkeyShort = Сочетание клавиш
+
+SettingsTitle = AntiPilot
+SettingsTagline = Решите, что на самом деле делает клавиша Copilot (и Win+C).
+OpenWindowsSettings = Открыть параметры Windows
+TabSinglePress = Одно нажатие
+TabDoublePress = Двойное нажатие
+TabPerApp = По приложениям
+TabPalette = Палитра
+DoThis = Делать это:
+TestIt = Проверить
+OpenLog = Открыть журнал
+About = О программе
+ImportExport = Импорт / экспорт
+NothingHintTap = Клавиша не делает ничего. Выберите действие выше.
+NothingHintDouble = Двойное нажатие делает то же, что и одиночное.
+ShowTrayAndStart = Показывать значок в области уведомлений и запускать при входе
+TrayNeedsInstall = Значок при входе (нужна установленная версия)
+TrayBlocked = Значок при входе (отключён в диспетчере задач)
+SaveBeforeClosing = Сохранить изменения перед закрытием?
+CouldNotSave = Не удалось сохранить параметры.
+NothingConfiguredYet = Пока ничего не настроено.
+MenuKeyTestHint = Действие «Клавиша меню» можно проверить только с клавиатуры: закройте это окно, переключитесь на другое приложение и нажмите клавишу.
+HotkeyTestHint = Сочетание клавиш можно проверить только с клавиатуры: закройте это окно, переключитесь на другое приложение и нажмите клавишу.
+Language = Язык
+LanguageSystem = Как в Windows
+LanguageRestartHint = Новый язык появится при следующем открытии окна.
+
+StatusUnpackaged = Отладочная сборка — Windows видит только установленный MSIX.
+StatusActive = Клавиша Copilot и Win+C запускают AntiPilot.
+StatusSearch = Клавиша Copilot открывает поиск — выберите AntiPilot →
+StatusOtherApp = Клавиша Copilot открывает другое приложение — выберите AntiPilot →
+StatusDefault = Клавиша Copilot по-прежнему делает своё обычное дело →
+
+ModeNothing = Ничего
+ModeShellApp = Запустить установленное приложение  (меню «Пуск» или Microsoft Store)
+ModeFile = Запустить программу, файл, папку или ссылку
+ModeMenuKey = Работать как клавиша меню  (старая клавиша контекстного меню)
+ModeHotkey = Отправить сочетание клавиш
+ModePalette = Показать палитру быстрого запуска
+ChooseApp = Выбрать приложение…
+Browse = Обзор…
+AppHint = Подойдёт всё из списка приложений меню «Пуск», включая приложения Microsoft Store.
+FileCaptionPath = Программа, файл, папка или ссылка
+FileCaptionArgs = Аргументы (необязательно)
+FileCaptionWorkDir = Рабочая папка (необязательно)
+FileHint = Переменные среды, такие как %USERPROFILE%, раскрываются.
+FilePlaceholder = C:\Windows\System32\notepad.exe   или   https://example.com
+FileDialogTitle = Выберите программу или файл
+FileDialogFilter = Программы и ярлыки|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|Все файлы|*.*
+MenuKeyBody = Клавиша отправляет код клавиши меню (VK_APPS), поэтому открывается контекстное меню того, что сейчас в фокусе, — точно как по правому щелчку.
+ElevatedHint = Windows блокирует синтетический ввод в окна, запущенные от имени администратора, поэтому в такой момент это не сработает.
+PaletteBody = Клавиша открывает небольшой список записей палитры. Начните печатать для фильтрации, нажмите 1–9 для запуска, Esc — чтобы закрыть.
+PaletteEmptyWarning = В палитре пока нет записей. Добавьте их на вкладке «Палитра».
+WhenAlreadyRunning = Если приложение уже запущено:
+BehaviourAlways = Запустить ещё одну копию
+BehaviourFocus = Вывести существующее окно на передний план
+BehaviourToggle = Вывести на передний план, а если оно уже там — свернуть
+BehaviourHint = Чтобы вывести существующее окно вперёд, приложение должно быть запущено от вашего имени, а не от имени администратора.
+
+HotkeyCaption = Какое сочетание отправлять
+HotkeyPlaceholder = Щёлкните здесь и нажмите сочетание
+HotkeyRecording = Нажмите сочетание…
+HotkeyClear = Очистить
+HotkeyHint = Отправляется тому, что сейчас в фокусе. Одни модификаторы сочетанием не являются — добавьте обычную клавишу.
+HotkeyPresets = Заготовки:
+HotkeyInvalid = Такое сочетание AntiPilot отправить не может.
+PresetTaskManager = Диспетчер задач
+PresetClipboard = Журнал буфера обмена
+PresetSnip = Ножницы
+PresetExplorer = Проводник
+PresetEmoji = Панель эмодзи
+PresetPrintScreen = Снимок экрана
+PresetLock = Заблокировать компьютер
+PresetShowDesktop = Показать рабочий стол
+PresetPlayPause = Воспроизведение / пауза
+PresetMute = Без звука
+
+PickerTitle = Выберите приложение
+PickerSearch = Поиск приложений
+PickerLoading = Читаем список приложений…
+PickerCount = приложений: {0}
+PickerNoMatch = Ничего не найдено.
+PickerColumnApp = Приложение
+PickerSelect = Выбрать
+PickerFailed = Не удалось прочитать список установленных приложений.
+
+PerAppIntro = Дайте клавише другое действие, пока впереди определённое приложение. Правила проверяются сверху вниз; если ничего не совпало, срабатывает действие одиночного нажатия.
+PerAppColumnApp = Когда впереди это
+PerAppColumnAction = Клавиша делает это
+PerAppAdd = Добавить правило…
+PerAppEditAction = Изменить действие…
+PerAppProcess = Имя процесса
+PerAppProcessHint = Имя исполняемого файла, с расширением .exe или без — например chrome или devenv.
+PerAppPickRunning = Выбрать из запущенных…
+PerAppNoRules = Правил пока нет. Клавиша везде делает одно и то же.
+PerAppDuplicate = Правило для этого приложения уже есть.
+
+PaletteIntro = Записи, которые предлагаются, когда действие задано как «Показать палитру быстрого запуска». Первые девять можно запускать клавишами 1–9.
+PaletteColumnLabel = Название
+PaletteColumnAction = Запускает
+PaletteAdd = Добавить запись…
+PaletteMoveUp = Вверх
+PaletteMoveDown = Вниз
+PaletteNoEntries = Записей пока нет.
+PaletteLabelCaption = Название (необязательно)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = Печатайте для фильтрации…
+PaletteNoMatch = Ничего не найдено.
+
+DoubleTapEnable = Задать отдельное действие для двух быстрых нажатий
+DoubleTapCostWarning = Одиночное нажатие вынуждено ждать {0} мс, чтобы понять, будет ли второе, поэтому каждое нажатие становится настолько же медленнее. Не включайте, если второе действие вам не нужно.
+DoubleTapWindow = Ждать второе нажатие
+DoubleTapMilliseconds = {0} мс
+DoubleTapDisabledHint = Два быстрых нажатия просто дважды выполнят действие одиночного нажатия.
+
+ExportTitle = Экспорт параметров AntiPilot
+ImportTitle = Импорт параметров AntiPilot
+ConfigFilter = Параметры AntiPilot|*.json|Все файлы|*.*
+ExportDone = Параметры экспортированы.
+ImportFailed = Этот файл не является читаемым файлом параметров AntiPilot.
+ImportConfirm = Заменить текущие параметры теми, что в этом файле?
+ImportDone = Параметры импортированы.
+ExportButton = Экспорт…
+ImportButton = Импорт…
+
+TraySettings = Параметры…
+TrayRunAction = Выполнить действие клавиши
+TrayRunNamed = Выполнить: {0}
+TrayNothingConfigured = Ничего не настроено
+TrayCustomiseKey = Настроить клавишу Copilot в Windows…
+TrayStartWithSignIn = Запускать при входе
+TrayStartBlocked = Запускать при входе (отключено в диспетчере задач)
+TrayAbout = О программе AntiPilot…
+TrayExit = Выход
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = ещё не настроено
+TrayIntroTitle = AntiPilot в области уведомлений
+TrayIntroBody = Windows прячет новые значки: щёлкните ^ рядом с часами и перетащите AntiPilot на панель задач, чтобы он оставался на виду.
+TrayMenuKeyOnly = Действие «Клавиша меню» имеет смысл, только когда вы нажимаете клавишу сами.
+TrayStartupBlockedBody = Windows помнит, что это было отключено в диспетчере задач, и включить обратно можете только вы: Диспетчер задач → Автозагрузка приложений → «AntiPilot tray icon».
+TrayStartupFailed = Windows не разрешила включить запуск при входе.
+TrayCouldNotStart = Не удалось запустить значок в области уведомлений.
+
+ActionFailedTitle = AntiPilot не смог выполнить действие
+ActionFailedBody = {0}
+TargetMissingApp = Это приложение больше не установлено.
+TargetMissingFile = Этого файла или папки больше нет.
+ValidationTitle = Проверьте это перед сохранением
+ValidationContinue = Всё равно сохранить
+
+AboutTitle = О программе AntiPilot
+AboutVersion = Версия {0}
+AboutVersionUnknown = Версия неизвестна
+AboutUnpackaged = Запущено без пакета
+AboutTagline = Позволяет клавише Copilot запускать нужное приложение, отправлять сочетание клавиш или работать как клавиша меню.
+
+# Added with the Fluent redesign.
+TabGeneral = Общие
+GeneralGroupBehaviour = Запуск и язык
+GeneralGroupTransfer = Файл настроек
+GeneralGroupAbout = О программе
+OpenLogDescription = Каждое нажатие клавиши и причина, по которой что-то не сработало
+TrayDescription = Способ вернуться в это окно, не открывая меню «Пуск»
+DoubleTapEnableDescription = Второе нажатие в пределах окна ниже запускает действие, заданное внизу этой страницы.

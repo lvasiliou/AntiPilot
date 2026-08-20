@@ -1,0 +1,181 @@
+# Turkish. 2.0% of installs.
+
+AppName = AntiPilot
+Nothing = Hiçbir şey
+NoApp = (uygulama yok)
+NoAppChosen = (uygulama seçilmedi)
+Ok = Tamam
+Cancel = İptal
+Save = Kaydet
+Remove = Kaldır
+Add = Ekle
+Close = Kapat
+Edit = Düzenle
+
+MenuKeyShort = Menü tuşu
+PaletteShort = Hızlı başlatma paleti
+HotkeyShort = Klavye kısayolu
+
+SettingsTitle = AntiPilot
+SettingsTagline = Copilot tuşunun (ve Win+C'nin) gerçekte ne yapacağına siz karar verin.
+OpenWindowsSettings = Windows ayarlarını aç
+TabSinglePress = Tek basış
+TabDoublePress = Çift basış
+TabPerApp = Uygulamaya göre
+TabPalette = Palet
+DoThis = Şunu yap:
+TestIt = Dene
+OpenLog = Günlüğü aç
+About = Hakkında
+ImportExport = İçe / dışa aktar
+NothingHintTap = Tuş hiçbir şey yapmıyor. Yukarıdan bir şey seçin.
+NothingHintDouble = Çift basış, tek basışla aynı şeyi yapar.
+ShowTrayAndStart = Bildirim alanı simgesini göster ve oturum açtığımda başlat
+TrayNeedsInstall = Oturum açılışında simge (kurulu sürüm gerekir)
+TrayBlocked = Oturum açılışında simge (Görev Yöneticisi'nde kapalı)
+SaveBeforeClosing = Kapatmadan önce değişiklikler kaydedilsin mi?
+CouldNotSave = Ayarlar kaydedilemedi.
+NothingConfiguredYet = Henüz hiçbir şey ayarlanmadı.
+MenuKeyTestHint = Menü tuşu eylemi yalnızca klavyeden denenebilir: bu pencereyi kapatın, odağı başka bir yere alın ve tuşa basın.
+HotkeyTestHint = Klavye kısayolu yalnızca klavyeden denenebilir: bu pencereyi kapatın, odağı başka bir yere alın ve tuşa basın.
+Language = Dil
+LanguageSystem = Windows ile aynı
+LanguageRestartHint = Yeni dil, pencere bir sonraki açılışında görünür.
+
+StatusUnpackaged = Hata ayıklama derlemesi — Windows yalnızca kurulu MSIX'i görür.
+StatusActive = Copilot tuşu ve Win+C, AntiPilot'u çalıştırıyor.
+StatusSearch = Copilot tuşu Arama'yı açıyor — AntiPilot'u seçin →
+StatusOtherApp = Copilot tuşu başka bir uygulamayı açıyor — AntiPilot'u seçin →
+StatusDefault = Copilot tuşu hâlâ varsayılan işini yapıyor →
+
+ModeNothing = Hiçbir şey
+ModeShellApp = Kurulu bir uygulamayı başlat  (Başlat menüsü veya Microsoft Store)
+ModeFile = Bir program, dosya, klasör veya bağlantı aç
+ModeMenuKey = Menü tuşu gibi davran  (eski bağlam menüsü tuşu)
+ModeHotkey = Bir klavye kısayolu gönder
+ModePalette = Hızlı başlatma paletini göster
+ChooseApp = Uygulama seç…
+Browse = Gözat…
+AppHint = Başlat menüsündeki uygulama listesinde yer alan her şey, Microsoft Store uygulamaları dahil, burada çalışır.
+FileCaptionPath = Program, dosya, klasör veya bağlantı
+FileCaptionArgs = Bağımsız değişkenler (isteğe bağlı)
+FileCaptionWorkDir = Başlangıç konumu (isteğe bağlı)
+FileHint = %USERPROFILE% gibi ortam değişkenleri genişletilir.
+FilePlaceholder = C:\Windows\System32\notepad.exe   veya   https://example.com
+FileDialogTitle = Bir program veya dosya seçin
+FileDialogFilter = Programlar ve kısayollar|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|Tüm dosyalar|*.*
+MenuKeyBody = Tuş, Menü tuşunu (VK_APPS) gönderir; böylece odaktaki şeyin bağlam menüsü açılır — tıpkı sağ tıklamada olduğu gibi.
+ElevatedHint = Windows, yönetici olarak çalışan pencerelere yönelik yapay girdiyi engeller; bu nedenle önde böyle bir pencere varken hiçbir şey olmaz.
+PaletteBody = Tuş, palet girdilerinizin kısa bir listesini açar. Filtrelemek için yazın, bir girdiyi çalıştırmak için 1-9'a, kapatmak için Esc'e basın.
+PaletteEmptyWarning = Palette henüz girdi yok. Palet sekmesinden ekleyin.
+WhenAlreadyRunning = Zaten çalışıyorsa:
+BehaviourAlways = Bir kopya daha başlat
+BehaviourFocus = Var olan pencereyi öne getir
+BehaviourToggle = Öne getir; zaten öndeyse simge durumuna küçült
+BehaviourHint = Var olan bir pencereyi öne getirmek için uygulamanın yönetici olarak değil, sizin adınıza çalışıyor olması gerekir.
+
+HotkeyCaption = Gönderilecek kısayol
+HotkeyPlaceholder = Buraya tıklayın, sonra kısayola basın
+HotkeyRecording = Şimdi kısayola basın…
+HotkeyClear = Temizle
+HotkeyHint = Odakta ne varsa ona gönderilir. Tek başına değiştirici tuşlar kısayol sayılmaz — normal bir tuş ekleyin.
+HotkeyPresets = Hazır ayarlar:
+HotkeyInvalid = Bu, AntiPilot'un gönderebileceği bir kısayol değil.
+PresetTaskManager = Görev Yöneticisi
+PresetClipboard = Pano geçmişi
+PresetSnip = Ekran kırpma
+PresetExplorer = Dosya Gezgini
+PresetEmoji = Emoji paneli
+PresetPrintScreen = Ekranı yazdır
+PresetLock = Bilgisayarı kilitle
+PresetShowDesktop = Masaüstünü göster
+PresetPlayPause = Oynat / duraklat
+PresetMute = Sessize al
+
+PickerTitle = Bir uygulama seçin
+PickerSearch = Uygulama ara
+PickerLoading = Uygulama listesi okunuyor…
+PickerCount = {0} uygulama
+PickerNoMatch = Eşleşen bir şey yok.
+PickerColumnApp = Uygulama
+PickerSelect = Seç
+PickerFailed = Kurulu uygulamaların listesi okunamadı.
+
+PerAppIntro = Belirli bir uygulama öndeyken tuşa başka bir görev verin. Kurallar yukarıdan aşağıya denenir; eşleşmeyen her şey tek basış eylemine düşer.
+PerAppColumnApp = Şu öndeyken
+PerAppColumnAction = Tuş şunu yapar
+PerAppAdd = Kural ekle…
+PerAppEditAction = Eylemi değiştir…
+PerAppProcess = İşlem adı
+PerAppProcessHint = Yürütülebilir dosyanın adı, .exe ile veya .exe olmadan — örneğin chrome veya devenv.
+PerAppPickRunning = Çalışan bir uygulama seç…
+PerAppNoRules = Henüz kural yok. Tuş her yerde aynı şeyi yapıyor.
+PerAppDuplicate = Bu uygulama için zaten bir kural var.
+
+PaletteIntro = Bir eylem "Hızlı başlatma paletini göster" olarak ayarlandığında sunulan girdiler. İlk dokuzu 1-9 tuşlarıyla çalıştırılabilir.
+PaletteColumnLabel = Ad
+PaletteColumnAction = Çalıştırdığı
+PaletteAdd = Girdi ekle…
+PaletteMoveUp = Yukarı taşı
+PaletteMoveDown = Aşağı taşı
+PaletteNoEntries = Henüz girdi yok.
+PaletteLabelCaption = Ad (isteğe bağlı)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = Filtrelemek için yazın…
+PaletteNoMatch = Eşleşen bir şey yok.
+
+DoubleTapEnable = İki hızlı basışa kendi eylemini ver
+DoubleTapCostWarning = Tek bir basış, ikincisinin gelip gelmeyeceğini anlamak için {0} ms beklemek zorunda; bu yüzden her basış o kadar yavaşlar. İkinci eylemi istemiyorsanız kapalı bırakın.
+DoubleTapWindow = İkinci basışı şu kadar bekle
+DoubleTapMilliseconds = {0} ms
+DoubleTapDisabledHint = İki hızlı basış, tek basış eylemini yalnızca iki kez çalıştırır.
+
+ExportTitle = AntiPilot ayarlarını dışa aktar
+ImportTitle = AntiPilot ayarlarını içe aktar
+ConfigFilter = AntiPilot ayarları|*.json|Tüm dosyalar|*.*
+ExportDone = Ayarlar dışa aktarıldı.
+ImportFailed = Bu dosya, okunabilir bir AntiPilot ayar dosyası değil.
+ImportConfirm = Geçerli ayarlarınız bu dosyadakilerle değiştirilsin mi?
+ImportDone = Ayarlar içe aktarıldı.
+ExportButton = Dışa aktar…
+ImportButton = İçe aktar…
+
+TraySettings = Ayarlar…
+TrayRunAction = Tuşun eylemini çalıştır
+TrayRunNamed = Çalıştır: {0}
+TrayNothingConfigured = Hiçbir şey ayarlanmadı
+TrayCustomiseKey = Copilot tuşunu Windows'ta özelleştir…
+TrayStartWithSignIn = Oturum açtığımda başlat
+TrayStartBlocked = Oturum açtığımda başlat (Görev Yöneticisi'nde kapalı)
+TrayAbout = AntiPilot hakkında…
+TrayExit = Çıkış
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = henüz ayarlanmadı
+TrayIntroTitle = AntiPilot bildirim alanında
+TrayIntroBody = Windows yeni simgeleri gizler: saatin yanındaki ^ işaretine tıklayın ve görünür kalması için AntiPilot'u görev çubuğuna sürükleyin.
+TrayMenuKeyOnly = Menü tuşu eylemi yalnızca tuşa kendiniz bastığınızda anlamlıdır.
+TrayStartupBlockedBody = Windows bunun Görev Yöneticisi'nde kapatıldığını hatırlıyor ve yalnızca siz geri açabilirsiniz: Görev Yöneticisi → Başlangıç uygulamaları → "AntiPilot tray icon".
+TrayStartupFailed = Windows başlangıç görevini etkinleştirmedi.
+TrayCouldNotStart = Bildirim alanı simgesi başlatılamadı.
+
+ActionFailedTitle = AntiPilot eylemi çalıştıramadı
+ActionFailedBody = {0}
+TargetMissingApp = Bu uygulama artık kurulu değil.
+TargetMissingFile = Bu dosya veya klasör artık orada değil.
+ValidationTitle = Kaydetmeden önce şunu denetleyin
+ValidationContinue = Yine de kaydet
+
+AboutTitle = AntiPilot hakkında
+AboutVersion = Sürüm {0}
+AboutVersionUnknown = Sürüm bilinmiyor
+AboutUnpackaged = Paketlenmemiş çalışıyor
+AboutTagline = Copilot tuşunun seçtiğiniz uygulamayı açmasını, bir kısayol göndermesini ya da Menü tuşu gibi davranmasını sağlar.
+
+# Added with the Fluent redesign.
+TabGeneral = Genel
+GeneralGroupBehaviour = Başlangıç ve dil
+GeneralGroupTransfer = Ayar dosyası
+GeneralGroupAbout = Hakkında
+OpenLogDescription = Her tuşa basış ve başarısız olan her şeyin nedeni
+TrayDescription = Başlat menüsüne uğramadan bu pencereye dönmenin bir yolu
+DoubleTapEnableDescription = Aşağıdaki süre içinde gelen ikinci basış, bu sayfanın altında ayarlanan eylemi çalıştırır.

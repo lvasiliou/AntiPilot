@@ -1,0 +1,181 @@
+# Traditional Chinese. 1.2% of installs — Hong Kong SAR and Taiwan.
+
+AppName = AntiPilot
+Nothing = 無
+NoApp = (無應用程式)
+NoAppChosen = (未選擇應用程式)
+Ok = 確定
+Cancel = 取消
+Save = 儲存
+Remove = 移除
+Add = 新增
+Close = 關閉
+Edit = 編輯
+
+MenuKeyShort = 功能表鍵
+PaletteShort = 快速啟動面板
+HotkeyShort = 鍵盤快速鍵
+
+SettingsTitle = AntiPilot
+SettingsTagline = 決定 Copilot 鍵（以及 Win+C）到底要做什麼。
+OpenWindowsSettings = 開啟 Windows 設定
+TabSinglePress = 單次按鍵
+TabDoublePress = 連按兩次
+TabPerApp = 依應用程式
+TabPalette = 面板
+DoThis = 執行：
+TestIt = 測試
+OpenLog = 開啟記錄
+About = 關於
+ImportExport = 匯入 / 匯出
+NothingHintTap = 此鍵不會做任何事。請在上方選擇。
+NothingHintDouble = 連按兩次與按一次的動作相同。
+ShowTrayAndStart = 顯示通知區域圖示，並在登入時啟動
+TrayNeedsInstall = 登入時顯示圖示（需要已安裝的版本）
+TrayBlocked = 登入時顯示圖示（已在工作管理員中關閉）
+SaveBeforeClosing = 關閉前要儲存變更嗎？
+CouldNotSave = 無法儲存設定。
+NothingConfiguredYet = 尚未設定任何項目。
+MenuKeyTestHint = 功能表鍵動作只能用鍵盤測試：關閉此視窗，將焦點移到別處，然後按下該鍵。
+HotkeyTestHint = 鍵盤快速鍵只能用鍵盤測試：關閉此視窗，將焦點移到別處，然後按下該鍵。
+Language = 語言
+LanguageSystem = 與 Windows 相同
+LanguageRestartHint = 新語言會在下次開啟視窗時生效。
+
+StatusUnpackaged = 偵錯組建 — Windows 只看得到已安裝的 MSIX。
+StatusActive = Copilot 鍵和 Win+C 會執行 AntiPilot。
+StatusSearch = Copilot 鍵會開啟搜尋 — 請選擇 AntiPilot →
+StatusOtherApp = Copilot 鍵會開啟其他應用程式 — 請選擇 AntiPilot →
+StatusDefault = Copilot 鍵仍在執行預設動作 →
+
+ModeNothing = 無
+ModeShellApp = 啟動已安裝的應用程式（[開始] 功能表或 Microsoft Store）
+ModeFile = 開啟程式、檔案、資料夾或連結
+ModeMenuKey = 當作功能表鍵（舊的內容功能表鍵）
+ModeHotkey = 傳送鍵盤快速鍵
+ModePalette = 顯示快速啟動面板
+ChooseApp = 選擇應用程式…
+Browse = 瀏覽…
+AppHint = [開始] 功能表應用程式清單中的任何項目都可以，包括 Microsoft Store 應用程式。
+FileCaptionPath = 程式、檔案、資料夾或連結
+FileCaptionArgs = 引數（選用）
+FileCaptionWorkDir = 起始位置（選用）
+FileHint = 會展開 %USERPROFILE% 之類的環境變數。
+FilePlaceholder = C:\Windows\System32\notepad.exe   或   https://example.com
+FileDialogTitle = 選擇程式或檔案
+FileDialogFilter = 程式與捷徑|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|所有檔案|*.*
+MenuKeyBody = 此鍵會傳送功能表鍵 (VK_APPS)，因此會開啟目前焦點所在項目的內容功能表，就跟按右鍵一樣。
+ElevatedHint = Windows 會封鎖送往以系統管理員身分執行之視窗的合成輸入，所以當這類視窗在最前面時不會有任何反應。
+PaletteBody = 此鍵會開啟一份簡短的面板項目清單。輸入即可篩選，按 1-9 可執行項目，按 Esc 可關閉。
+PaletteEmptyWarning = 面板中尚無項目。請在 [面板] 索引標籤中新增。
+WhenAlreadyRunning = 當它已在執行時：
+BehaviourAlways = 再啟動一份
+BehaviourFocus = 將現有視窗移到最前面
+BehaviourToggle = 移到最前面；若已在最前面則最小化
+BehaviourHint = 要將現有視窗移到最前面，該應用程式必須以您的身分執行，而不是以系統管理員身分執行。
+
+HotkeyCaption = 要傳送的快速鍵
+HotkeyPlaceholder = 按一下這裡，然後按下快速鍵
+HotkeyRecording = 請立即按下快速鍵…
+HotkeyClear = 清除
+HotkeyHint = 會傳送給目前有焦點的項目。只有輔助鍵不算快速鍵 — 請再加一個一般按鍵。
+HotkeyPresets = 預設組合：
+HotkeyInvalid = AntiPilot 無法傳送這個快速鍵。
+PresetTaskManager = 工作管理員
+PresetClipboard = 剪貼簿歷程記錄
+PresetSnip = 螢幕剪取
+PresetExplorer = 檔案總管
+PresetEmoji = 表情符號面板
+PresetPrintScreen = 列印螢幕
+PresetLock = 鎖定電腦
+PresetShowDesktop = 顯示桌面
+PresetPlayPause = 播放 / 暫停
+PresetMute = 靜音
+
+PickerTitle = 選擇應用程式
+PickerSearch = 搜尋應用程式
+PickerLoading = 正在讀取應用程式清單…
+PickerCount = {0} 個應用程式
+PickerNoMatch = 沒有相符的項目。
+PickerColumnApp = 應用程式
+PickerSelect = 選取
+PickerFailed = 無法讀取已安裝應用程式的清單。
+
+PerAppIntro = 在特定應用程式位於最前面時，讓此鍵改做別的事。規則由上而下比對；沒有相符的就會回到單次按鍵的動作。
+PerAppColumnApp = 當這個在最前面
+PerAppColumnAction = 此鍵會做
+PerAppAdd = 新增規則…
+PerAppEditAction = 變更動作…
+PerAppProcess = 處理程序名稱
+PerAppProcessHint = 執行檔名稱，加不加 .exe 都可以 — 例如 chrome 或 devenv。
+PerAppPickRunning = 從執行中的應用程式選擇…
+PerAppNoRules = 尚無規則。此鍵在任何地方都做同樣的事。
+PerAppDuplicate = 該應用程式已有規則。
+
+PaletteIntro = 當動作設定為「顯示快速啟動面板」時提供的項目。前九個可以按 1-9 執行。
+PaletteColumnLabel = 名稱
+PaletteColumnAction = 執行
+PaletteAdd = 新增項目…
+PaletteMoveUp = 上移
+PaletteMoveDown = 下移
+PaletteNoEntries = 尚無項目。
+PaletteLabelCaption = 名稱（選用）
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = 輸入以篩選…
+PaletteNoMatch = 沒有相符的項目。
+
+DoubleTapEnable = 為快速連按兩次指定專屬動作
+DoubleTapCostWarning = 單次按鍵必須等待 {0} 毫秒才能確定是否還有第二次，因此每一次按鍵都會慢上這麼多。除非您真的需要第二個動作，否則請保持關閉。
+DoubleTapWindow = 等待第二次按鍵
+DoubleTapMilliseconds = {0} 毫秒
+DoubleTapDisabledHint = 快速連按兩次只會把單次按鍵的動作執行兩遍。
+
+ExportTitle = 匯出 AntiPilot 設定
+ImportTitle = 匯入 AntiPilot 設定
+ConfigFilter = AntiPilot 設定|*.json|所有檔案|*.*
+ExportDone = 設定已匯出。
+ImportFailed = 該檔案不是可讀取的 AntiPilot 設定檔。
+ImportConfirm = 要用這個檔案中的設定取代您目前的設定嗎？
+ImportDone = 設定已匯入。
+ExportButton = 匯出…
+ImportButton = 匯入…
+
+TraySettings = 設定…
+TrayRunAction = 執行此鍵的動作
+TrayRunNamed = 執行：{0}
+TrayNothingConfigured = 尚未設定
+TrayCustomiseKey = 在 Windows 中自訂 Copilot 鍵…
+TrayStartWithSignIn = 登入時啟動
+TrayStartBlocked = 登入時啟動（已在工作管理員中關閉）
+TrayAbout = 關於 AntiPilot…
+TrayExit = 結束
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = 尚未設定
+TrayIntroTitle = AntiPilot 已在通知區域中
+TrayIntroBody = Windows 會隱藏新圖示：按一下時鐘旁的 ^，再將 AntiPilot 拖曳到工作列上，就能讓它保持顯示。
+TrayMenuKeyOnly = 功能表鍵動作只有在您親自按鍵時才有意義。
+TrayStartupBlockedBody = Windows 記得這曾在工作管理員中被關閉，而且只有您能重新開啟：工作管理員 → 啟動應用程式 → 「AntiPilot tray icon」。
+TrayStartupFailed = Windows 不允許啟用登入時啟動。
+TrayCouldNotStart = 無法啟動通知區域圖示。
+
+ActionFailedTitle = AntiPilot 無法執行該動作
+ActionFailedBody = {0}
+TargetMissingApp = 該應用程式已不再安裝。
+TargetMissingFile = 該檔案或資料夾已不存在。
+ValidationTitle = 儲存前請先確認
+ValidationContinue = 仍要儲存
+
+AboutTitle = 關於 AntiPilot
+AboutVersion = 版本 {0}
+AboutVersionUnknown = 版本不明
+AboutUnpackaged = 正在以未封裝方式執行
+AboutTagline = 讓 Copilot 鍵開啟您選擇的應用程式、傳送快速鍵，或當作功能表鍵使用。
+
+# Added with the Fluent redesign.
+TabGeneral = 一般
+GeneralGroupBehaviour = 啟動與語言
+GeneralGroupTransfer = 設定檔
+GeneralGroupAbout = 關於
+OpenLogDescription = 每一次按鍵，以及失敗的原因
+TrayDescription = 不必經過 [開始] 功能表就能回到這個視窗的方法
+DoubleTapEnableDescription = 在下方時間內按下的第二次會執行本頁底部設定的動作。

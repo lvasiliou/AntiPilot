@@ -1,0 +1,184 @@
+# Arabic. 1.4% of installs across Egypt, Morocco, Saudi Arabia, the UAE and Qatar.
+#
+# Right-to-left: the arrows in the status strings point the other way on purpose, and the
+# windows flip their layout (see Theme.ApplyDirection).
+
+AppName = AntiPilot
+Nothing = لا شيء
+NoApp = (لا يوجد تطبيق)
+NoAppChosen = (لم يتم اختيار تطبيق)
+Ok = موافق
+Cancel = إلغاء
+Save = حفظ
+Remove = إزالة
+Add = إضافة
+Close = إغلاق
+Edit = تحرير
+
+MenuKeyShort = مفتاح القائمة
+PaletteShort = لوحة التشغيل السريع
+HotkeyShort = اختصار لوحة المفاتيح
+
+SettingsTitle = AntiPilot
+SettingsTagline = حدِّد ما يفعله مفتاح Copilot (و Win+C) فعليًا.
+OpenWindowsSettings = فتح إعدادات Windows
+TabSinglePress = ضغطة واحدة
+TabDoublePress = ضغطتان
+TabPerApp = حسب التطبيق
+TabPalette = اللوحة
+DoThis = نفِّذ هذا:
+TestIt = تجربة
+OpenLog = فتح السجل
+About = حول
+ImportExport = استيراد / تصدير
+NothingHintTap = المفتاح لا يفعل شيئًا. اختر شيئًا من الأعلى.
+NothingHintDouble = الضغطتان تفعلان ما تفعله الضغطة الواحدة.
+ShowTrayAndStart = إظهار الأيقونة في منطقة الإعلامات وتشغيلها عند تسجيل الدخول
+TrayNeedsInstall = الأيقونة عند تسجيل الدخول (تتطلب النسخة المثبَّتة)
+TrayBlocked = الأيقونة عند تسجيل الدخول (مُعطَّلة في إدارة المهام)
+SaveBeforeClosing = هل تريد حفظ التغييرات قبل الإغلاق؟
+CouldNotSave = تعذَّر حفظ الإعدادات.
+NothingConfiguredYet = لم يتم إعداد أي شيء بعد.
+MenuKeyTestHint = لا يمكن تجربة إجراء مفتاح القائمة إلا من لوحة المفاتيح: أغلق هذه النافذة، وانتقل بالتركيز إلى شيء آخر، ثم اضغط المفتاح.
+HotkeyTestHint = لا يمكن تجربة اختصار لوحة المفاتيح إلا من لوحة المفاتيح: أغلق هذه النافذة، وانتقل بالتركيز إلى شيء آخر، ثم اضغط المفتاح.
+Language = اللغة
+LanguageSystem = مثل Windows
+LanguageRestartHint = ستظهر اللغة الجديدة في المرة التالية التي تُفتح فيها النافذة.
+
+StatusUnpackaged = إصدار تصحيح — لا يرى Windows سوى حزمة MSIX المثبَّتة.
+StatusActive = مفتاح Copilot و Win+C يشغِّلان AntiPilot.
+StatusSearch = مفتاح Copilot يفتح البحث — اختر AntiPilot ←
+StatusOtherApp = مفتاح Copilot يفتح تطبيقًا آخر — اختر AntiPilot ←
+StatusDefault = ما زال مفتاح Copilot يقوم بعمله الافتراضي ←
+
+ModeNothing = لا شيء
+ModeShellApp = تشغيل تطبيق مثبَّت  (قائمة ابدأ أو Microsoft Store)
+ModeFile = فتح برنامج أو ملف أو مجلد أو رابط
+ModeMenuKey = العمل كمفتاح القائمة  (مفتاح قائمة السياق القديم)
+ModeHotkey = إرسال اختصار لوحة مفاتيح
+ModePalette = إظهار لوحة التشغيل السريع
+ChooseApp = اختيار تطبيق…
+Browse = استعراض…
+AppHint = يصلح أي عنصر في قائمة تطبيقات قائمة ابدأ، بما في ذلك تطبيقات Microsoft Store.
+FileCaptionPath = برنامج أو ملف أو مجلد أو رابط
+FileCaptionArgs = الوسائط (اختياري)
+FileCaptionWorkDir = البدء في (اختياري)
+FileHint = يتم توسيع متغيرات البيئة مثل ‎%USERPROFILE%‎.
+FilePlaceholder = C:\Windows\System32\notepad.exe   أو   https://example.com
+FileDialogTitle = اختر برنامجًا أو ملفًا
+FileDialogFilter = البرامج والاختصارات|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|كل الملفات|*.*
+MenuKeyBody = يرسل المفتاح مفتاح القائمة (VK_APPS)، فتُفتح قائمة السياق لما هو قيد التركيز — تمامًا كالنقر بالزر الأيمن.
+ElevatedHint = يحجب Windows الإدخال المُصطنع الموجَّه إلى النوافذ التي تعمل كمسؤول، لذا لا يحدث شيء ما دامت إحداها في المقدمة.
+PaletteBody = يفتح المفتاح قائمة قصيرة بعناصر لوحتك. اكتب للتصفية، واضغط ٩-١ لتشغيل عنصر، و Esc للإغلاق.
+PaletteEmptyWarning = لا توجد عناصر في اللوحة بعد. أضِف بعضها من علامة التبويب "اللوحة".
+WhenAlreadyRunning = عندما يكون قيد التشغيل بالفعل:
+BehaviourAlways = تشغيل نسخة أخرى
+BehaviourFocus = إحضار النافذة الموجودة إلى المقدمة
+BehaviourToggle = إحضارها إلى المقدمة، أو تصغيرها إن كانت هناك بالفعل
+BehaviourHint = لإحضار نافذة موجودة إلى المقدمة، يجب أن يعمل التطبيق باسمك لا كمسؤول.
+
+HotkeyCaption = الاختصار المُرسَل
+HotkeyPlaceholder = انقر هنا ثم اضغط الاختصار
+HotkeyRecording = اضغط الاختصار الآن…
+HotkeyClear = مسح
+HotkeyHint = يُرسَل إلى ما هو قيد التركيز. مفاتيح التعديل وحدها ليست اختصارًا — أضِف مفتاحًا عاديًا.
+HotkeyPresets = إعدادات جاهزة:
+HotkeyInvalid = هذا ليس اختصارًا يستطيع AntiPilot إرساله.
+PresetTaskManager = إدارة المهام
+PresetClipboard = سجل الحافظة
+PresetSnip = قص الشاشة
+PresetExplorer = مستكشف الملفات
+PresetEmoji = لوحة الرموز التعبيرية
+PresetPrintScreen = طباعة الشاشة
+PresetLock = قفل الجهاز
+PresetShowDesktop = إظهار سطح المكتب
+PresetPlayPause = تشغيل / إيقاف مؤقت
+PresetMute = كتم الصوت
+
+PickerTitle = اختر تطبيقًا
+PickerSearch = البحث في التطبيقات
+PickerLoading = جارٍ قراءة قائمة التطبيقات…
+PickerCount = {0} تطبيق
+PickerNoMatch = لا توجد نتائج مطابقة.
+PickerColumnApp = التطبيق
+PickerSelect = تحديد
+PickerFailed = تعذَّرت قراءة قائمة التطبيقات المثبَّتة.
+
+PerAppIntro = امنح المفتاح مهمة مختلفة ما دام تطبيق معيَّن في المقدمة. تُجرَّب القواعد من الأعلى إلى الأسفل، وما لا ينطبق يعود إلى إجراء الضغطة الواحدة.
+PerAppColumnApp = عندما يكون هذا في المقدمة
+PerAppColumnAction = يفعل المفتاح هذا
+PerAppAdd = إضافة قاعدة…
+PerAppEditAction = تغيير الإجراء…
+PerAppProcess = اسم العملية
+PerAppProcessHint = اسم الملف التنفيذي، مع ‎.exe‎ أو بدونه — مثل chrome أو devenv.
+PerAppPickRunning = اختيار تطبيق قيد التشغيل…
+PerAppNoRules = لا توجد قواعد بعد. المفتاح يفعل الشيء نفسه في كل مكان.
+PerAppDuplicate = توجد قاعدة لهذا التطبيق بالفعل.
+
+PaletteIntro = العناصر المعروضة عندما يكون الإجراء مضبوطًا على "إظهار لوحة التشغيل السريع". يمكن تشغيل أول تسعة منها بالضغط على ٩-١.
+PaletteColumnLabel = الاسم
+PaletteColumnAction = يشغِّل
+PaletteAdd = إضافة عنصر…
+PaletteMoveUp = تحريك لأعلى
+PaletteMoveDown = تحريك لأسفل
+PaletteNoEntries = لا توجد عناصر بعد.
+PaletteLabelCaption = الاسم (اختياري)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = اكتب للتصفية…
+PaletteNoMatch = لا توجد نتائج مطابقة.
+
+DoubleTapEnable = منح الضغطتين السريعتين إجراءً خاصًا بهما
+DoubleTapCostWarning = على الضغطة الواحدة أن تنتظر {0} مللي ثانية لمعرفة ما إذا كانت ستأتي ضغطة ثانية، فتصبح كل ضغطة أبطأ بهذا المقدار. اتركه معطَّلاً ما لم تكن تريد الإجراء الثاني.
+DoubleTapWindow = انتظار الضغطة الثانية لمدة
+DoubleTapMilliseconds = {0} مللي ثانية
+DoubleTapDisabledHint = الضغطتان السريعتان تنفِّذان إجراء الضغطة الواحدة مرتين فقط.
+
+ExportTitle = تصدير إعدادات AntiPilot
+ImportTitle = استيراد إعدادات AntiPilot
+ConfigFilter = إعدادات AntiPilot|*.json|كل الملفات|*.*
+ExportDone = تم تصدير الإعدادات.
+ImportFailed = هذا الملف ليس ملف إعدادات AntiPilot قابلاً للقراءة.
+ImportConfirm = هل تريد استبدال إعداداتك الحالية بما في هذا الملف؟
+ImportDone = تم استيراد الإعدادات.
+ExportButton = تصدير…
+ImportButton = استيراد…
+
+TraySettings = الإعدادات…
+TrayRunAction = تنفيذ إجراء المفتاح
+TrayRunNamed = تنفيذ: {0}
+TrayNothingConfigured = لم يتم إعداد شيء
+TrayCustomiseKey = تخصيص مفتاح Copilot في Windows…
+TrayStartWithSignIn = التشغيل عند تسجيل الدخول
+TrayStartBlocked = التشغيل عند تسجيل الدخول (مُعطَّل في إدارة المهام)
+TrayAbout = حول AntiPilot…
+TrayExit = خروج
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = لم يُعد بعد
+TrayIntroTitle = AntiPilot موجود في منطقة الإعلامات
+TrayIntroBody = يُخفي Windows الأيقونات الجديدة: انقر على ^ بجوار الساعة واسحب AntiPilot إلى شريط المهام ليبقى ظاهرًا.
+TrayMenuKeyOnly = إجراء مفتاح القائمة لا معنى له إلا عندما تضغط المفتاح بنفسك.
+TrayStartupBlockedBody = يتذكَّر Windows أن هذا عُطِّل في إدارة المهام، ولا يمكن إعادة تفعيله إلا منك: إدارة المهام ← تطبيقات بدء التشغيل ← "AntiPilot tray icon".
+TrayStartupFailed = لم يسمح Windows بتفعيل التشغيل عند بدء التشغيل.
+TrayCouldNotStart = تعذَّر تشغيل أيقونة منطقة الإعلامات.
+
+ActionFailedTitle = تعذَّر على AntiPilot تنفيذ الإجراء
+ActionFailedBody = {0}
+TargetMissingApp = لم يعد هذا التطبيق مثبَّتًا.
+TargetMissingFile = لم يعد هذا الملف أو المجلد موجودًا.
+ValidationTitle = تحقَّق من هذا قبل الحفظ
+ValidationContinue = الحفظ على أي حال
+
+AboutTitle = حول AntiPilot
+AboutVersion = الإصدار {0}
+AboutVersionUnknown = الإصدار غير معروف
+AboutUnpackaged = يعمل بدون حزمة
+AboutTagline = يجعل مفتاح Copilot يفتح التطبيق الذي تختاره، أو يرسل اختصارًا، أو يعمل كمفتاح القائمة.
+
+# Added with the Fluent redesign.
+TabGeneral = عام
+GeneralGroupBehaviour = بدء التشغيل واللغة
+GeneralGroupTransfer = ملف الإعدادات
+GeneralGroupAbout = حول
+OpenLogDescription = كل ضغطة مفتاح، وسبب فشل ما فشل
+TrayDescription = طريقة للعودة إلى هذه النافذة دون المرور بقائمة ابدأ
+DoubleTapEnableDescription = الضغطة الثانية خلال المدة أدناه تنفِّذ الإجراء المحدَّد في أسفل هذه الصفحة.

@@ -1,0 +1,181 @@
+# Japanese. 1.4% of installs.
+
+AppName = AntiPilot
+Nothing = なし
+NoApp = (アプリなし)
+NoAppChosen = (アプリが選択されていません)
+Ok = OK
+Cancel = キャンセル
+Save = 保存
+Remove = 削除
+Add = 追加
+Close = 閉じる
+Edit = 編集
+
+MenuKeyShort = メニューキー
+PaletteShort = クイック起動パレット
+HotkeyShort = キーボード ショートカット
+
+SettingsTitle = AntiPilot
+SettingsTagline = Copilot キー (と Win+C) が実際に何をするかを決めます。
+OpenWindowsSettings = Windows の設定を開く
+TabSinglePress = 1 回押し
+TabDoublePress = 2 回押し
+TabPerApp = アプリごと
+TabPalette = パレット
+DoThis = 次を実行:
+TestIt = 試す
+OpenLog = ログを開く
+About = バージョン情報
+ImportExport = インポート / エクスポート
+NothingHintTap = キーは何もしません。上から選んでください。
+NothingHintDouble = 2 回押しは 1 回押しと同じ動作になります。
+ShowTrayAndStart = 通知領域にアイコンを表示し、サインイン時に起動する
+TrayNeedsInstall = サインイン時のアイコン (インストール版が必要)
+TrayBlocked = サインイン時のアイコン (タスク マネージャーで無効)
+SaveBeforeClosing = 閉じる前に変更を保存しますか?
+CouldNotSave = 設定を保存できませんでした。
+NothingConfiguredYet = まだ何も設定されていません。
+MenuKeyTestHint = メニューキーの動作はキーボードからのみ試せます。このウィンドウを閉じ、別のものにフォーカスを移してからキーを押してください。
+HotkeyTestHint = キーボード ショートカットはキーボードからのみ試せます。このウィンドウを閉じ、別のものにフォーカスを移してからキーを押してください。
+Language = 言語
+LanguageSystem = Windows と同じ
+LanguageRestartHint = 新しい言語は次にウィンドウを開いたときに反映されます。
+
+StatusUnpackaged = デバッグ ビルド — Windows はインストール済みの MSIX しか認識しません。
+StatusActive = Copilot キーと Win+C で AntiPilot が実行されます。
+StatusSearch = Copilot キーは検索を開きます — AntiPilot を選んでください →
+StatusOtherApp = Copilot キーは別のアプリを開きます — AntiPilot を選んでください →
+StatusDefault = Copilot キーはまだ既定の動作のままです →
+
+ModeNothing = なし
+ModeShellApp = インストール済みのアプリを起動する  (スタート メニューまたは Microsoft Store)
+ModeFile = プログラム、ファイル、フォルダー、リンクを開く
+ModeMenuKey = メニューキーとして動作する  (旧コンテキスト メニュー キー)
+ModeHotkey = キーボード ショートカットを送る
+ModePalette = クイック起動パレットを表示する
+ChooseApp = アプリを選択…
+Browse = 参照…
+AppHint = スタート メニューのアプリ一覧にあるものなら、Microsoft Store アプリも含めて何でも指定できます。
+FileCaptionPath = プログラム、ファイル、フォルダー、リンク
+FileCaptionArgs = 引数 (省略可)
+FileCaptionWorkDir = 作業フォルダー (省略可)
+FileHint = %USERPROFILE% などの環境変数は展開されます。
+FilePlaceholder = C:\Windows\System32\notepad.exe   または   https://example.com
+FileDialogTitle = プログラムまたはファイルを選択
+FileDialogFilter = プログラムとショートカット|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|すべてのファイル|*.*
+MenuKeyBody = キーはメニューキー (VK_APPS) を送ります。右クリックとまったく同じように、フォーカスのあるもののコンテキスト メニューが開きます。
+ElevatedHint = Windows は管理者として実行中のウィンドウ宛ての合成入力をブロックするため、そうしたウィンドウが手前にある間は何も起こりません。
+PaletteBody = キーを押すとパレットの項目が短い一覧で開きます。入力すると絞り込み、1-9 で項目を実行、Esc で閉じます。
+PaletteEmptyWarning = パレットにはまだ項目がありません。[パレット] タブで追加してください。
+WhenAlreadyRunning = すでに実行中の場合:
+BehaviourAlways = もう 1 つ起動する
+BehaviourFocus = 既存のウィンドウを手前に出す
+BehaviourToggle = 手前に出す。すでに手前なら最小化する
+BehaviourHint = 既存のウィンドウを手前に出すには、そのアプリが管理者ではなく自分の権限で実行されている必要があります。
+
+HotkeyCaption = 送るショートカット
+HotkeyPlaceholder = ここをクリックしてショートカットを押す
+HotkeyRecording = ショートカットを押してください…
+HotkeyClear = クリア
+HotkeyHint = フォーカスのあるものに送られます。修飾キーだけではショートカットになりません — 通常のキーを加えてください。
+HotkeyPresets = プリセット:
+HotkeyInvalid = これは AntiPilot が送れるショートカットではありません。
+PresetTaskManager = タスク マネージャー
+PresetClipboard = クリップボードの履歴
+PresetSnip = 画面領域の切り取り
+PresetExplorer = エクスプローラー
+PresetEmoji = 絵文字パネル
+PresetPrintScreen = Print Screen
+PresetLock = PC をロック
+PresetShowDesktop = デスクトップを表示
+PresetPlayPause = 再生 / 一時停止
+PresetMute = ミュート
+
+PickerTitle = アプリを選択
+PickerSearch = アプリを検索
+PickerLoading = アプリ一覧を読み込んでいます…
+PickerCount = {0} 個のアプリ
+PickerNoMatch = 一致するものがありません。
+PickerColumnApp = アプリ
+PickerSelect = 選択
+PickerFailed = インストール済みアプリの一覧を読み取れませんでした。
+
+PerAppIntro = 特定のアプリが手前にある間だけ、キーに別の役割を持たせます。ルールは上から順に照合され、どれにも一致しない場合は 1 回押しの動作になります。
+PerAppColumnApp = これが手前のとき
+PerAppColumnAction = キーはこれを実行
+PerAppAdd = ルールを追加…
+PerAppEditAction = 動作を変更…
+PerAppProcess = プロセス名
+PerAppProcessHint = 実行ファイル名です。.exe はあってもなくても構いません — 例: chrome、devenv。
+PerAppPickRunning = 実行中のアプリから選ぶ…
+PerAppNoRules = ルールはまだありません。キーはどこでも同じ動作をします。
+PerAppDuplicate = そのアプリのルールはすでにあります。
+
+PaletteIntro = 動作が「クイック起動パレットを表示する」に設定されているときに表示される項目です。最初の 9 個は 1-9 のキーで実行できます。
+PaletteColumnLabel = 名前
+PaletteColumnAction = 実行内容
+PaletteAdd = 項目を追加…
+PaletteMoveUp = 上へ
+PaletteMoveDown = 下へ
+PaletteNoEntries = 項目はまだありません。
+PaletteLabelCaption = 名前 (省略可)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = 入力して絞り込み…
+PaletteNoMatch = 一致するものがありません。
+
+DoubleTapEnable = 素早い 2 回押しに専用の動作を割り当てる
+DoubleTapCostWarning = 1 回押しは 2 回目が来るかどうかを判断するために {0} ミリ秒待つ必要があり、その分どの押下も遅く感じられます。2 つ目の動作が必要でなければオフのままにしてください。
+DoubleTapWindow = 2 回目を待つ時間
+DoubleTapMilliseconds = {0} ミリ秒
+DoubleTapDisabledHint = 素早い 2 回押しは、1 回押しの動作を 2 回実行するだけです。
+
+ExportTitle = AntiPilot の設定をエクスポート
+ImportTitle = AntiPilot の設定をインポート
+ConfigFilter = AntiPilot の設定|*.json|すべてのファイル|*.*
+ExportDone = 設定をエクスポートしました。
+ImportFailed = このファイルは読み取れる AntiPilot の設定ファイルではありません。
+ImportConfirm = 現在の設定をこのファイルの内容で置き換えますか?
+ImportDone = 設定をインポートしました。
+ExportButton = エクスポート…
+ImportButton = インポート…
+
+TraySettings = 設定…
+TrayRunAction = キーの動作を実行
+TrayRunNamed = 実行: {0}
+TrayNothingConfigured = 未設定
+TrayCustomiseKey = Windows で Copilot キーをカスタマイズ…
+TrayStartWithSignIn = サインイン時に起動
+TrayStartBlocked = サインイン時に起動 (タスク マネージャーで無効)
+TrayAbout = AntiPilot について…
+TrayExit = 終了
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = 未設定
+TrayIntroTitle = AntiPilot は通知領域にあります
+TrayIntroBody = Windows は新しいアイコンを隠します。時計の横の ^ をクリックし、AntiPilot をタスク バーにドラッグすると表示されたままになります。
+TrayMenuKeyOnly = メニューキーの動作は、自分でキーを押したときにだけ意味があります。
+TrayStartupBlockedBody = Windows はタスク マネージャーで無効にされたことを覚えており、元に戻せるのは本人だけです: タスク マネージャー → スタートアップ アプリ → 「AntiPilot tray icon」。
+TrayStartupFailed = Windows がスタートアップ タスクを有効にしませんでした。
+TrayCouldNotStart = 通知領域アイコンを起動できませんでした。
+
+ActionFailedTitle = AntiPilot は動作を実行できませんでした
+ActionFailedBody = {0}
+TargetMissingApp = このアプリはインストールされていません。
+TargetMissingFile = このファイルまたはフォルダーは見つかりません。
+ValidationTitle = 保存する前に確認してください
+ValidationContinue = このまま保存
+
+AboutTitle = AntiPilot について
+AboutVersion = バージョン {0}
+AboutVersionUnknown = バージョン不明
+AboutUnpackaged = 未パッケージで実行中
+AboutTagline = Copilot キーで好きなアプリを開いたり、ショートカットを送ったり、メニューキーとして使えるようにします。
+
+# Added with the Fluent redesign.
+TabGeneral = 全般
+GeneralGroupBehaviour = 起動と言語
+GeneralGroupTransfer = 設定ファイル
+GeneralGroupAbout = バージョン情報
+OpenLogDescription = すべてのキー操作と、失敗した理由
+TrayDescription = スタート メニューを使わずにこのウィンドウへ戻る方法
+DoubleTapEnableDescription = 下の時間内に 2 回目を押すと、このページ下部で設定した動作が実行されます。

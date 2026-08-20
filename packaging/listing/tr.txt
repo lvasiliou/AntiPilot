@@ -1,0 +1,171 @@
+# Turkish listing copy. 2.0% of installs.
+
+[ShortDescription]
+Copilot tuşuna gerçekten istediğiniz işi yaptırın. Onu kurulu herhangi bir uygulamaya, bir programa, dosyaya, klasöre ya da bağlantıya, kendi seçtiğiniz bir klavye kısayoluna yönlendirin — ya da klavyelerden kaldırılan Menü tuşuna geri döndürün. İki hızlı basış, tek basıştan farklı bir şey yapabilir ve tuş, önde hangi uygulama varsa ona göre görevini değiştirebilir. Arka planda hiçbir şey durmaz: bir basış AntiPilot'u başlatır, o tek işi yapar ve kapanır.
+
+[Description]
+Sizin Copilot tuşunuz. Sizin uygulamanız.
+
+Windows 11 Copilot tuşunu özelleştirmenize izin verir, ama yalnızca MSIX ile paketlenmiş, imzalanmış ve Copilot donanım tuşu sağlayıcısı olarak kaydedilmiş bir uygulamaya. Neredeyse hiçbir uygulama bunu yapmaz; bu yüzden Ayarlar > Bluetooth ve cihazlar > Klavye altındaki liste genellikle Copilot'un kendisi dışında boştur.
+
+AntiPilot bunu yapar. Ayarlar'da bir kez seçin, sonra tuşun ne yapacağına karar verin.
+
+KURULU BİR UYGULAMAYI BAŞLATIN
+Başlat menüsündeki uygulama listesinde ne varsa, Microsoft Store uygulamaları dahil. Aramalı ve gerçek simgeli bir listeden seçin; kurulum yollarını aramanıza gerek yok. Uygulama zaten açıksa AntiPilot ikinci bir kopya başlatmak yerine o pencereyi öne getirebilir, siz zaten ona bakıyorsanız da simge durumuna küçültebilir. Böylece tek bir tuş, en çok kullandığınız şeye girip çıkmanın yolu olur.
+
+BİR PROGRAMI, DOSYAYI, KLASÖRÜ VEYA BAĞLANTIYI AÇIN
+Herhangi bir yol ya da URL; isteğe bağlı bağımsız değişkenler ve bir başlangıç klasörüyle. %USERPROFILE% gibi ortam değişkenleri genişletilir.
+
+BİR KLAVYE KISAYOLU GÖNDERİN
+Hangi uygulamayı kullanıyorsanız ona, herhangi bir tuş birleşimi: Görev Yöneticisi için Ctrl+Shift+Esc, pano geçmişi için Win+V, Print Screen, medya tuşları ya da hiçbir klavyede bulunmayan tuşları dinleyen makro yazılımları için F13-F24. Kısayolu yakalamak için ona basın veya hazır ayarlardan birini seçin.
+
+MENÜ TUŞU GİBİ DAVRANSIN
+Modern klavyelerden kaybolan bağlam menüsü tuşu. AntiPilot gerçek tuşu gönderir, böylece odaktaki neyse onun bağlam menüsü açılır — tıpkı sağ tıklamada olduğu gibi.
+
+HIZLI BAŞLATMA PALETİNİ AÇIN
+Sık uzandığınız şeylerden oluşan, klavye öncelikli kısa bir liste. Filtrelemek için yazın, bir girdiyi hemen çalıştırmak için 1-9 tuşlarına basın, kapatmak için Esc. Eylem palet kapandıktan sonra çalışır, böylece bir kısayol gerçekten kullandığınız pencereye ulaşır.
+
+TEK TUŞ, BİRDEN FAZLA GÖREV
+
+İki hızlı basış, tek basıştan farklı bir eylem çalıştırabilir: aynı tuş üzerinde ikinci bir iş — AntiPilot hangisini kastettiğinizi anlarken geçen kısa bir bekleme karşılığında. Varsayılan olarak kapalıdır ve bekleme süresi ayarlanabilir; çünkü o gecikme gerçektir ve onu kabul etmeye siz karar vermelisiniz.
+
+Kurallar da, önde hangi uygulama varsa ona göre tuşun işini değiştirebilir: düzenleyicinizde Menü tuşu, tarayıcınızda bir kısayol, geri kalan her yerde her zamanki uygulamanız.
+
+YOLUNUZDAN ÇEKİLİR
+
+Bir basış AntiPilot'u başlatır, o tek işi yapar ve kapanır. Bellekte tuş bekleyen hiçbir şey kalmaz ve henüz bir şey ayarlamadıysanız dışında hiçbir pencere açılmaz. Elinizin altında olmasını isterseniz, tek bir anahtar bildirim alanına bir simge koyar ve oturum açtığınızda geri getirir. Varsayılan olarak kapalıdır.
+
+Ayarlar penceresi Windows 11'e uyacak şekilde tasarlandı: solda gezinme, ayar kartları ve baştan sona sizin vurgu renginiz. Açık ve koyu temayı siz değiştirdikçe takip eder, tuşun şu anda AntiPilot'a yönlendirilmiş olup olmadığını bir bakışta gösterir ve bunun ayarlandığı Windows sayfasına doğrudan götürür. Yapılandırmanız bir dosyaya aktarılabilir ve başka bir bilgisayarda içe aktarılabilir.
+
+KENDİ DİLİNİZDE
+
+İngilizce, Rusça, İspanyolca, Basitleştirilmiş ve Geleneksel Çince, Brezilya Portekizcesi, Türkçe, Japonca, Korece, Arapça, Endonezce ve Yunanca. AntiPilot varsayılan olarak Windows dilinizi izler; Arapçada ise metni çevirmekle kalmaz, pencerenin tamamını yansıtır.
+
+WIN+C İLE DE ÇALIŞIR
+
+Klavyenizde Copilot tuşu yok mu? Windows aynı sinyali Win+C için de gönderir, AntiPilot ona da yanıt verir.
+
+AÇIK KAYNAK
+
+MIT lisanslı. Lisansın tam metni uygulamayla birlikte gelir, Hakkında bölümünde bulunur.
+
+GEREKSİNİMLER
+
+Windows 11, derleme 22621 veya daha yenisi. AntiPilot'u bir kez Ayarlar > Bluetooth ve cihazlar > Klavye > Kısayollar ve erişim tuşları > Klavyedeki Copilot tuşunu özelleştir > Özel altından seçin.
+
+BİLİNMESİ GEREKENLER
+
+Windows, yönetici olarak çalışan pencerelere yönelik yapay tuş vuruşlarını engeller; bu nedenle böyle bir pencere öndeyken Menü tuşu ve klavye kısayolu eylemleri hiçbir şey yapmaz. Bu bir Windows güvenlik kuralıdır, uygulamanın vazgeçebileceği bir şey değildir.
+
+AntiPilot yalnızca Copilot tuşunun neyi başlattığını değiştirir. Başka tuşları yeniden atamaz ve Copilot'u bilgisayarınızdan kaldırmaz.
+
+[ReleaseNotes]
+Tek tuş, birden fazla görev.
+
+- Herhangi bir klavye kısayolu gönderin: Ctrl+Shift+Esc, Win+V, Print Screen, medya tuşları ya da makro yazılımları için F13-F24. Kısayolu yakalamak için ona basın veya hazır bir ayar seçin.
+- İki hızlı basışa, tek basıştan ayrı kendi eylemini verin.
+- Önde hangi uygulama varsa ona göre tuşun işini değiştirin.
+- Hızlı başlatma paletini açın: filtrelemek için yazın, çalıştırmak için 1-9, kapatmak için Esc.
+- Zaten açık olan bir uygulamayı ikinci kopya başlatmak yerine öne getirin; ona bakıyorsanız simge durumuna küçültün.
+
+Windows 11'e uyacak şekilde tasarlanmış yeni bir ayarlar penceresi: solda gezinme, ayar kartları ve baştan sona sizin vurgu renginiz. Açık ve koyu temayı siz değiştirdikçe takip eder.
+
+Artık 12 dilde: İngilizce, Rusça, İspanyolca, Basitleştirilmiş ve Geleneksel Çince, Brezilya Portekizcesi, Türkçe, Japonca, Korece, Arapça, Endonezce ve Yunanca; varsayılan olarak Windows dilinizi izleyerek. Arapçada düzen yansıtılır.
+
+Küçük şeyler: yapılandırmanızı bilgisayarlar arasında taşımak için dışa ve içe aktarın; başarısız bir eylem artık odağınızı çalan bir iletişim kutusu yerine bir bildirimle haber verir; ve her tuş basışı biraz daha hızlı başlar.
+
+[CopyrightTrademarkInformation]
+Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 ve Microsoft Copilot, Microsoft Corporation'ın ticari markalarıdır. AntiPilot, Microsoft ile bağlantılı değildir ve onaylanmamıştır.
+
+[Feature1]
+Copilot tuşunu kurulu herhangi bir uygulamaya yönlendirin, Microsoft Store dahil
+
+[Feature2]
+Ya da bir programa, dosyaya, klasöre veya bağlantıya; bağımsız değişken ve başlangıç klasörüyle
+
+[Feature3]
+Ya da kısayol gönderin: Ctrl+Shift+Esc, Win+V, Print Screen, medya tuşları, F13-F24
+
+[Feature4]
+Ya da Menü tuşuna geri döndürün; odaktakinin bağlam menüsü açılsın
+
+[Feature5]
+Ya da hızlı başlatma paletini açın: yazarak filtreleyin, 1-9 ile çalıştırın, Esc ile kapatın
+
+[Feature6]
+İki hızlı basışa, tek basıştan ayrı kendi eylemini verin
+
+[Feature7]
+Önde hangi uygulama varsa ona göre tuşun işini değiştirin
+
+[Feature8]
+Zaten açık bir uygulamayı ikinci kopya başlatmak yerine öne getirin
+
+[Feature9]
+Win+C tuşuna da yanıt verir; Copilot tuşu olmayan klavyeler için
+
+[Feature10]
+Arka planda hiçbir şey çalışmaz: basış onu başlatır, iş yapar ve kapanır
+
+[Feature11]
+İsteğe bağlı bildirim alanı simgesi, varsayılan kapalı, oturum açmada başlatma anahtarıyla
+
+[Feature12]
+Windows 11'e uyacak şekilde tasarlanmış, sizin vurgu renginizde bir ayarlar penceresi
+
+[Feature13]
+Windows açık ve koyu temasını izler, siz değiştirdiğinizde de uyum sağlar
+
+[Feature14]
+12 dilde mevcut; varsayılan olarak Windows dilinizi izler
+
+[Feature15]
+Gerçek Windows simgeleriyle, aramalı uygulama seçici
+
+[Feature16]
+Yapılandırmanızı bilgisayarlar arasında taşımak için dışa ve içe aktarın
+
+[Feature17]
+Copilot tuşunun AntiPilot'a yönelip yönelmediğini gösterir ve o ayara bağlantı verir
+
+[Feature18]
+Açık kaynak, MIT lisanslı
+
+[DesktopScreenshotCaption1]
+Copilot tuşunun ne yapacağını seçin: bir uygulama, dosya ya da bağlantı, bir kısayol veya Menü tuşu.
+
+[DesktopScreenshotCaption2]
+Başlat menüsündeki tüm uygulamalar arasından seçin, Microsoft Store dahil.
+
+[DesktopScreenshotCaption3]
+İki hızlı basışa, süresini sizin belirlediğiniz kendi eylemini verin.
+
+[DesktopScreenshotCaption4]
+Önde hangi uygulama varsa ona göre tuşun işini değiştirin.
+
+[DesktopScreenshotCaption5]
+Hızlı başlatma paleti: filtrelemek için yazın, çalıştırmak için 1-9 tuşlarına basın.
+
+[DesktopScreenshotCaption6]
+İsteğe bağlı bildirim alanı simgesi ve oturum açmada geri getiren anahtar.
+
+[SearchTerm1]
+Copilot tuşu
+
+[SearchTerm2]
+Copilot tuşu değiştirme
+
+[SearchTerm3]
+Menü tuşu
+
+[SearchTerm4]
+bağlam menüsü
+
+[SearchTerm5]
+klavye kısayolu
+
+[SearchTerm6]
+Copilot kapatma
+
+[SearchTerm7]
+Copilot key

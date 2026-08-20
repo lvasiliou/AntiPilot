@@ -22,11 +22,29 @@
 
   <Dependencies>
     <!-- Copilot hardware key providers are supported from build 22621 onwards. -->
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22621.0" MaxVersionTested="10.0.26100.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22621.0" MaxVersionTested="10.0.26200.0" />
   </Dependencies>
 
+  <!--
+    The languages the UI is actually translated into, in descending order of Store installs, which
+    is what picked them: together they cover about 97% of acquisitions. The first entry is the
+    fallback for everything not listed. Each one needs a tools\strings\<tag>.txt, an entry in
+    SatelliteResourceLanguages in AntiPilot.csproj, and a place in the makepri qualifier list in
+    build.ps1 — miss any of the three and the language silently disappears from the package.
+  -->
   <Resources>
     <Resource Language="en-us" />
+    <Resource Language="ru" />
+    <Resource Language="es" />
+    <Resource Language="zh-Hans" />
+    <Resource Language="pt-BR" />
+    <Resource Language="tr" />
+    <Resource Language="ja" />
+    <Resource Language="ko" />
+    <Resource Language="ar" />
+    <Resource Language="id" />
+    <Resource Language="zh-Hant" />
+    <Resource Language="el" />
   </Resources>
 
   <!--

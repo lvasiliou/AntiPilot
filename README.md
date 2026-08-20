@@ -1,7 +1,9 @@
 # AntiPilot
 
-Makes the Windows 11 **Copilot key** (and <kbd>Win</kbd>+<kbd>C</kbd>) launch whatever you want —
-a desktop program, a Microsoft Store app, or the old **Menu / context-menu key**.
+Makes the Windows 11 **Copilot key** (and <kbd>Win</kbd>+<kbd>C</kbd>) do whatever you want — launch
+a desktop program or a Microsoft Store app, send a keyboard shortcut, open a small launcher, or act
+as the old **Menu / context-menu key**. Two quick presses can do something different from one, and
+the key can change its mind depending on which app is in front.
 
 ## Why a whole app is needed
 
@@ -50,8 +52,22 @@ The URI form still works where Windows uses it, and every state runs the same ac
 | `PressAndHoldStart` | `…?state=Down`               | runs the action                          |
 | `PressAndHoldStop`  | `…?state=Up`                 | ignored, so a long press acts only once  |
 
-There is no separate press-and-hold action. Telling a long press from a short one needs the URI
-states above, and the machines that matter never send them — a hold action would silently do nothing.
+There is no press-and-hold action. Telling a long press from a short one needs the URI states above,
+and the machines that matter never send them — a hold action would silently do nothing.
+
+### Two presses, though, *are* distinguishable
+
+A **double press** is detectable without any help from Windows, and AntiPilot offers it as a second
+action. Since every press is a brand new process, the two never meet in memory; they meet through
+two named kernel objects instead. The first press takes a mutex and waits on an event; a second
+press finds the mutex already held, sets the event and exits without doing anything itself. The
+first press then runs the double action rather than the single one.
+
+The catch is stated plainly in the UI rather than buried: **the wait is unconditional.** A single
+press has to sit out the whole window to find out that no second press is coming, so turning this on
+makes every press that much slower — the same trade every double-click detector in existence makes.
+That is why it is off by default and why the window is adjustable (200–1000 ms, 350 ms default).
+Leave it off and there is no delay at all; the check is skipped entirely.
 
 ## What it can do
 
@@ -60,11 +76,63 @@ states above, and the machines that matter never send them — a hold action wou
   to the shell as `shell:AppsFolder\…`.
 - **Launch a program, file, folder or link** — any path or URL, with optional arguments and working
   directory. Environment variables are expanded.
+- **Send a keyboard shortcut** — any chord, into whatever has focus: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd>,
+  <kbd>Win</kbd>+<kbd>V</kbd>, Print Screen, the media keys, <kbd>F13</kbd>–<kbd>F24</kbd> for macro
+  software. Capture it by pressing it, or pick one of the presets. Scan codes come from
+  `MapVirtualKey` and the extended-key flag is set per key, which is what keeps the arrows from
+  arriving as the numeric keypad.
 - **Act as the Menu key** — synthesises `VK_APPS`, so the context menu of whatever is focused opens,
-  exactly like a right-click.
+  exactly like a right-click. (A special case of the above, kept as its own mode because it is the
+  reason a lot of people install this.)
+- **Open a quick-launch palette** — a small keyboard-first list of your own entries. Type to filter,
+  <kbd>1</kbd>–<kbd>9</kbd> to run one outright, <kbd>Esc</kbd> to dismiss. The chosen action runs
+  *after* the palette closes, so a shortcut entry lands on the window you were actually using.
 
-It follows the **Windows light/dark theme** and never opens a window on a key press unless nothing is
-configured yet. Nothing runs in the background: each press starts the app, does the thing, and exits.
+Two more things shape what a press does:
+
+- **Launch or focus.** App and program actions can start another copy every time (the default),
+  bring an existing window to the front instead, or toggle — front if it is not, minimised if it is.
+  Windows belonging to Store apps are hosted by `ApplicationFrameHost`, so matching walks through it
+  to the process that really owns the window.
+- **Per-app rules.** The key can do something different while a particular app is in front — rules
+  are matched on the foreground process name, tried in order, and anything unmatched falls through
+  to the ordinary single-press action.
+
+It follows the **Windows light/dark theme**, live: change the theme and open windows repaint rather
+than waiting to be reopened. The UI is translated into **ten languages besides English**. It never
+opens a window on a key press unless nothing is configured yet, and when an action fails it says so
+with a notification-area balloon rather than a dialog that steals focus from whatever you were
+typing into. Nothing runs in the background: each press starts the app, does the thing, and exits.
+
+## The settings window
+
+Laid out the way Windows 11 lays settings out: a navigation rail down the left, a page of cards on
+the right, the commit buttons along the bottom.
+
+None of that is WinForms' own. WinForms has no card, no toggle switch, no navigation rail, and its
+buttons and sliders are drawn by the common controls library, which has looked its age for a decade.
+So `UI/Fluent/` is a small design system — rounded surfaces, the WinUI type ramp in Segoe UI
+Variable, settings cards, a toggle, a slider, a button with an accent variant, and the rail — all
+custom-painted from one set of tokens in [Theme.cs](src/AntiPilot/UI/Theme.cs). The colours are the
+ones WinUI specifies rather than ones invented to look close, and the **accent colour is the user's
+own**, read from `AccentPalette` in the shade WinUI would pick for the current theme: the light
+variant on dark backgrounds, the dark variant on light ones, so text on top of it stays readable
+whatever colour they chose.
+
+The alternative was WinUI 3, which would have been the authentic stack and the wrong choice here: it
+pulls in the Windows App SDK, adds tens of megabytes to a package that ships per-architecture, and
+puts a runtime initialisation in front of a window that a key press might open. This app's whole
+premise is that it is small and starts fast.
+
+Because every pixel is hand-drawn, looking at it is the only way to review it —
+[tools/Capture-Window.ps1](tools/Capture-Window.ps1) opens the window, screenshots it and closes it
+again, in either theme, any language, on any page:
+
+```powershell
+.\tools\Capture-Window.ps1 -ColorMode dark -Page 1
+```
+
+That is not a nicety. It is how the Arabic layout bug below was found.
 
 An optional **notification-area icon** (settings, run the action, status) is **off by default** — a
 resident process just to host one icon is a poor trade when the Start menu already opens the
@@ -91,6 +159,44 @@ choice is stored per executable path under `HKCU\Control Panel\NotifyIconSetting
 install path contains the version number — so a version bump makes Windows treat it as a new icon
 and hide it again.
 
+## Languages
+
+English plus ten others, chosen from the Store acquisition report rather than from a list of big
+languages: Russian, Spanish, Simplified Chinese, Brazilian Portuguese, Turkish, Japanese, Korean,
+Arabic, Indonesian and Traditional Chinese. English covers 65% of installs on its own; those ten
+take it to about 97%.
+
+The language picker is on the **General** page of the settings window. Its default, and the value a
+fresh install has, is **"Same as Windows"** — stored as no value at all, so the app follows the
+system UI language and keeps following it if that changes. Picking a language pins it.
+
+**Arabic mirrors the window**, and getting that right needed a second attempt. The obvious lever,
+WinForms' `RightToLeftLayout`, sets `WS_EX_LAYOUTRTL`, which mirrors the whole device context — and
+every Fluent control paints into that context, so the first Arabic build came back with every card
+title and button label reversed letter by letter. The fix is to set `RightToLeft` alone, which flips
+the standard controls and scrollbars without touching what we draw, and to have the custom controls
+mirror their own geometry: icons and the accent pill move to the right edge, the toggle's "on"
+position flips, and text is drawn with the reading-order flag. Only a screenshot showed the problem;
+no test would have.
+
+All 157 strings live in `tools\strings\en.txt` as plain `Key = text` lines, with one file per
+translation. `tools\Update-Strings.ps1` turns them into the `.resx` files the app embeds *and* into
+`Strings.g.cs`, which has one property per key — so a mistyped string name is a compile error rather
+than a blank label found by a user. Adding a language is one new `<tag>.txt`, then the same tag in
+three places:
+
+| Where | Why |
+| ----- | --- |
+| `tools\strings\<tag>.txt`                       | the translation itself |
+| `SatelliteResourceLanguages` in the csproj      | anything unlisted is stripped from the build |
+| `<Resources>` in `AppxManifest.xml` and the makepri qualifier list in `build.ps1` | or the package reports itself as English-only |
+
+Miss one and the language disappears quietly, which is why a test asserts that every shipped
+language actually resolves to something other than the English text.
+
+Note that .NET ships its own translated WinForms strings for seven of the ten; Arabic and Indonesian
+are not among them, so a handful of framework-supplied strings stay English there.
+
 ## Build
 
 Needs the .NET 10 SDK and the Windows 10/11 SDK (for `makeappx`, `makepri` and `signtool`).
@@ -102,6 +208,31 @@ Needs the .NET 10 SDK and the Windows 10/11 SDK (for `makeappx`, `makepri` and `
 This publishes the app self-contained (logos included, see the `Content` item in the csproj), indexes
 resources with `makepri`, packs `build\out\AntiPilot.msix`, and signs it with a self-signed
 certificate created in `Cert:\CurrentUser\My` on first run.
+
+The publish is **ReadyToRun**, which matters here for a reason it would not in a normal app: Windows
+starts a fresh process for every key press, so cold-start cost is paid per press rather than once
+per session. Measured on x64, twelve runs each, it is 118 ms median without and 107 ms with, for
+0.2 MB of package. Most of the gain one might expect is already there — a self-contained publish
+ships a precompiled framework, so only AntiPilot's own code was still being jitted — but at that
+price the trade is worth making on the one path the user waits for.
+
+### Tests
+
+```powershell
+dotnet test
+```
+
+95 tests, no UI automation: the parts worth testing are the parts that decide what a key press does.
+Chord parsing and formatting round-trip (including which keys need the extended-key prefix, where a
+mistake sends <kbd>Num4</kbd> instead of <kbd>←</kbd>); config load, save and the clamping that keeps
+a hand-edited double-press window from making the key look broken; rule matching and fall-through;
+target validation; that every string resolves in every shipped language. The double-press
+coordinator is tested too — it talks through named kernel objects, and threads see those exactly the
+way separate processes do, so a second thread stands in for the second press.
+
+CI runs the same on `windows-latest`, plus a check that the generated `.resx` and `Strings.g.cs`
+match `tools\strings`, and builds the Store bundle on every run so a broken manifest is caught
+before an upload rather than after one.
 
 ### Building for the Microsoft Store
 
@@ -191,10 +322,25 @@ To remove it again:
 src/AntiPilot/            the app: trampoline + tray icon + settings UI (WinForms, .NET 10)
   Program.cs              entry point; picks key-press / settings / tray from args or AUMID
   ActionRunner.cs         carries out a configured action
+  ActionValidator.cs      checks an action still points at something real, before it is saved
   AppConfig.cs            settings model, stored as JSON
+  HotkeyDefinition.cs     parses and formats chords ("Ctrl+Shift+Escape"); no WinForms dependency
+  TapCoordinator.cs       tells one press from two, across processes
   CopilotKeyStatus.cs     reads HKCU\…\Shell\BrandedKey to report the current key target
-  Interop/                SendInput, app activation, Apps-folder enumeration and icons
-  UI/                     settings window, action editor, app picker, tray icon, theme
+  Strings.g.cs            generated: one property per user-visible string
+  Resources/              generated: Strings.resx and one satellite per language
+  Interop/                SendInput, app activation, Apps-folder enumeration and icons,
+                          window/foreground lookup for focus-or-launch and per-app rules
+  UI/                     settings window, action editor, hotkey capture, app picker,
+                          rule and palette editors, the palette itself, tray icon
+  UI/Theme.cs             the design tokens: Fluent palette, the user's accent, metrics
+  UI/Fluent/              the controls WinForms does not have — settings card, toggle,
+                          slider, accent button, navigation rail, type ramp, paint helpers
+tests/AntiPilot.Tests/    xunit; the decision-making parts, no UI automation
+tools/strings/            en.txt and one file per translation — the source of truth
+tools/Update-Strings.ps1  generates Resources\*.resx and Strings.g.cs from the above
+tools/Capture-Window.ps1  screenshots the settings window, for reviewing the hand-drawn UI
+.github/workflows/ci.yml  build, test, string-table check, Store package
 packaging/AppxManifest.xml  three entry points, the key-provider extension, one capability
 packaging/Images/         logos shipped *inside* the MSIX — scale-* and targetsize-* variants,
                           copied into the build by the Content item in AntiPilot.csproj and
@@ -212,12 +358,29 @@ build.ps1 install.ps1 uninstall.ps1
 - **Settings location.** Unpackaged: `%LOCALAPPDATA%\AntiPilot\config.json`. Installed as MSIX,
   Windows redirects that to `%LOCALAPPDATA%\Packages\AntiPilot_…\LocalCache\Local\AntiPilot\`.
   `antipilot.log` in the same folder records every key activation — the *Open log* button in the
-  settings window opens it.
+  settings window opens it. It rotates to `antipilot.log.1` at 256 KB rather than being deleted,
+  because the part that explains the problem is usually the part that just scrolled off. Writes are
+  serialised with a named mutex: several AntiPilot processes are alive at once by design, and two of
+  them for every double press, and appends from different processes were observed interleaving
+  *inside* a line.
+- **Settings travel.** *Export* and *Import* in the settings window write and read the same JSON, so
+  a setup can be moved between machines. The tray introduction is not imported — it is about the
+  machine, not the settings.
 - **Elevated windows.** Windows blocks synthetic input aimed at processes running as administrator,
-  so the Menu key action does nothing while an elevated window is focused. This is a UIPI rule, not
-  something an app can opt out of.
-- **Theme.** Follows the Windows app theme, read at start-up; reopen the window after switching
-  themes. `ANTIPILOT_COLORMODE=dark` or `=light` forces one regardless of the system setting.
+  so the Menu key and keyboard-shortcut actions do nothing while an elevated window is focused, and
+  "bring the existing window to the front" cannot reach one either. This is a UIPI rule, not
+  something an app can opt out of. The escape hatch, `uiAccess`, needs an install location MSIX
+  cannot provide, so this is not fixable rather than merely unfixed.
+- **The Windows key in a captured shortcut** is a checkbox, not something you press. Windows opens
+  the Start menu before any application sees that key, and swallowing it needs a resident low-level
+  keyboard hook — a lot of machinery for an app whose whole point is not staying resident.
+  <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd> is absent entirely: it is the secure attention
+  sequence and no synthesised input can trigger it, so offering it would be a button that does
+  nothing.
+- **Theme.** Follows the Windows app theme and keeps up with changes while a window is open, title
+  bar included. It is not quite a fresh start-up — a few standard controls pick their colours when
+  their handle is created and only fully catch up next time the window opens.
+  `ANTIPILOT_COLORMODE=dark` or `=light` forces one regardless of the system setting.
 - **Self-signed certificate.** Fine for your own machine. Distributing the package to others means
   either signing with a certificate they trust or shipping it through the Store.
 - **Version bumps.** `Add-AppxPackage` refuses to reinstall the same version over itself, so pass a

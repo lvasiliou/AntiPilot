@@ -6,31 +6,70 @@ namespace AntiPilot.Interop;
 internal static class InputSender
 {
     /// <summary>
-    /// Synthesises a press of the Menu / context-menu key (VK_APPS, extended scan E0 5D)
-    /// into whatever window currently has focus.
+    /// Synthesises a press of the Menu / context-menu key (VK_APPS) into whatever has focus.
     /// </summary>
-    public static void SendMenuKey()
+    public static void SendMenuKey() => SendHotkey(new HotkeyDefinition(VK_APPS));
+
+    /// <summary>
+    /// Synthesises a chord: modifiers down, key down, key up, modifiers up. Order matters — a
+    /// window that reads the modifier state on key-down sees nothing if the modifiers arrive late.
+    /// </summary>
+    public static void SendHotkey(HotkeyDefinition hotkey)
     {
         ReleaseStuckModifiers();
 
-        var inputs = new[]
-        {
-            KeyInput(VK_APPS, 0x5D, KEYEVENTF_EXTENDEDKEY),
-            KeyInput(VK_APPS, 0x5D, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP),
-        };
+        var events = new List<INPUT>(10);
 
+        // Left-hand modifiers throughout: the generic VK_CONTROL and friends are fine for
+        // GetKeyState but some applications test specifically for the sided codes.
+        AddModifier(events, hotkey.Control, VK_LCONTROL, 0x1D, extended: false, down: true);
+        AddModifier(events, hotkey.Alt, VK_LMENU, 0x38, extended: false, down: true);
+        AddModifier(events, hotkey.Shift, VK_LSHIFT, 0x2A, extended: false, down: true);
+        AddModifier(events, hotkey.Windows, VK_LWIN, 0x5B, extended: true, down: true);
+
+        ushort scan = (ushort)MapVirtualKeyW((uint)hotkey.VirtualKey, MAPVK_VK_TO_VSC);
+        uint keyFlags = hotkey.IsExtended ? KEYEVENTF_EXTENDEDKEY : 0;
+
+        events.Add(KeyInput(hotkey.VirtualKey, scan, keyFlags));
+        events.Add(KeyInput(hotkey.VirtualKey, scan, keyFlags | KEYEVENTF_KEYUP));
+
+        // Released in the reverse order they went down, so the chord unwinds cleanly.
+        AddModifier(events, hotkey.Windows, VK_LWIN, 0x5B, extended: true, down: false);
+        AddModifier(events, hotkey.Shift, VK_LSHIFT, 0x2A, extended: false, down: false);
+        AddModifier(events, hotkey.Alt, VK_LMENU, 0x38, extended: false, down: false);
+        AddModifier(events, hotkey.Control, VK_LCONTROL, 0x1D, extended: false, down: false);
+
+        var inputs = events.ToArray();
         uint sent = SendInput((uint)inputs.Length, inputs, Marshal.SizeOf<INPUT>());
+
         if (sent != inputs.Length)
         {
-            Log.Write($"SendInput sent {sent}/{inputs.Length} events, error {Marshal.GetLastWin32Error()}. " +
-                      "The focused window is probably running elevated (UIPI blocks input from a normal process).");
+            Log.Write($"SendInput sent {sent}/{inputs.Length} events for {hotkey.Format()}, " +
+                      $"error {Marshal.GetLastWin32Error()}. The focused window is probably running " +
+                      "elevated (UIPI blocks input from a normal process).");
             return;
         }
 
         var target = GetForegroundWindow();
         Log.Write(target == 0
-            ? "Menu key sent, but no window has focus (locked session?), so nothing will react."
-            : $"Menu key sent to window 0x{target:X}.");
+            ? $"Sent {hotkey.Format()}, but no window has focus (locked session?), so nothing will react."
+            : $"Sent {hotkey.Format()} to window 0x{target:X}.");
+    }
+
+    private static void AddModifier(List<INPUT> events, bool wanted, int virtualKey, ushort scan, bool extended, bool down)
+    {
+        if (!wanted)
+        {
+            return;
+        }
+
+        uint flags = extended ? KEYEVENTF_EXTENDEDKEY : 0;
+        if (!down)
+        {
+            flags |= KEYEVENTF_KEYUP;
+        }
+
+        events.Add(KeyInput(virtualKey, scan, flags));
     }
 
     /// <summary>

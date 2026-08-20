@@ -30,22 +30,22 @@ public sealed class TrayApplication : ApplicationContext
 
     public TrayApplication()
     {
-        _actionItem = new ToolStripMenuItem("Run the key action", null, (_, _) => RunConfiguredAction());
-        _startupItem = new ToolStripMenuItem("Start when I sign in", null, (_, _) => ToggleStartup())
+        _actionItem = new ToolStripMenuItem(Strings.TrayRunAction, null, (_, _) => RunConfiguredAction());
+        _startupItem = new ToolStripMenuItem(Strings.TrayStartWithSignIn, null, (_, _) => ToggleStartup())
         {
             CheckOnClick = false,
         };
 
         var menu = new ContextMenuStrip();
-        menu.Items.Add(new ToolStripMenuItem("Settings…", null, (_, _) => OpenSettings()) { Font = new Font(menu.Font, FontStyle.Bold) });
+        menu.Items.Add(new ToolStripMenuItem(Strings.TraySettings, null, (_, _) => OpenSettings()) { Font = new Font(menu.Font, FontStyle.Bold) });
         menu.Items.Add(_actionItem);
         menu.Items.Add(new ToolStripSeparator());
-        menu.Items.Add(new ToolStripMenuItem("Customise the Copilot key in Windows…", null,
+        menu.Items.Add(new ToolStripMenuItem(Strings.TrayCustomiseKey, null,
             (_, _) => CopilotKeyStatus.OpenWindowsSettings()));
         menu.Items.Add(_startupItem);
-        menu.Items.Add(new ToolStripMenuItem("About AntiPilot…", null, (_, _) => ShowAbout()));
+        menu.Items.Add(new ToolStripMenuItem(Strings.TrayAbout, null, (_, _) => ShowAbout()));
         menu.Items.Add(new ToolStripSeparator());
-        menu.Items.Add(new ToolStripMenuItem("Exit", null, (_, _) => ExitThread()));
+        menu.Items.Add(new ToolStripMenuItem(Strings.TrayExit, null, (_, _) => ExitThread()));
         menu.Opening += (_, _) => RefreshLabels();
 
         _icon = new NotifyIcon
@@ -176,10 +176,8 @@ public sealed class TrayApplication : ApplicationContext
 
         try
         {
-            _icon.BalloonTipTitle = "AntiPilot is in the notification area";
-            _icon.BalloonTipText =
-                "Windows hides new icons: click the ^ next to the clock and drag AntiPilot onto the " +
-                "taskbar to keep it visible.";
+            _icon.BalloonTipTitle = Strings.TrayIntroTitle;
+            _icon.BalloonTipText = Strings.TrayIntroBody;
             _icon.BalloonTipIcon = ToolTipIcon.Info;
             _icon.ShowBalloonTip(10_000);
 
@@ -195,21 +193,21 @@ public sealed class TrayApplication : ApplicationContext
     private void RefreshLabels()
     {
         var config = AppConfig.Load();
-        var summary = config.Tap.IsConfigured ? config.Tap.Describe() : "not set up yet";
+        var summary = config.Tap.IsConfigured ? config.Tap.Describe() : Strings.TrayNotSetUp;
 
         // NotifyIcon.Text is capped at 63 characters.
-        var text = $"AntiPilot — {summary}";
+        var text = Strings.Format(Strings.TrayTooltip, summary);
         _icon.Text = text.Length > 63 ? text[..60] + "…" : text;
 
         _actionItem.Enabled = config.Tap.IsConfigured;
-        _actionItem.Text = config.Tap.IsConfigured ? $"Run: {summary}" : "Nothing configured";
+        _actionItem.Text = config.Tap.IsConfigured ? Strings.Format(Strings.TrayRunNamed, summary) : Strings.TrayNothingConfigured;
 
         var startup = TrayStartup.GetState();
         _startupItem.Checked = startup == TrayStartup.Availability.On;
         _startupItem.Enabled = startup != TrayStartup.Availability.Unavailable;
         _startupItem.Text = startup == TrayStartup.Availability.BlockedByUser
-            ? "Start when I sign in (off in Task Manager)"
-            : "Start when I sign in";
+            ? Strings.TrayStartBlocked
+            : Strings.TrayStartWithSignIn;
     }
 
     private void ToggleStartup()
@@ -222,9 +220,8 @@ public sealed class TrayApplication : ApplicationContext
         else if (TrayStartup.Enable() == TrayStartup.Availability.BlockedByUser)
         {
             MessageBox.Show(
-                "Windows remembers that this was switched off in Task Manager, and only you can " +
-                "switch it back on: Task Manager → Startup apps → \"AntiPilot tray icon\".",
-                "AntiPilot", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Strings.TrayStartupBlockedBody,
+                Strings.AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         RefreshLabels();
@@ -272,16 +269,17 @@ public sealed class TrayApplication : ApplicationContext
     private void RunConfiguredAction()
     {
         var config = AppConfig.Load();
-        if (config.Tap.Kind == ActionKind.MenuKey)
+        if (config.Tap.Kind is ActionKind.MenuKey or ActionKind.Hotkey)
         {
-            // Pointless from here: the menu would open on the tray menu itself.
+            // Pointless from here: synthesised input lands on whatever has focus, which at this
+            // moment is the tray menu the user is clicking in.
             MessageBox.Show(
-                "The Menu key action only makes sense when you press the key yourself.",
-                "AntiPilot", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Strings.TrayMenuKeyOnly,
+                Strings.AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
-        ActionRunner.Run(config.Tap);
+        ActionRunner.Run(config.Tap, ActionFeedback.Dialog, config);
     }
 
     protected override void Dispose(bool disposing)

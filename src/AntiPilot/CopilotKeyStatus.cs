@@ -59,19 +59,19 @@ public static class CopilotKeyStatus
     {
         if (!IsPackaged)
         {
-            return "Debug build — Windows only sees the installed MSIX.";
+            return Strings.StatusUnpackaged;
         }
 
         if (IsActiveTarget)
         {
-            return "The Copilot key and Win+C run AntiPilot.";
+            return Strings.StatusActive;
         }
 
         return ChoiceType switch
         {
-            "Search" => "The Copilot key opens Search — pick AntiPilot →",
-            "App" or "AppEnforcedByPolicy" => "The Copilot key opens another app — pick AntiPilot →",
-            _ => "The Copilot key still does its default thing →",
+            "Search" => Strings.StatusSearch,
+            "App" or "AppEnforcedByPolicy" => Strings.StatusOtherApp,
+            _ => Strings.StatusDefault,
         };
     }
 

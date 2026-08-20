@@ -14,8 +14,18 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!-- English plus the languages with measurable traction in the Store acquisition report, in
+         order of installs; together those cover ~97%. Greek is the exception and has none: it is
+         here because it is the author's own language. Anything not listed is stripped from the
+         output, so a new tools\strings\<tag>.txt has to be added here too, and to <Resources> in
+         AppxManifest.xml and the makepri qualifier list in build.ps1, or it silently disappears. -->
+    <SatelliteResourceLanguages>en;ru;es;zh-Hans;pt-BR;tr;ja;ko;ar;id;zh-Hant;el</SatelliteResourceLanguages>
+
+    <!-- Was true, which pins every culture to the invariant one and makes the translations
+         unreachable. It costs nothing here: on Windows 10 1903 and later .NET uses the ICU that
+         ships with the OS, so nothing is added to the package. -->
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +36,16 @@
          "dotnet run" both find them under Images\. -->
     <Content Include="..\..\packaging\Images\*.png" Link="Images\%(Filename)%(Extension)"
              CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Generated from tools\strings by tools\Update-Strings.ps1. The default manifest name for
+         these is AntiPilot.Resources.Strings, which is what Strings.g.cs asks ResourceManager for. -->
+    <EmbeddedResource Update="Resources\Strings*.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="AntiPilot.Tests" />
   </ItemGroup>
 
 </Project>
