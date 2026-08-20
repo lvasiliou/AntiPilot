@@ -165,15 +165,22 @@ internal static class Program
 
     private static void RunAction(AppConfig config, KeyAction action)
     {
-        if (!action.IsConfigured)
+        switch (config.OutcomeFor(action))
         {
-            // Nothing set up yet — the friendliest thing to do is show the settings window.
-            Log.Write("No action configured; opening settings.");
-            ShowSettings();
-            return;
-        }
+            case KeyPressOutcome.OpenSettings:
+                // Nothing set up yet — the friendliest thing to do is show the settings window.
+                Log.Write("Nothing has been set up yet; opening settings.");
+                ShowSettings();
+                return;
 
-        ActionRunner.Run(action, ActionFeedback.Balloon, config);
+            case KeyPressOutcome.DoNothing:
+                Log.Write("The key is set to do nothing.");
+                return;
+
+            default:
+                ActionRunner.Run(action, ActionFeedback.Balloon, config);
+                return;
+        }
     }
 
     private static void ShowSettings()

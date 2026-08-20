@@ -126,6 +126,19 @@ public sealed class AppRule
     public AppRule Clone() => new() { ProcessName = ProcessName, Action = Action.Clone() };
 }
 
+/// <summary>What a press of the key should actually do, once the configuration has had its say.</summary>
+public enum KeyPressOutcome
+{
+    /// <summary>Nothing has ever been set up, so show the user where to set it up.</summary>
+    OpenSettings,
+
+    /// <summary>The user chose "Nothing". Honour that and stay out of the way.</summary>
+    DoNothing,
+
+    /// <summary>Carry out the configured action.</summary>
+    RunAction,
+}
+
 public sealed class AppConfig
 {
     /// <summary>Bumped when the shape changes, so an imported file can be checked before it is trusted.</summary>
@@ -169,6 +182,17 @@ public sealed class AppConfig
     /// <summary>UI language as a BCP-47 tag. Null or empty follows Windows.</summary>
     public string? Language { get; set; }
 
+    /// <summary>
+    /// True when these settings came from a file the user has actually saved.
+    ///
+    /// This is what separates "never set up" from "set up as Nothing", which
+    /// <see cref="ActionKind.None"/> alone cannot: it is both the value a fresh install starts
+    /// with and the value a user picks to switch the key off. Not serialised — the existence of
+    /// the file is the signal, so there is nothing to store and nothing to migrate.
+    /// </summary>
+    [JsonIgnore]
+    public bool HasBeenSaved { get; private set; }
+
     public static string ConfigDirectory =>
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "AntiPilot");
 
@@ -193,7 +217,12 @@ public sealed class AppConfig
             }
 
             var config = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(path), JsonOptions);
-            config?.Normalise();
+            if (config is not null)
+            {
+                config.Normalise();
+                config.HasBeenSaved = true;
+            }
+
             return config;
         }
         catch (Exception ex)
@@ -255,6 +284,40 @@ public sealed class AppConfig
         var tmp = path + ".tmp";
         File.WriteAllText(tmp, json);
         File.Move(tmp, path, overwrite: true);
+
+        HasBeenSaved = true;
+    }
+
+    /// <summary>
+    /// Decides what a press should do.
+    ///
+    /// Reported as issue #1: choosing "Nothing" opened the settings window on every press, because
+    /// the key path asked <see cref="KeyAction.IsConfigured"/>, which is false for
+    /// <see cref="ActionKind.None"/>. The obvious fix — make None count as configured — was
+    /// rejected: IsConfigured means "this action will do something" and is read in ten other
+    /// places, where the current answer is the right one. A rule with no action would start
+    /// shadowing the single-press action, the tray would offer "Run: Nothing" as a command, and
+    /// the double-press delay would arm itself for an action that does nothing.
+    ///
+    /// The real problem is that one value carried two meanings. Splitting them here leaves
+    /// IsConfigured alone and keeps first-run onboarding, which is the one case where opening the
+    /// settings window is genuinely helpful.
+    /// </summary>
+    public KeyPressOutcome OutcomeFor(KeyAction action)
+    {
+        if (!HasBeenSaved)
+        {
+            return KeyPressOutcome.OpenSettings;
+        }
+
+        if (action.Kind == ActionKind.None)
+        {
+            return KeyPressOutcome.DoNothing;
+        }
+
+        // A kind was chosen but its target never was — "launch an app" with no app. The user meant
+        // something, so send them back to finish it.
+        return action.IsConfigured ? KeyPressOutcome.RunAction : KeyPressOutcome.OpenSettings;
     }
 
     public AppConfig Clone()
