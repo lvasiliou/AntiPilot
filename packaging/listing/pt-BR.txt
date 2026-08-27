@@ -60,20 +60,17 @@ O Windows bloqueia teclas simuladas destinadas a janelas executadas como adminis
 O AntiPilot muda apenas o que a tecla Copilot abre. Ele não remapeia outras teclas e não remove o Copilot do seu PC.
 
 [ReleaseNotes]
-Uma tecla, mais de uma função.
+Corrigido: definir a tecla como "Nada" agora não faz nada. Antes, abria a janela de configurações do AntiPilot a cada toque. Obrigado ao SHAGGAR por relatar.
 
-- Envie qualquer atalho de teclado: Ctrl+Shift+Esc, Win+V, Print Screen, as teclas de mídia ou F13 a F24 para softwares de macro. Pressione o atalho para capturá-lo, ou use uma predefinição.
-- Dê aos dois toques rápidos uma ação própria, separada do toque único.
-- Mude o que a tecla faz conforme o aplicativo que estiver na frente.
-- Abra uma paleta de acesso rápido: digite para filtrar, pressione de 1 a 9 para executar, Esc para fechar.
-- Traga para a frente um aplicativo que já esteja aberto em vez de abrir outra cópia, ou minimize-o se você já estiver olhando para ele.
+Se você está vindo de uma versão mais antiga, esta também traz:
 
-Uma nova janela de configurações, feita para combinar com o Windows 11: navegação à esquerda, cartões de ajustes e a sua própria cor de destaque. Ela acompanha os temas claro e escuro conforme você troca.
-
-Agora em 12 idiomas: inglês, russo, espanhol, chinês simplificado e tradicional, português do Brasil, turco, japonês, coreano, árabe, indonésio e grego, seguindo o idioma do Windows por padrão. Em árabe, o layout é espelhado.
-
-Detalhes menores: exporte e importe sua configuração para levá-la de um PC a outro; uma ação que falha agora avisa com uma notificação em vez de uma caixa de diálogo que rouba seu foco; e cada toque começa um pouco mais rápido.
-
+- Enviar qualquer atalho de teclado: Ctrl+Shift+Esc, Win+V, Print Screen, as teclas de mídia ou F13 a F24 para softwares de macro.
+- Dar aos dois toques rápidos uma ação própria, separada do toque único.
+- Mudar o que a tecla faz conforme o aplicativo que estiver na frente.
+- Uma paleta de acesso rápido: digite para filtrar, pressione de 1 a 9 para executar, Esc para fechar.
+- Trazer para a frente um aplicativo que já esteja aberto em vez de abrir outra cópia.
+- Uma janela de configurações refeita para combinar com o Windows 11, na sua cor de destaque, acompanhando os temas claro e escuro.
+- Agora em 12 idiomas, seguindo o idioma do Windows por padrão.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 e Microsoft Copilot são marcas da Microsoft Corporation. O AntiPilot não é afiliado à Microsoft nem endossado por ela.
 

@@ -170,7 +170,23 @@ if ($problems.Count -gt 0) {
 
 # ---- fill ---------------------------------------------------------------------
 
+# Which screenshot slots actually hold an image, per locale. A caption for a slot with no image
+# behind it is noise in the listing, and Partner Center shows it against nothing.
+$hasImage = @{}
+foreach ($row in $rows) {
+    if ($row.Count -lt $width) { continue }
+    if ($row[0] -notmatch '^DesktopScreenshot(\d+)$') { continue }
+
+    $slot = $Matches[1]
+    foreach ($column in $localeColumn.Keys) {
+        if (-not [string]::IsNullOrWhiteSpace($row[$localeColumn[$column]])) {
+            $hasImage["$column/$slot"] = $true
+        }
+    }
+}
+
 $filled = 0
+$skipped = 0
 foreach ($row in $rows) {
     if ($row.Count -lt $width) { continue }
     $field = $row[0]
@@ -179,9 +195,18 @@ foreach ($row in $rows) {
         $fields = $copy[$column]
         if (-not $fields.Contains($field)) { continue }
 
+        if ($field -match '^DesktopScreenshotCaption(\d+)$' -and -not $hasImage["$column/$($Matches[1])"]) {
+            $skipped++
+            continue
+        }
+
         $row[$localeColumn[$column]] = $fields[$field]
         $filled++
     }
+}
+
+if ($skipped -gt 0) {
+    Write-Host "Skipped $skipped caption(s) with no screenshot in that slot." -ForegroundColor DarkGray
 }
 
 # ---- write --------------------------------------------------------------------

@@ -60,20 +60,17 @@ Windows, yönetici olarak çalışan pencerelere yönelik yapay tuş vuruşları
 AntiPilot yalnızca Copilot tuşunun neyi başlattığını değiştirir. Başka tuşları yeniden atamaz ve Copilot'u bilgisayarınızdan kaldırmaz.
 
 [ReleaseNotes]
-Tek tuş, birden fazla görev.
+Düzeltildi: tuş "Hiçbir şey" olarak ayarlandığında artık gerçekten hiçbir şey yapmıyor. Önceden her basışta AntiPilot ayarlar penceresini açıyordu. Bildirdiği için SHAGGAR'a teşekkürler.
 
-- Herhangi bir klavye kısayolu gönderin: Ctrl+Shift+Esc, Win+V, Print Screen, medya tuşları ya da makro yazılımları için F13-F24. Kısayolu yakalamak için ona basın veya hazır bir ayar seçin.
-- İki hızlı basışa, tek basıştan ayrı kendi eylemini verin.
-- Önde hangi uygulama varsa ona göre tuşun işini değiştirin.
-- Hızlı başlatma paletini açın: filtrelemek için yazın, çalıştırmak için 1-9, kapatmak için Esc.
-- Zaten açık olan bir uygulamayı ikinci kopya başlatmak yerine öne getirin; ona bakıyorsanız simge durumuna küçültün.
+Daha eski bir sürümden geliyorsanız, bu sürüm ayrıca şunları getiriyor:
 
-Windows 11'e uyacak şekilde tasarlanmış yeni bir ayarlar penceresi: solda gezinme, ayar kartları ve baştan sona sizin vurgu renginiz. Açık ve koyu temayı siz değiştirdikçe takip eder.
-
-Artık 12 dilde: İngilizce, Rusça, İspanyolca, Basitleştirilmiş ve Geleneksel Çince, Brezilya Portekizcesi, Türkçe, Japonca, Korece, Arapça, Endonezce ve Yunanca; varsayılan olarak Windows dilinizi izleyerek. Arapçada düzen yansıtılır.
-
-Küçük şeyler: yapılandırmanızı bilgisayarlar arasında taşımak için dışa ve içe aktarın; başarısız bir eylem artık odağınızı çalan bir iletişim kutusu yerine bir bildirimle haber verir; ve her tuş basışı biraz daha hızlı başlar.
-
+- Herhangi bir klavye kısayolu gönderme: Ctrl+Shift+Esc, Win+V, Print Screen, medya tuşları ya da makro yazılımları için F13-F24.
+- İki hızlı basışa, tek basıştan ayrı kendi eylemini verme.
+- Önde hangi uygulama varsa ona göre tuşun işini değiştirme.
+- Hızlı başlatma paleti: filtrelemek için yazın, çalıştırmak için 1-9, kapatmak için Esc.
+- Zaten açık olan bir uygulamayı ikinci kopya başlatmak yerine öne getirme.
+- Windows 11'e uyacak şekilde yeniden yapılmış, sizin vurgu renginizde, açık ve koyu temayı izleyen bir ayarlar penceresi.
+- Artık 12 dilde; varsayılan olarak Windows dilinizi izler.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 ve Microsoft Copilot, Microsoft Corporation'ın ticari markalarıdır. AntiPilot, Microsoft ile bağlantılı değildir ve onaylanmamıştır.
 

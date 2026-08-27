@@ -60,20 +60,17 @@ Windows memblokir ketukan tombol sintetis yang ditujukan ke jendela yang berjala
 AntiPilot hanya mengubah apa yang dijalankan tombol Copilot. Ia tidak memetakan ulang tombol lain, dan tidak menghapus Copilot dari PC Anda.
 
 [ReleaseNotes]
-Satu tombol, lebih dari satu tugas.
+Diperbaiki: mengatur tombol ke "Tidak ada" kini benar-benar tidak melakukan apa pun. Sebelumnya, setiap tekanan malah membuka jendela pengaturan AntiPilot. Terima kasih kepada SHAGGAR yang melaporkannya.
 
-- Kirim pintasan keyboard apa pun: Ctrl+Shift+Esc, Win+V, Print Screen, tombol media, atau F13 sampai F24 untuk perangkat lunak makro. Tekan pintasannya untuk merekamnya, atau ambil prasetel.
-- Beri dua tekanan cepat tindakan tersendiri, terpisah dari satu tekanan.
-- Ubah tugas tombol tergantung aplikasi yang sedang di depan.
-- Buka palet peluncur cepat: ketik untuk menyaring, tekan 1 sampai 9 untuk menjalankan, Esc untuk menutup.
-- Bawa aplikasi yang sudah terbuka ke depan alih-alih menjalankan salinan lain, atau perkecil jika Anda memang sedang melihatnya.
+Jika Anda datang dari versi lama, versi ini juga membawa:
 
-Jendela pengaturan baru, dibuat agar serasi dengan Windows 11: navigasi di kiri, kartu pengaturan, dan warna aksen Anda sendiri di seluruh tampilan. Ia mengikuti tema terang dan gelap saat Anda menggantinya.
-
-Kini dalam 12 bahasa: Inggris, Rusia, Spanyol, Tionghoa Sederhana dan Tradisional, Portugis Brasil, Turki, Jepang, Korea, Arab, Indonesia, dan Yunani, mengikuti bahasa Windows Anda secara bawaan. Untuk bahasa Arab, tata letaknya dicerminkan.
-
-Hal-hal kecil: ekspor dan impor konfigurasi untuk memindahkannya antar-PC; tindakan yang gagal kini memberi tahu lewat notifikasi, bukan kotak dialog yang merebut fokus Anda; dan setiap tekanan tombol mulai sedikit lebih cepat.
-
+- Mengirim pintasan keyboard apa pun: Ctrl+Shift+Esc, Win+V, Print Screen, tombol media, atau F13 sampai F24 untuk perangkat lunak makro.
+- Memberi dua tekanan cepat tindakan tersendiri, terpisah dari satu tekanan.
+- Mengubah tugas tombol tergantung aplikasi yang sedang di depan.
+- Palet peluncur cepat: ketik untuk menyaring, tekan 1 sampai 9 untuk menjalankan, Esc untuk menutup.
+- Membawa aplikasi yang sudah terbuka ke depan alih-alih menjalankan salinan lain.
+- Jendela pengaturan yang dibangun ulang agar serasi dengan Windows 11, dalam warna aksen Anda, mengikuti tema terang dan gelap.
+- Kini dalam 12 bahasa, mengikuti bahasa Windows Anda secara bawaan.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11, dan Microsoft Copilot adalah merek dagang Microsoft Corporation. AntiPilot tidak berafiliasi dengan maupun didukung oleh Microsoft.
 
