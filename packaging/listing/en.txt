@@ -69,20 +69,17 @@ Windows blocks simulated keystrokes aimed at windows running as administrator, s
 AntiPilot changes only what the Copilot key launches. It does not remap other keys, and it does not remove Copilot from your PC.
 
 [ReleaseNotes]
-One key, more than one job.
+Fixed: setting the key to "Nothing" now does nothing. It used to open the AntiPilot settings window on every press instead. Thanks to SHAGGAR for reporting it.
 
-- Send any keyboard shortcut: Ctrl+Shift+Esc, Win+V, Print Screen, the media keys, or F13 to F24 for macro software. Press the shortcut to capture it, or take a preset.
+If you are coming from an older version, this one also brings:
+
+- Send any keyboard shortcut: Ctrl+Shift+Esc, Win+V, Print Screen, the media keys, or F13 to F24 for macro software.
 - Give two quick presses their own action, separate from a single press.
 - Change what the key does depending on which app is in front.
-- Open a quick-launch palette: type to filter, press 1 to 9 to run an entry, Esc to dismiss.
-- Bring an app you already have open to the front instead of starting another copy, or minimise it if you are already looking at it.
-
-A new settings window, built to match Windows 11: navigation down the left, settings cards, and your own accent colour throughout. It follows light and dark as you switch them.
-
-Now in 12 languages: English, Russian, Spanish, Simplified and Traditional Chinese, Brazilian Portuguese, Turkish, Japanese, Korean, Arabic, Indonesian and Greek, following your Windows language by default. Arabic mirrors the layout.
-
-Smaller things: export and import your setup to move it between PCs; a failed action now tells you with a notification instead of a dialog that steals your focus; and every key press starts a little faster.
-
+- A quick-launch palette: type to filter, press 1 to 9 to run an entry, Esc to dismiss.
+- Bring an app you already have open to the front instead of starting another copy.
+- A settings window rebuilt to match Windows 11, in your own accent colour, following light and dark as you switch them.
+- Now in 12 languages, following your Windows language by default.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 and Microsoft Copilot are trademarks of Microsoft Corporation. AntiPilot is not affiliated with or endorsed by Microsoft.
 
