@@ -29,7 +29,7 @@ public sealed class AppPickerDialog : Form
         FormBorderStyle = FormBorderStyle.Sizable;
         ClientSize = new Size(520, 560);
         MinimumSize = new Size(420, 400);
-        AutoScaleMode = AutoScaleMode.Font;
+        Theme.ScaleFromDesignDpi(this);
         BackColor = Theme.Window;
         ForeColor = Theme.Text;
         Icon = AppIcon.Load(32);

@@ -57,7 +57,7 @@ public sealed class SettingsForm : Form
         FormBorderStyle = FormBorderStyle.Sizable;
         MaximizeBox = false;
         StartPosition = FormStartPosition.CenterScreen;
-        AutoScaleMode = AutoScaleMode.Font;
+        Theme.ScaleFromDesignDpi(this);
         BackColor = Theme.Window;
         ForeColor = Theme.Text;
         Icon = AppIcon.Load(32);
