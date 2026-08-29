@@ -63,7 +63,7 @@
       <uap:VisualElements
         DisplayName="AntiPilot"
         Description="Runs whatever you have set the Copilot key to do."
-        BackgroundColor="#0F172A"
+        BackgroundColor="#0C2F76"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
         <uap:DefaultTile
@@ -103,7 +103,7 @@
       <uap:VisualElements
         DisplayName="AntiPilot Settings"
         Description="Choose what the Copilot key and Win+C do: launch an app, a file or a link, or act as the Menu key."
-        BackgroundColor="#0F172A"
+        BackgroundColor="#0C2F76"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">
         <uap:DefaultTile
@@ -119,7 +119,7 @@
         AppListEntry="none"
         DisplayName="AntiPilot tray icon"
         Description="Keeps the AntiPilot icon in the notification area."
-        BackgroundColor="#0F172A"
+        BackgroundColor="#0C2F76"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png" />
       <!--
