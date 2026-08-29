@@ -60,17 +60,11 @@ O Windows bloqueia teclas simuladas destinadas a janelas executadas como adminis
 O AntiPilot muda apenas o que a tecla Copilot abre. Ele não remapeia outras teclas e não remove o Copilot do seu PC.
 
 [ReleaseNotes]
-Corrigido: definir a tecla como "Nada" agora não faz nada. Antes, abria a janela de configurações do AntiPilot a cada toque. Obrigado ao SHAGGAR por relatar.
+Corrigido: a janela de configurações abria pequena demais em telas com escala acima de 100%. Ela abria no tamanho de 100% enquanto o texto e os controles dentro dela cresciam, então os rótulos da esquerda ficavam cortados e, a 150%, a janela podia abrir mais alta que a tela, com o botão Salvar abaixo da borda inferior. Agora todas as janelas acompanham a escala da tela e são mantidas dentro dela.
 
-Se você está vindo de uma versão mais antiga, esta também traz:
+Corrigido: em uma instalação nova, pressionar Salvar sem mudar nada não gravava nada. Deixar a tecla em "Nada" é uma escolha legítima, mas também era o estado inicial, então não havia nada marcado como alterado e nenhum arquivo de configurações era criado - e sem ele a tecla continuava abrindo esta janela a cada pressionamento. Salvar agora sempre grava.
 
-- Enviar qualquer atalho de teclado: Ctrl+Shift+Esc, Win+V, Print Screen, as teclas de mídia ou F13 a F24 para softwares de macro.
-- Dar aos dois toques rápidos uma ação própria, separada do toque único.
-- Mudar o que a tecla faz conforme o aplicativo que estiver na frente.
-- Uma paleta de acesso rápido: digite para filtrar, pressione de 1 a 9 para executar, Esc para fechar.
-- Trazer para a frente um aplicativo que já esteja aberto em vez de abrir outra cópia.
-- Uma janela de configurações refeita para combinar com o Windows 11, na sua cor de destaque, acompanhando os temas claro e escuro.
-- Agora em 12 idiomas, seguindo o idioma do Windows por padrão.
+Novo ícone do aplicativo.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 e Microsoft Copilot são marcas da Microsoft Corporation. O AntiPilot não é afiliado à Microsoft nem endossado por ela.
 

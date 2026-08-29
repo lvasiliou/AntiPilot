@@ -69,17 +69,11 @@ Windows blocks simulated keystrokes aimed at windows running as administrator, s
 AntiPilot changes only what the Copilot key launches. It does not remap other keys, and it does not remove Copilot from your PC.
 
 [ReleaseNotes]
-Fixed: setting the key to "Nothing" now does nothing. It used to open the AntiPilot settings window on every press instead. Thanks to SHAGGAR for reporting it.
+Fixed: the settings window came up too small on any display running above 100% scaling. It opened at its 100% size while the text and controls inside it grew, so the labels down the left were cut short and, at 150%, the window could open taller than the screen with the Save button below the bottom edge. Every window now scales with the display and is kept inside it.
 
-If you are coming from an older version, this one also brings:
+Fixed: on a fresh install, pressing Save without changing anything wrote nothing. Leaving the key set to "Nothing" is a real choice, but it was also the starting state, so there was nothing marked as changed and no settings file was written - and with no settings file the key went on opening this window on every press. Save now always writes.
 
-- Send any keyboard shortcut: Ctrl+Shift+Esc, Win+V, Print Screen, the media keys, or F13 to F24 for macro software.
-- Give two quick presses their own action, separate from a single press.
-- Change what the key does depending on which app is in front.
-- A quick-launch palette: type to filter, press 1 to 9 to run an entry, Esc to dismiss.
-- Bring an app you already have open to the front instead of starting another copy.
-- A settings window rebuilt to match Windows 11, in your own accent colour, following light and dark as you switch them.
-- Now in 12 languages, following your Windows language by default.
+New app icon.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 and Microsoft Copilot are trademarks of Microsoft Corporation. AntiPilot is not affiliated with or endorsed by Microsoft.
 
