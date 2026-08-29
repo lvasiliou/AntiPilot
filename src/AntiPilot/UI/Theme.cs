@@ -194,6 +194,34 @@ public static class Theme
 
     public const int PagePadding = 20;
 
+    /// <summary>The DPI every measurement in this UI is written at.</summary>
+    public const int DesignDpi = 96;
+
+    /// <summary>
+    /// Pins a window's scaling baseline to <see cref="DesignDpi"/> so it grows with the display it
+    /// opens on. Call it before adding any child control.
+    ///
+    /// Every size in these windows — the client size, card heights, button heights — is written as
+    /// a measurement at <see cref="DesignDpi"/>, and the controls in the Fluent folder scale their
+    /// own painting from <see cref="Control.DeviceDpi"/>. Setting AutoScaleMode alone does not join
+    /// the two up, which is the trap this replaces: AutoScaleDimensions starts out empty, WinForms
+    /// fills it in at run time from whatever the font happened to measure, and a factor computed
+    /// against a baseline captured at the current DPI is 1.0 — at every DPI. So the window opened
+    /// 900x700 *physical* pixels on a 150% display while its contents drew half again as large, and
+    /// the footer with Save and Cancel fell off the bottom edge.
+    ///
+    /// Dpi rather than Font because it makes the factor exactly DeviceDpi/96, which is the same
+    /// arithmetic FluentPaint.Dpi already does for the painting — the two cannot drift apart. A
+    /// Font baseline would have to be a hard-coded glyph measurement, and that measurement changes
+    /// on any machine where Segoe UI Variable is missing and the type ramp falls back to Segoe UI.
+    /// The fonts need no help either way: the ramp is quoted in points, so GDI scales it by itself.
+    /// </summary>
+    public static void ScaleFromDesignDpi(ContainerControl container)
+    {
+        container.AutoScaleMode = AutoScaleMode.Dpi;
+        container.AutoScaleDimensions = new SizeF(DesignDpi, DesignDpi);
+    }
+
     /// <summary>Sets up WinForms' own dark mode. Call once before creating any window.</summary>
     public static void Apply()
     {
@@ -287,11 +315,52 @@ public static class Theme
         SystemEvents.UserPreferenceChanged += OnPreferenceChanged;
         form.FormClosed += (_, _) => SystemEvents.UserPreferenceChanged -= OnPreferenceChanged;
 
+        // Load rather than Shown: by then the window has been scaled but not yet painted, so it
+        // never appears at the wrong size first.
+        form.Load += (_, _) => FitToWorkArea(form);
+
         form.HandleCreated += (_, _) => ApplyTitleBar(form);
         if (form.IsHandleCreated)
         {
             ApplyTitleBar(form);
         }
+    }
+
+    /// <summary>
+    /// Brings a window down to the screen it is opening on.
+    ///
+    /// Scaling the design sizes up is the right answer until the display is small as well as dense.
+    /// The settings window asks for 900x700, which becomes 1350x1050 at 150% — taller than the work
+    /// area of a 1080p laptop, which is exactly the machine most likely to be running at 150% in the
+    /// first place. Windows will happily place a window past the bottom of the screen, so it would
+    /// open with the footer, and the Save button in it, somewhere below the taskbar.
+    ///
+    /// The minimum size has to come down first or the window simply refuses to shrink past it.
+    /// </summary>
+    private static void FitToWorkArea(Form form)
+    {
+        var work = Screen.FromControl(form).WorkingArea;
+
+        form.MinimumSize = new Size(
+            Math.Min(form.MinimumSize.Width, work.Width),
+            Math.Min(form.MinimumSize.Height, work.Height));
+
+        var fitted = new Size(
+            Math.Min(form.Width, work.Width),
+            Math.Min(form.Height, work.Height));
+
+        if (fitted == form.Size)
+        {
+            return;
+        }
+
+        // Whatever centred the window measured the size it had a moment ago, and StartPosition does
+        // not run a second time, so the position that goes with the new size is ours to work out.
+        form.StartPosition = FormStartPosition.Manual;
+        form.Size = fitted;
+        form.Location = new Point(
+            work.X + (work.Width - fitted.Width) / 2,
+            work.Y + (work.Height - fitted.Height) / 2);
     }
 
     /// <summary>

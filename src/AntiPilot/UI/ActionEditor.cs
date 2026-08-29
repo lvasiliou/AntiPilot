@@ -79,7 +79,7 @@ public sealed class ActionEditor : UserControl
 
     public ActionEditor()
     {
-        AutoScaleMode = AutoScaleMode.Font;
+        Theme.ScaleFromDesignDpi(this);
         Dock = DockStyle.Fill;
 
         // The editor always sits inside a card, so it takes the card colour rather than the page one.

@@ -60,17 +60,11 @@ Windows bloquea las pulsaciones simuladas dirigidas a ventanas que se ejecutan c
 AntiPilot solo cambia lo que abre la tecla Copilot. No reasigna otras teclas y no elimina Copilot de tu PC.
 
 [ReleaseNotes]
-Corregido: poner la tecla en «Nada» ahora no hace nada. Antes abría la ventana de configuración de AntiPilot en cada pulsación. Gracias a SHAGGAR por informar del fallo.
+Corregido: la ventana de configuración se abría demasiado pequeña en pantallas con una escala superior al 100%. Se abría con el tamaño del 100% mientras el texto y los controles de su interior crecían, así que las etiquetas de la izquierda quedaban cortadas y, al 150%, la ventana podía abrirse más alta que la pantalla, con el botón Guardar por debajo del borde inferior. Ahora todas las ventanas se escalan con la pantalla y se mantienen dentro de ella.
 
-Si vienes de una versión anterior, esta también trae:
+Corregido: en una instalación nueva, pulsar Guardar sin cambiar nada no escribía nada. Dejar la tecla en «Nada» es una elección legítima, pero también era el estado inicial, así que no había nada marcado como cambiado y no se creaba el archivo de configuración; y sin ese archivo la tecla seguía abriendo esta ventana en cada pulsación. Guardar ahora escribe siempre.
 
-- Enviar cualquier atajo de teclado: Ctrl+Mayús+Esc, Win+V, Impr Pant, las teclas multimedia o de F13 a F24 para software de macros.
-- Dar a dos pulsaciones rápidas su propia acción, distinta de una sola.
-- Cambiar lo que hace la tecla según la aplicación que tengas delante.
-- Una paleta de inicio rápido: escribe para filtrar, pulsa de 1 a 9 para ejecutar, Esc para cerrar.
-- Traer al frente una aplicación que ya tengas abierta en lugar de abrir otra copia.
-- Una ventana de configuración rehecha al estilo de Windows 11, en tu color de énfasis, que sigue los temas claro y oscuro.
-- Ahora en 12 idiomas, siguiendo el idioma de Windows de forma predeterminada.
+Nuevo icono de la aplicación.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 y Microsoft Copilot son marcas de Microsoft Corporation. AntiPilot no está afiliado a Microsoft ni cuenta con su respaldo.
 

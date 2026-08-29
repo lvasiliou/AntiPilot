@@ -23,7 +23,7 @@ internal sealed class HotkeyBox : UserControl
 
     public HotkeyBox()
     {
-        AutoScaleMode = AutoScaleMode.Font;
+        Theme.ScaleFromDesignDpi(this);
         Height = 30;
         BackColor = Theme.Window;
         ForeColor = Theme.Text;

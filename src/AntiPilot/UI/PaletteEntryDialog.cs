@@ -22,7 +22,7 @@ public sealed class PaletteEntryDialog : Form
         MaximizeBox = false;
         ShowInTaskbar = false;
         ClientSize = new Size(560, 500);
-        AutoScaleMode = AutoScaleMode.Font;
+        Theme.ScaleFromDesignDpi(this);
         BackColor = Theme.Window;
         ForeColor = Theme.Text;
         Icon = AppIcon.Load(32);

@@ -60,17 +60,11 @@ Windows, yönetici olarak çalışan pencerelere yönelik yapay tuş vuruşları
 AntiPilot yalnızca Copilot tuşunun neyi başlattığını değiştirir. Başka tuşları yeniden atamaz ve Copilot'u bilgisayarınızdan kaldırmaz.
 
 [ReleaseNotes]
-Düzeltildi: tuş "Hiçbir şey" olarak ayarlandığında artık gerçekten hiçbir şey yapmıyor. Önceden her basışta AntiPilot ayarlar penceresini açıyordu. Bildirdiği için SHAGGAR'a teşekkürler.
+Düzeltildi: ayarlar penceresi, %100'ün üzerinde ölçeklendirme kullanan ekranlarda çok küçük açılıyordu. Pencere %100 boyutunda açılırken içindeki yazılar ve denetimler büyüdüğü için soldaki etiketler kesiliyor, %150'de ise pencere ekrandan daha uzun açılabiliyor ve Kaydet düğmesi alt kenarın altında kalıyordu. Artık tüm pencereler ekranla birlikte ölçekleniyor ve ekranın içinde tutuluyor.
 
-Daha eski bir sürümden geliyorsanız, bu sürüm ayrıca şunları getiriyor:
+Düzeltildi: yeni bir kurulumda hiçbir şey değiştirmeden Kaydet'e basmak hiçbir şey yazmıyordu. Tuşu "Hiçbir şey" olarak bırakmak gerçek bir tercihtir, ama aynı zamanda başlangıç durumuydu; değişen bir şey işaretlenmediği için ayar dosyası oluşturulmuyor, dosya olmayınca da tuş her basışta bu pencereyi açmayı sürdürüyordu. Kaydet artık her zaman yazıyor.
 
-- Herhangi bir klavye kısayolu gönderme: Ctrl+Shift+Esc, Win+V, Print Screen, medya tuşları ya da makro yazılımları için F13-F24.
-- İki hızlı basışa, tek basıştan ayrı kendi eylemini verme.
-- Önde hangi uygulama varsa ona göre tuşun işini değiştirme.
-- Hızlı başlatma paleti: filtrelemek için yazın, çalıştırmak için 1-9, kapatmak için Esc.
-- Zaten açık olan bir uygulamayı ikinci kopya başlatmak yerine öne getirme.
-- Windows 11'e uyacak şekilde yeniden yapılmış, sizin vurgu renginizde, açık ve koyu temayı izleyen bir ayarlar penceresi.
-- Artık 12 dilde; varsayılan olarak Windows dilinizi izler.
+Yeni uygulama simgesi.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 ve Microsoft Copilot, Microsoft Corporation'ın ticari markalarıdır. AntiPilot, Microsoft ile bağlantılı değildir ve onaylanmamıştır.
 

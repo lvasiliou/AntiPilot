@@ -1,3 +1,5 @@
+using AntiPilot.UI.Fluent;
+
 namespace AntiPilot.UI;
 
 /// <summary>
@@ -10,6 +12,12 @@ namespace AntiPilot.UI;
 public sealed class PaletteForm : Form
 {
     private const int MaxNumbered = 9;
+
+    /// <summary>The height of one row, at the design DPI.</summary>
+    private const int RowHeight = 28;
+
+    /// <summary>The filter box plus the padding above and below the list, at the design DPI.</summary>
+    private const int ChromeHeight = 58;
 
     private readonly List<KeyAction> _entries;
     private readonly List<KeyAction> _shown = [];
@@ -30,7 +38,7 @@ public sealed class PaletteForm : Form
         MaximizeBox = false;
         TopMost = true;
         KeyPreview = true;
-        AutoScaleMode = AutoScaleMode.Font;
+        Theme.ScaleFromDesignDpi(this);
         BackColor = Theme.Card;
         ForeColor = Theme.Text;
         Padding = new Padding(1);
@@ -51,7 +59,6 @@ public sealed class PaletteForm : Form
         _list.BackColor = Theme.ListBackground;
         _list.ForeColor = Theme.Text;
         _list.DrawMode = DrawMode.OwnerDrawFixed;
-        _list.ItemHeight = 28;
         _list.IntegralHeight = false;
         _list.DrawItem += OnDrawItem;
         _list.Click += (_, _) => RunSelected();
@@ -146,7 +153,15 @@ public sealed class PaletteForm : Form
     private void ResizeToContent()
     {
         int rows = Math.Clamp(_list.Items.Count, 1, 12);
-        ClientSize = new Size(ClientSize.Width, 42 + rows * _list.ItemHeight + 16);
+
+        // Every number in this sum is a design-DPI measurement and none of them is scaled for us:
+        // ListBox.ItemHeight is not bounds, and a size written into ClientSize after the window has
+        // already been scaled has missed its turn. Recomputing the row height from the constant
+        // rather than multiplying whatever is there keeps this safe to call as often as it likes.
+        _list.ItemHeight = FluentPaint.Dpi(this, RowHeight);
+        ClientSize = new Size(
+            ClientSize.Width,
+            FluentPaint.Dpi(this, ChromeHeight) + rows * _list.ItemHeight);
     }
 
     private void OnDrawItem(object? sender, DrawItemEventArgs e)

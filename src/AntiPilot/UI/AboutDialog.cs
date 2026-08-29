@@ -32,7 +32,7 @@ public sealed class AboutDialog : Form
         MinimizeBox = false;
         MaximizeBox = false;
         ShowInTaskbar = false;
-        AutoScaleMode = AutoScaleMode.Font;
+        Theme.ScaleFromDesignDpi(this);
         BackColor = Theme.Window;
         ForeColor = Theme.Text;
         Icon = AppIcon.Load(32);

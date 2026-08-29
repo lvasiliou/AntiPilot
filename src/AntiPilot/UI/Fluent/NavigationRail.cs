@@ -12,6 +12,9 @@ namespace AntiPilot.UI.Fluent;
 /// </summary>
 internal sealed class NavigationRail : Control, IThemedControl
 {
+    /// <summary>The width of the rail at the design DPI.</summary>
+    private const int DesignWidth = 184;
+
     private readonly List<(string Glyph, string Label)> _items = [];
     private int _selected;
     private int _hovered = -1;
@@ -27,10 +30,29 @@ internal sealed class NavigationRail : Control, IThemedControl
         BackColor = Color.Transparent;
         Font = Typography.Body;
         TabStop = true;
-        Width = 184;
+        Width = FluentPaint.Dpi(this, DesignWidth);
     }
 
     public int ItemHeight => FluentPaint.Dpi(this, 40);
+
+    /// <summary>
+    /// Keeps the rail as wide as the display it is being shown on.
+    ///
+    /// Two things conspire to leave it behind otherwise. The rail is docked, so the window's scaling
+    /// pass skips its bounds — a docked control's size is held to be its parent's business. And that
+    /// parent is an AutoSize column, which measures a child that is not itself AutoSize by the width
+    /// it already has rather than by asking GetPreferredSize, so there is nothing for the rail to
+    /// answer. Between them the width is nobody's job, which left the rail 184 pixels wide while the
+    /// labels inside it grew with the font: at 150% "Single press" came out as "Single pr...".
+    ///
+    /// The new DPI is taken from the argument rather than from DeviceDpi, which has not necessarily
+    /// caught up by the time this is called.
+    /// </summary>
+    protected override void RescaleConstantsForDpi(int deviceDpiOld, int deviceDpiNew)
+    {
+        base.RescaleConstantsForDpi(deviceDpiOld, deviceDpiNew);
+        Width = (int)Math.Round(DesignWidth * (double)deviceDpiNew / Theme.DesignDpi);
+    }
 
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

@@ -60,17 +60,11 @@ Windows memblokir ketukan tombol sintetis yang ditujukan ke jendela yang berjala
 AntiPilot hanya mengubah apa yang dijalankan tombol Copilot. Ia tidak memetakan ulang tombol lain, dan tidak menghapus Copilot dari PC Anda.
 
 [ReleaseNotes]
-Diperbaiki: mengatur tombol ke "Tidak ada" kini benar-benar tidak melakukan apa pun. Sebelumnya, setiap tekanan malah membuka jendela pengaturan AntiPilot. Terima kasih kepada SHAGGAR yang melaporkannya.
+Diperbaiki: jendela pengaturan terbuka terlalu kecil pada layar dengan penskalaan di atas 100%. Jendela terbuka pada ukuran 100% sementara teks dan kontrol di dalamnya membesar, sehingga label di sebelah kiri terpotong dan, pada 150%, jendela bisa terbuka lebih tinggi daripada layar dengan tombol Simpan berada di bawah tepi bawah. Kini semua jendela ikut menyesuaikan skala layar dan tetap berada di dalamnya.
 
-Jika Anda datang dari versi lama, versi ini juga membawa:
+Diperbaiki: pada instalasi baru, menekan Simpan tanpa mengubah apa pun tidak menulis apa pun. Membiarkan tombol pada "Tidak ada" adalah pilihan yang sah, tetapi itu juga keadaan awalnya, jadi tidak ada yang ditandai berubah dan berkas pengaturan tidak dibuat - dan tanpa berkas itu tombol terus membuka jendela ini setiap kali ditekan. Simpan kini selalu menulis.
 
-- Mengirim pintasan keyboard apa pun: Ctrl+Shift+Esc, Win+V, Print Screen, tombol media, atau F13 sampai F24 untuk perangkat lunak makro.
-- Memberi dua tekanan cepat tindakan tersendiri, terpisah dari satu tekanan.
-- Mengubah tugas tombol tergantung aplikasi yang sedang di depan.
-- Palet peluncur cepat: ketik untuk menyaring, tekan 1 sampai 9 untuk menjalankan, Esc untuk menutup.
-- Membawa aplikasi yang sudah terbuka ke depan alih-alih menjalankan salinan lain.
-- Jendela pengaturan yang dibangun ulang agar serasi dengan Windows 11, dalam warna aksen Anda, mengikuti tema terang dan gelap.
-- Kini dalam 12 bahasa, mengikuti bahasa Windows Anda secara bawaan.
+Ikon aplikasi baru.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11, dan Microsoft Copilot adalah merek dagang Microsoft Corporation. AntiPilot tidak berafiliasi dengan maupun didukung oleh Microsoft.
 
