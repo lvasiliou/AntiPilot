@@ -23,14 +23,21 @@ The documentation says providers are started through **URI activation** (`antipi
 and the manifest registers that scheme. In practice, on Windows 11 26200 the key simply **launches
 the provider's AUMID with no command line at all** — measured, not guessed. AntiPilot handles both.
 
-Because a bare launch carries no arguments, one executable serves three manifest `<Application>`
-entries and works out its job from `GetCurrentApplicationUserModelId()`:
+Because a bare launch carries no arguments, the .NET executable works out its job from
+`GetCurrentApplicationUserModelId()`. The key entry itself is a separate, native executable:
 
-| Entry       | Started by                        | Behaviour                             |
-| ----------- | --------------------------------- | ------------------------------------- |
-| `AntiPilot` | the Copilot key / Win+C           | runs the configured action, no window |
-| `Settings`  | **AntiPilot Settings** in Start   | opens the settings window             |
-| `Tray`      | the sign-in shortcut, or settings | notification-area icon                |
+| Entry       | Started by                        | Executable          | Behaviour                             |
+| ----------- | --------------------------------- | ------------------- | ------------------------------------- |
+| `AntiPilot` | the Copilot key / Win+C           | `AntiPilot.Key.exe` | runs the configured action, no window |
+| `Settings`  | **AntiPilot Settings** in Start   | `AntiPilot.exe`     | opens the settings window             |
+| `Tray`      | the sign-in shortcut, or settings | `AntiPilot.exe`     | notification-area icon                |
+
+`AntiPilot.Key.exe` is C++ with no dependencies, and exists because Windows starts a fresh process
+for every press: whatever that process costs to start is paid on every press, and starting the .NET
+runtime was most of it — 102 ms a press against 20 ms, measured on x64. It reads the settings file,
+decides what the press means and does it. Anything that needs a window — the palette, the settings
+window on a fresh install, a balloon saying an action failed — it hands to `AntiPilot.exe` next to
+it (`--palette`, `--settings`, `--notify`), so the .NET side only starts on the presses that need one.
 
 So the Start menu shows two entries. That is not tidiness losing an argument — it is forced:
 
@@ -199,38 +206,48 @@ are not among them, so a handful of framework-supplied strings stay English ther
 
 ## Build
 
-Needs the .NET 10 SDK and the Windows 10/11 SDK (for `makeappx`, `makepri` and `signtool`).
+Needs the .NET 10 SDK, the Windows 10/11 SDK (for `makeappx`, `makepri` and `signtool`), and
+Visual Studio with the **Desktop development with C++** workload — the MSVC x64 and ARM64 build
+tools — for the native key path.
 
 ```powershell
 .\build.ps1
 ```
 
-This publishes the app self-contained (logos included, see the `Content` item in the csproj), indexes
+This publishes the .NET app self-contained (logos included, see the `Content` item in the csproj),
+builds `AntiPilot.Key.exe` with MSBuild (found through `vswhere`, since `dotnet` cannot build a C++
+project and the key path is therefore not in `AntiPilot.sln`), stages the two side by side, indexes
 resources with `makepri`, packs `build\out\AntiPilot.msix`, and signs it with a self-signed
 certificate created in `Cert:\CurrentUser\My` on first run.
 
-The publish is **ReadyToRun**, which matters here for a reason it would not in a normal app: Windows
-starts a fresh process for every key press, so cold-start cost is paid per press rather than once
-per session. Measured on x64, twelve runs each, it is 118 ms median without and 107 ms with, for
-0.2 MB of package. Most of the gain one might expect is already there — a self-contained publish
-ships a precompiled framework, so only AntiPilot's own code was still being jitted — but at that
-price the trade is worth making on the one path the user waits for.
+The key path is `src/AntiPilot.Key`: C++20, static CRT so the package picks up no framework
+dependency, about 460 KB. It is what makes a press cost 20 ms rather than 102 — Windows starts a
+fresh process for every press, and the .NET runtime's start was most of what the user waited for.
+The .NET publish is still **ReadyToRun** for the paths it still owns (the palette, the settings
+window, a failure balloon), which are the other moments someone is waiting; it costs 0.2 MB.
 
 ### Tests
 
 ```powershell
 dotnet test
+msbuild tests\AntiPilot.Key.Tests\AntiPilot.Key.Tests.vcxproj /p:Configuration=Release /p:Platform=x64
+tests\AntiPilot.Key.Tests\bin\x64\Release\AntiPilot.Key.Tests.exe
 ```
 
-95 tests, no UI automation: the parts worth testing are the parts that decide what a key press does.
-Chord parsing and formatting round-trip (including which keys need the extended-key prefix, where a
-mistake sends <kbd>Num4</kbd> instead of <kbd>←</kbd>); config load, save and the clamping that keeps
-a hand-edited double-press window from making the key look broken; rule matching and fall-through;
-target validation; that every string resolves in every shipped language. The double-press
-coordinator is tested too — it talks through named kernel objects, and threads see those exactly the
-way separate processes do, so a second thread stands in for the second press.
+110 xunit tests, no UI automation: the parts worth testing are the parts that decide what a key
+press does. Chord parsing and formatting round-trip (including which keys need the extended-key
+prefix, where a mistake sends <kbd>Num4</kbd> instead of <kbd>←</kbd>); config load, save and the
+clamping that keeps a hand-edited double-press window from making the key look broken; rule
+matching and fall-through; target validation; that every string resolves in every shipped language.
+The double-press coordinator is tested too — it talks through named kernel objects, and threads see
+those exactly the way separate processes do, so a second thread stands in for the second press.
 
-CI runs the same on `windows-latest`, plus a check that the generated `.resx` and `Strings.g.cs`
+The native key path has 35 tests of its own, in `tests/AntiPilot.Key.Tests`: no framework, and the
+exit code is the failure count. They mirror the xunit cases for the logic both halves implement —
+chords, rules, what a press means, the double-press coordinator — so the two cannot quietly disagree,
+and add the JSON reader, checked against the exact text the settings window writes.
+
+CI runs all of it on `windows-latest`, plus a check that the generated `.resx` and `Strings.g.cs`
 match `tools\strings`, and builds the Store bundle on every run so a broken manifest is caught
 before an upload rather than after one.
 
@@ -319,8 +336,15 @@ To remove it again:
 ## Layout
 
 ```
-src/AntiPilot/            the app: trampoline + tray icon + settings UI (WinForms, .NET 10)
-  Program.cs              entry point; picks key-press / settings / tray from args or AUMID
+src/AntiPilot.Key/        the key press itself (C++20, static CRT, no dependencies): reads the
+                          config, decides what the press means, does it — 20 ms where .NET took 102
+  Main.cpp                the flow; Config, Json, Hotkey, Tap, Input, Focus and Launch do the same
+                          jobs as the .NET files of those names, and Launch::Delegate starts
+                          AntiPilot.exe for anything that needs a window
+src/AntiPilot/            the app: tray icon + settings UI, and the windows the key path borrows
+                          (WinForms, .NET 10)
+  Program.cs              entry point; picks settings / tray / palette / notify from args or AUMID
+                          (and the key press too, for running unpackaged with --key)
   ActionRunner.cs         carries out a configured action
   ActionValidator.cs      checks an action still points at something real, before it is saved
   AppConfig.cs            settings model, stored as JSON
@@ -337,17 +361,19 @@ src/AntiPilot/            the app: trampoline + tray icon + settings UI (WinForm
   UI/Fluent/              the controls WinForms does not have — settings card, toggle,
                           slider, accent button, navigation rail, type ramp, paint helpers
 tests/AntiPilot.Tests/    xunit; the decision-making parts, no UI automation
+tests/AntiPilot.Key.Tests/  the native side's tests, mirroring the above; exit code = failures
 tools/strings/            en.txt and one file per translation — the source of truth
 tools/Update-Strings.ps1  generates Resources\*.resx and Strings.g.cs from the above
 tools/Capture-Window.ps1  screenshots the settings window, for reviewing the hand-drawn UI
-.github/workflows/ci.yml  build, test, string-table check, Store package
-packaging/AppxManifest.xml  three entry points, the key-provider extension, one capability
+.github/workflows/ci.yml  build, test, string-table check, native key path build + tests, Store package
+packaging/AppxManifest.xml  three entry points across two executables, the key-provider extension,
+                          one capability
 packaging/Images/         logos shipped *inside* the MSIX — scale-* and targetsize-* variants,
                           copied into the build by the Content item in AntiPilot.csproj and
                           resolved from their base names by makepri
 packaging/store/          artwork uploaded to Partner Center, never packaged (listing icon,
                           and screenshots when you take them)
-packaging/design/         sources: master SVG, 1024px export, preview sheet, ICONS.md
+packaging/design/         sources: master PNG, 1024px export, preview sheet, ICONS.md
 packaging/store-listing.md  Store listing copy, per Partner Center field
 packaging/Public/         empty folder the copilotkeyprovider extension requires
 build.ps1 install.ps1 uninstall.ps1

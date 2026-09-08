@@ -20,6 +20,12 @@ internal static class Program
 
         /// <summary>Sit in the notification area.</summary>
         Tray,
+
+        /// <summary>Show the quick-launch palette. Asked for by the native key path, which has no window to show it in.</summary>
+        Palette,
+
+        /// <summary>Show a failure balloon for the native key path, for the same reason.</summary>
+        Notify,
     }
 
     [STAThread]
@@ -40,6 +46,14 @@ internal static class Program
 
             case Mode.Tray:
                 RunTray();
+                return 0;
+
+            case Mode.Palette:
+                ShowPalette(config);
+                return 0;
+
+            case Mode.Notify:
+                ShowFailure(string.Join(' ', args.SkipWhile(a => !a.Equals("--notify", StringComparison.OrdinalIgnoreCase) && !a.Equals("/notify", StringComparison.OrdinalIgnoreCase)).Skip(1)));
                 return 0;
 
             default:
@@ -82,6 +96,19 @@ internal static class Program
         if (Match(args, "--tray", "/tray"))
         {
             return Mode.Tray;
+        }
+
+        // Both are how AntiPilot.Key.exe reaches the parts of the app that need a window. They are
+        // checked before the AUMID below because that process starts this one as a plain child,
+        // and a child inherits the key entry's identity, which would otherwise read as a key press.
+        if (Match(args, "--palette", "/palette"))
+        {
+            return Mode.Palette;
+        }
+
+        if (Match(args, "--notify", "/notify"))
+        {
+            return Mode.Notify;
         }
 
         if (activationUri is not null || Match(args, "--key", "/key"))
@@ -192,6 +219,25 @@ internal static class Program
 
         WinFormsHost.Ensure();
         Application.Run(new SettingsForm());
+    }
+
+    /// <summary>The palette, on behalf of the native key path. Same call the key path here makes, so it behaves identically.</summary>
+    private static void ShowPalette(AppConfig config)
+    {
+        WinFormsHost.Ensure();
+        PaletteForm.Show(config, ActionFeedback.Balloon);
+    }
+
+    /// <summary>A failure balloon, on behalf of the native key path, which has already logged the details.</summary>
+    private static void ShowFailure(string body)
+    {
+        if (string.IsNullOrWhiteSpace(body))
+        {
+            return;
+        }
+
+        WinFormsHost.Ensure();
+        Notifier.ShowError(Strings.ActionFailedTitle, body, ActionFeedback.Balloon);
     }
 
     private static void RunTray()

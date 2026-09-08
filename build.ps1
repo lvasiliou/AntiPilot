@@ -163,8 +163,24 @@ function Invoke-Tool([string]$exe, [string[]]$toolArgs) {
     if ($LASTEXITCODE -ne 0) { throw "$exe failed with exit code $LASTEXITCODE" }
 }
 
+# The native key path is a C++ project, which dotnet cannot build, so it is not in AntiPilot.sln
+# and is built here through MSBuild proper. vswhere is the supported way to find one that has the
+# C++ tools; the one on PATH, if any, is not guaranteed to.
+function Find-MSBuild {
+    $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
+    if (-not (Test-Path $vswhere)) { throw "vswhere.exe not found. Install Visual Studio with the 'Desktop development with C++' workload." }
+
+    $candidate = & $vswhere -latest -products * `
+        -requires Microsoft.Component.MSBuild Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+        -find 'MSBuild\**\Bin\MSBuild.exe' | Select-Object -First 1
+
+    if (-not $candidate) { throw "No Visual Studio with both MSBuild and the C++ build tools was found." }
+    return $candidate
+}
+
 $makepri = Find-SdkTool 'makepri.exe'
 $makeappx = Find-SdkTool 'makeappx.exe'
+$msbuild = Find-MSBuild
 
 foreach ($dir in @($packagesDir)) {
     if (Test-Path $dir) { Get-ChildItem $dir -File | Remove-Item -Force }
@@ -192,19 +208,32 @@ foreach ($arch in $Architectures) {
     $publishDir = Join-Path $buildDir "publish\$arch"
     if (Test-Path $publishDir) { Remove-Item -LiteralPath $publishDir -Recurse -Force }
 
-    # ReadyToRun matters more here than in most apps: Windows starts a whole new process for every
-    # press of the key, so cold-start cost is paid per press rather than once per session.
-    # Measured on this machine, x64, twelve runs each: 118 ms median without, 107 ms with, for
-    # 0.2 MB. The gain is small because a self-contained publish already ships a precompiled
-    # framework — only AntiPilot's own code was still being jitted — but 0.2 MB is close enough to
-    # free that the trade is worth making on the one path the user actually waits for.
-    # Crossgen2 cross-compiles arm64 from an x64 host, so the Store bundle gets it too.
+    # ReadyToRun used to matter here more than in most apps, because the key press started this
+    # executable and paid its cold start on every press. The key press now starts the native
+    # AntiPilot.Key.exe below (20 ms against 102 ms, measured on this machine, x64, fifteen runs
+    # each), and this one is only started for the presses that need a window: the palette, the
+    # settings window, a failure balloon. ReadyToRun is kept because those are still the moments
+    # someone is waiting on, and it costs 0.2 MB. Crossgen2 cross-compiles arm64 from an x64 host,
+    # so the Store bundle gets it too.
     dotnet publish (Join-Path $root 'src\AntiPilot\AntiPilot.csproj') `
         -c Release -r "win-$arch" --self-contained true `
         -p:Version=$assemblyVersion -p:DebugType=none `
         -p:PublishReadyToRun=true -p:TieredCompilationQuickStartupJit=true `
         -o $publishDir --nologo -v minimal
     if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed for $arch." }
+
+    # --- the native key path ------------------------------------------------
+
+    # AntiPilot.Key.exe is what the Copilot key actually starts; see src\AntiPilot.Key\Main.cpp for
+    # why it is not the .NET executable. Static CRT, so it adds no framework dependency to the
+    # package. The ARM64 build cross-compiles from an x64 host like the .NET one does.
+    Write-Host "Building the key path..." -ForegroundColor Cyan
+    $vcPlatform = if ($arch -eq 'arm64') { 'ARM64' } else { 'x64' }
+    $keyProject = Join-Path $root 'src\AntiPilot.Key\AntiPilot.Key.vcxproj'
+    Invoke-Tool $msbuild @($keyProject, '/nologo', '/v:minimal', '/p:Configuration=Release', "/p:Platform=$vcPlatform")
+
+    $keyExe = Join-Path $root "src\AntiPilot.Key\bin\$vcPlatform\Release\AntiPilot.Key.exe"
+    if (-not (Test-Path $keyExe)) { throw "AntiPilot.Key.exe was not produced for $arch." }
 
     # --- stage --------------------------------------------------------------
 
@@ -214,6 +243,9 @@ foreach ($arch in $Architectures) {
     New-Item -ItemType Directory -Path $stageDir -Force | Out-Null
     Copy-Item (Join-Path $publishDir '*') $stageDir -Recurse -Force
     Get-ChildItem $stageDir -Filter '*.pdb' -Recurse | Remove-Item -Force
+
+    # Next to AntiPilot.exe, which it starts for anything that needs a window.
+    Copy-Item $keyExe $stageDir -Force
 
     # The logos travel with the publish output (see the Content item in AntiPilot.csproj).
     $logoCount = (Get-ChildItem (Join-Path $stageDir 'Images') -Filter '*.png' -ErrorAction SilentlyContinue | Measure-Object).Count

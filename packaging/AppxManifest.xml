@@ -48,18 +48,22 @@
   </Resources>
 
   <!--
-    Three entry points share one executable. Windows launches a Copilot key provider by AUMID
-    with no command line, so the app works out what it was started for from
+    Three entry points, two executables. Windows launches a Copilot key provider by AUMID with no
+    command line, so the .NET executable works out what it was started for from
     GetCurrentApplicationUserModelId().
-      AntiPilot  - the key target; carries out the configured action. MUST stay in the app list:
-                   hiding it with AppListEntry="none" also drops it from the "Customize Copilot key"
-                   picker in Settings, even though the app extension is still registered and the
-                   already-stored choice keeps working. Tested the hard way.
+      AntiPilot  - the key target; carries out the configured action. This one is the native
+                   AntiPilot.Key.exe, because Windows starts a fresh process for every press and
+                   a .NET runtime start on each of them was most of what the user waited for. It
+                   hands anything that needs a window back to AntiPilot.exe.
+                   MUST stay in the app list: hiding it with AppListEntry="none" also drops it
+                   from the "Customize Copilot key" picker in Settings, even though the app
+                   extension is still registered and the already-stored choice keeps working.
+                   Tested the hard way.
       Settings   - opens the settings window
       Tray       - hidden entry, target of the sign-in shortcut, owns the notification-area icon
   -->
   <Applications>
-    <Application Id="AntiPilot" Executable="AntiPilot.exe" EntryPoint="Windows.FullTrustApplication">
+    <Application Id="AntiPilot" Executable="AntiPilot.Key.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
         DisplayName="AntiPilot"
         Description="Runs whatever you have set the Copilot key to do."

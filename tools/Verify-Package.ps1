@@ -34,6 +34,25 @@ $markers = [ordered]@{
     'NavigationRail'    = 'Fluent settings window'
     'AccentFromPalette' = 'accent colour fix (RGBA)'
     'OutcomeFor'        = 'issue #1 fix: Nothing does nothing'
+    'ShowFailure'       = 'entry points the native key path delegates to (--palette, --notify)'
+}
+
+# The key press starts AntiPilot.Key.exe, not the .NET executable, and the two halves have to
+# agree: a package with the manifest pointing at an exe that is not in it is a dead key, and one
+# with the exe but a manifest still naming AntiPilot.exe is the old 100 ms key path shipped again.
+function Show-KeyPath([bool]$exePresent, [long]$exeBytes, [string]$manifestTarget) {
+    $ok = $exePresent -and $manifestTarget -eq 'AntiPilot.Key.exe'
+    $mark = if ($ok) { 'yes' } else { 'NO ' }
+    $colour = if ($ok) { 'Green' } else { 'Red' }
+    $detail = if ($exePresent) { "AntiPilot.Key.exe present ($([math]::Round($exeBytes / 1KB)) KB), manifest key entry -> $manifestTarget" }
+              else { "AntiPilot.Key.exe missing, manifest key entry -> $manifestTarget" }
+    Write-Host ("      {0}  native key path: {1}" -f $mark, $detail) -ForegroundColor $colour
+}
+
+function Get-KeyEntryTarget([xml]$manifest) {
+    $entry = @($manifest.Package.Applications.Application) | Where-Object { $_.Id -eq 'AntiPilot' } | Select-Object -First 1
+    if ($entry) { return [string]$entry.Executable }
+    return '(no AntiPilot entry)'
 }
 
 function Show-Payload([string]$msix, [string]$label) {
@@ -68,6 +87,9 @@ function Show-Payload([string]$msix, [string]$label) {
             $colour = if ($present) { 'Green' } else { 'Red' }
             Write-Host ("      {0}  {1}" -f $mark, $markers[$m]) -ForegroundColor $colour
         }
+
+        $keyExe = $zip.Entries | Where-Object { $_.FullName -eq 'AntiPilot.Key.exe' }
+        Show-KeyPath ($null -ne $keyExe) $(if ($keyExe) { $keyExe.Length } else { 0 }) (Get-KeyEntryTarget $xml)
     }
     finally { $zip.Dispose() }
 }
@@ -125,4 +147,9 @@ foreach ($p in $installed) {
         $colour = if ($present) { 'Green' } else { 'Red' }
         Write-Host ("      {0}  {1}" -f $mark, $markers[$m]) -ForegroundColor $colour
     }
+
+    $keyExePath = Join-Path $p.InstallLocation 'AntiPilot.Key.exe'
+    $installedManifest = [xml](Get-Content (Join-Path $p.InstallLocation 'AppxManifest.xml') -Raw)
+    $keyBytes = if (Test-Path $keyExePath) { (Get-Item $keyExePath).Length } else { 0 }
+    Show-KeyPath (Test-Path $keyExePath) $keyBytes (Get-KeyEntryTarget $installedManifest)
 }
