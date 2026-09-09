@@ -33,6 +33,9 @@ public sealed class SettingsForm : Form
     private readonly ListView _rulesList = new();
     private readonly ListView _paletteList = new();
 
+    private readonly Label _rulesEmpty = new();
+    private readonly Label _paletteEmpty = new();
+
     private readonly SettingsCard _statusCard = new();
     private readonly FluentButton _saveButton = new();
     private readonly ToggleSwitch _startupToggle = new();
@@ -425,6 +428,7 @@ public sealed class SettingsForm : Form
         page.Controls.Add(BuildListPage(
             Strings.PerAppIntro,
             _rulesList,
+            EmptyState(_rulesEmpty, Strings.PerAppNoRules),
             [
                 (Strings.PerAppAdd, AddRule),
                 (Strings.Edit, EditRule),
@@ -456,6 +460,7 @@ public sealed class SettingsForm : Form
         page.Controls.Add(BuildListPage(
             Strings.PaletteIntro,
             _paletteList,
+            EmptyState(_paletteEmpty, Strings.PaletteNoEntries),
             [
                 (Strings.PaletteAdd, AddPaletteEntry),
                 (Strings.Edit, EditPaletteEntry),
@@ -464,23 +469,56 @@ public sealed class SettingsForm : Form
                 (Strings.PaletteMoveDown, () => MovePaletteEntry(+1)),
             ]));
 
+        // The rules page has always done this and the palette page never did, so entries already in
+        // the config were invisible until something else forced a refresh: the list opened empty,
+        // and Edit, Remove and the two Move buttons had nothing to act on. Nothing was lost, since
+        // the config is the source of truth and Save writes that, but the page was lying.
+        RefreshPalette();
         return page;
     }
 
-    private static Control BuildListPage(string intro, Control list, (string Label, Action OnClick)[] buttons)
+    /// <summary>The message a list shows in place of itself when it has nothing to show.</summary>
+    private static Label EmptyState(Label label, string text)
+    {
+        label.Text = text;
+        label.Dock = DockStyle.Fill;
+        label.TextAlign = ContentAlignment.MiddleCenter;
+        label.Font = Typography.Body;
+        label.ForeColor = Theme.SecondaryText;
+        label.Tag = Theme.SecondaryTag;
+        label.BackColor = Color.Transparent;
+        label.Visible = false;
+        return label;
+    }
+
+    /// <summary>
+    /// Swaps a list for its empty message, and back.
+    ///
+    /// The list is hidden rather than left underneath, because a ListView with no rows still draws
+    /// its column headers — and headers sitting above the sentence explaining there is nothing
+    /// under them is worse than the bare grid this replaces.
+    /// </summary>
+    private static void SyncEmptyState(ListView list, Label empty)
+    {
+        bool none = list.Items.Count == 0;
+        empty.Visible = none;
+        list.Visible = !none;
+    }
+
+    private static Control BuildListPage(
+        string intro, Control list, Label empty, (string Label, Action OnClick)[] buttons)
     {
         var layout = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
             ColumnCount = 1,
-            RowCount = 3,
+            RowCount = 2,
             BackColor = Color.Transparent,
             Margin = Padding.Empty,
         };
         layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
         layout.Controls.Add(new Label
         {
@@ -495,8 +533,13 @@ public sealed class SettingsForm : Form
             Margin = new Padding(2, 0, 2, 10),
         }, 0, 0);
 
+        // The list and the message that stands in for it when there is nothing to list. Both fill
+        // the same space and exactly one of them is ever visible.
+        var listHost = new Panel { Dock = DockStyle.Fill, BackColor = Color.Transparent, Margin = Padding.Empty };
+        listHost.Controls.Add(list);
+        listHost.Controls.Add(empty);
+
         var card = new CardPanel { Dock = DockStyle.Fill, Padding = new Padding(6) };
-        card.Controls.Add(list);
         layout.Controls.Add(card, 0, 1);
 
         if (list is ListView view)
@@ -528,8 +571,10 @@ public sealed class SettingsForm : Form
             AutoSize = true,
             AutoSizeMode = AutoSizeMode.GrowAndShrink,
             WrapContents = false,
+            Dock = DockStyle.Top,
             BackColor = Color.Transparent,
-            Margin = new Padding(0, 12, 0, 0),
+            Margin = Padding.Empty,
+            Padding = new Padding(2, 8, 2, 2),
         };
 
         foreach (var (label, onClick) in buttons)
@@ -546,7 +591,25 @@ public sealed class SettingsForm : Form
             row.Controls.Add(button);
         }
 
-        layout.Controls.Add(row, 0, 2);
+        // Inside the card rather than loose on the page below it. The buttons act on what the card
+        // holds, and Windows 11 keeps that pairing on one surface; floating underneath they read as
+        // page-level commands that happen to be nearby.
+        var body = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            ColumnCount = 1,
+            RowCount = 2,
+            BackColor = Color.Transparent,
+            Margin = Padding.Empty,
+            Padding = Padding.Empty,
+        };
+        body.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        body.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+        body.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        body.Controls.Add(listHost, 0, 0);
+        body.Controls.Add(row, 0, 1);
+
+        card.Controls.Add(body);
         return layout;
     }
 
@@ -665,6 +728,7 @@ public sealed class SettingsForm : Form
         }
 
         _rulesList.EndUpdate();
+        SyncEmptyState(_rulesList, _rulesEmpty);
     }
 
     private void AddRule()
@@ -735,6 +799,7 @@ public sealed class SettingsForm : Form
         }
 
         _paletteList.EndUpdate();
+        SyncEmptyState(_paletteList, _paletteEmpty);
     }
 
     private static string DescribeKind(KeyAction entry) => entry.Kind switch
