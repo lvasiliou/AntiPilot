@@ -340,8 +340,13 @@ public sealed class PaletteForm : Form
         if (badgeWidth > 0)
         {
             var badge = FluentPaint.Mirror(new Rectangle(row.Right - Dpi(12) - badgeWidth, row.Top + (row.Height - Dpi(22)) / 2, badgeWidth, Dpi(22)), ClientSize.Width);
-            using var outline = new Pen(Theme.ControlStroke, Dpi(1));
             using var path = FluentPaint.RoundedRect(badge, Dpi(Theme.ControlRadius));
+
+            // A stroke on its own is only as visible as the wallpaper behind that row lets it be;
+            // the same faint fill the search field uses reads the same on every row.
+            using var fill = new SolidBrush(Color.FromArgb(Theme.IsDark ? 0x1E : 0x14, Theme.IsDark ? Color.White : Color.Black));
+            g.FillPath(fill, path);
+            using var outline = new Pen(Theme.ControlStroke, Dpi(1));
             g.DrawPath(outline, path);
             DrawText(g, (index + 1).ToString(), _secondaryFont, badge, Theme.SecondaryText, FluentPaint.TextCentre);
         }
