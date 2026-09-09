@@ -223,6 +223,9 @@ certificate created in `Cert:\CurrentUser\My` on first run.
 The key path is `src/AntiPilot.Key`: C++20, static CRT so the package picks up no framework
 dependency, about 460 KB. It is what makes a press cost 20 ms rather than 102 — Windows starts a
 fresh process for every press, and the .NET runtime's start was most of what the user waited for.
+Measured through the path the key really takes, activation by AUMID on the installed package, a
+press is 50 ms end to end, of which about 30 is Windows resolving the package and creating the
+process; the same measurement puts the old path at about 130. What is left is Windows' own floor.
 The .NET publish is still **ReadyToRun** for the paths it still owns (the palette, the settings
 window, a failure balloon), which are the other moments someone is waiting; it costs 0.2 MB.
 
