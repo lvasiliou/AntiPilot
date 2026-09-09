@@ -302,12 +302,14 @@ public static class ShellApps
     /// </summary>
     private static Bitmap? BitmapFromHBitmap(nint hBitmap, int requestedSize)
     {
-        var info = new BITMAP();
-        if (GetObject(hBitmap, Marshal.SizeOf<BITMAP>(), ref info) == 0)
+        var section = new DIBSECTION();
+        int got = GetObject(hBitmap, Marshal.SizeOf<DIBSECTION>(), ref section);
+        if (got == 0)
         {
             return null;
         }
 
+        var info = section.dsBm;
         if (info.bmBits == 0 || info.bmBitsPixel != 32)
         {
             // Not a 32bpp DIB section: fall back to the lossy conversion.
@@ -315,8 +317,22 @@ public static class ShellApps
             return new Bitmap(plain);
         }
 
-        // The shell hands back a top-down DIB, so the stride is positive and row 0 is the top row.
-        using var source = new Bitmap(info.bmWidth, info.bmHeight, info.bmWidthBytes, PixelFormat.Format32bppArgb, info.bmBits);
+        // A DIB keeps its rows bottom-up unless the header says otherwise with a negative height,
+        // and the shell's are bottom-up: bmBits is the row at the foot of the picture. This used to
+        // assume the opposite, and every icon in the app picker was upside down from the first
+        // release — at 24 pixels a calculator flipped is still a calculator, and nobody looked twice
+        // until the palette drew a wolf. GDI+ reads a negative stride as "start at the top row and
+        // walk backwards", which is exactly the layout, so no pixel is copied to turn it over.
+        bool bottomUp = got < Marshal.SizeOf<DIBSECTION>() || section.dsBmih.biHeight > 0;
+        int stride = info.bmWidthBytes;
+        nint scan0 = info.bmBits;
+        if (bottomUp)
+        {
+            scan0 += (nint)((long)(info.bmHeight - 1) * stride);
+            stride = -stride;
+        }
+
+        using var source = new Bitmap(info.bmWidth, info.bmHeight, stride, PixelFormat.Format32bppArgb, scan0);
         var copy = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
         using (var g = Graphics.FromImage(copy))
         {
@@ -360,6 +376,35 @@ public static class ShellApps
         public nint bmBits;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    private struct BITMAPINFOHEADER
+    {
+        public uint biSize;
+        public int biWidth;
+        public int biHeight;
+        public ushort biPlanes;
+        public ushort biBitCount;
+        public uint biCompression;
+        public uint biSizeImage;
+        public int biXPelsPerMeter;
+        public int biYPelsPerMeter;
+        public uint biClrUsed;
+        public uint biClrImportant;
+    }
+
+    /// <summary>What GetObject fills in for a DIB section: the BITMAP, then the header that says which way up it is.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    private struct DIBSECTION
+    {
+        public BITMAP dsBm;
+        public BITMAPINFOHEADER dsBmih;
+        public uint dsBitfields0;
+        public uint dsBitfields1;
+        public uint dsBitfields2;
+        public nint dshSection;
+        public uint dsOffset;
+    }
+
     [ComImport]
     [Guid("bcc18b79-ba16-442f-80c4-8a59c30c463b")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -377,7 +422,7 @@ public static class ShellApps
         [MarshalAs(UnmanagedType.Interface)] out object ppv);
 
     [DllImport("gdi32.dll")]
-    private static extern int GetObject(nint hObject, int nCount, ref BITMAP lpObject);
+    private static extern int GetObject(nint hObject, int nCount, ref DIBSECTION lpObject);
 
     [DllImport("gdi32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
