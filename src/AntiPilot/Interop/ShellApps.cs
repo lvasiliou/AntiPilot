@@ -58,7 +58,7 @@ public static class ShellApps
 
                     var name = Invoke(item, "Name") as string;
                     var path = Invoke(item, "Path") as string;
-                    if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(path))
+                    if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(path) && !IsSelf(name!, path!))
                     {
                         result.Add(new ShellAppEntry(name!, path!));
                     }
@@ -113,6 +113,118 @@ public static class ShellApps
 
     private static object? Invoke(object target, string member, params object[] args) =>
         target.GetType().InvokeMember(member, BindingFlags.InvokeMethod | BindingFlags.GetProperty, null, target, args);
+
+    /// <summary>The Start-menu names the manifest gives this app's own entries. Not localised, so they can be matched.</summary>
+    private static readonly string[] OwnNames = ["AntiPilot", "AntiPilot Settings", "AntiPilot tray icon"];
+
+    /// <summary>
+    /// A package family of ours, whichever publisher it was signed under: the Store one is
+    /// "5676LambrosVasiliou.AntiPilot_ry1r8aenh16n2", a sideload is "AntiPilot_" and a different
+    /// hash, and the thirteen characters after the underscore are always the publisher hash.
+    /// </summary>
+    private static readonly System.Text.RegularExpressions.Regex OwnFamilyPattern =
+        new(@"(^|\.)AntiPilot_[a-z0-9]{13}!", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+    /// <summary>
+    /// True for this app's own Apps-folder entries, which are left out of every list the user
+    /// picks from. Pointing the key at AntiPilot starts AntiPilot, which reads the config and
+    /// points the key at AntiPilot: a loop with a very short fuse. The running package's family
+    /// is the exact test; the name and pattern checks cover a debug build, which has no family
+    /// but is looking at the same Start menu as the installed copy.
+    /// </summary>
+    internal static bool IsSelf(string name, string parsingName)
+    {
+        var family = NativeMethods.GetCurrentPackageFamilyName();
+        if (family is not null && parsingName.StartsWith(family + "!", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return OwnFamilyPattern.IsMatch(parsingName) ||
+            OwnNames.Any(own => own.Equals(name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
+    /// The shell's icon for a file, folder or program, at the given size. Null for anything the
+    /// shell cannot resolve, which includes URLs — those get a glyph from the caller instead.
+    /// </summary>
+    public static Bitmap? TryGetFileIcon(string path, int size)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            return null;
+        }
+
+        var expanded = Environment.ExpandEnvironmentVariables(path).Trim();
+        if (Uri.TryCreate(expanded, UriKind.Absolute, out var uri) && !uri.IsFile)
+        {
+            return null;
+        }
+
+        uint flags = SHGFI_ICON | (size > 16 ? SHGFI_LARGEICON : SHGFI_SMALLICON);
+        var info = new SHFILEINFO();
+
+        // A path that no longer exists still has an extension, and the extension still has an
+        // icon; asking by attributes gets that rather than nothing.
+        bool exists = File.Exists(expanded) || Directory.Exists(expanded);
+        nint result = exists
+            ? SHGetFileInfoW(expanded, 0, ref info, (uint)Marshal.SizeOf<SHFILEINFO>(), flags)
+            : SHGetFileInfoW(expanded, FILE_ATTRIBUTE_NORMAL, ref info, (uint)Marshal.SizeOf<SHFILEINFO>(), flags | SHGFI_USEFILEATTRIBUTES);
+
+        if (result == 0 || info.hIcon == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            using var icon = Icon.FromHandle(info.hIcon);
+            using var source = icon.ToBitmap();
+            if (source.Width == size && source.Height == size)
+            {
+                return new Bitmap(source);
+            }
+
+            var scaled = new Bitmap(size, size, PixelFormat.Format32bppArgb);
+            using var g = Graphics.FromImage(scaled);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            g.DrawImage(source, 0, 0, size, size);
+            return scaled;
+        }
+        catch (Exception ex)
+        {
+            Log.Write($"Could not read the icon for '{path}': {ex.Message}");
+            return null;
+        }
+        finally
+        {
+            DestroyIcon(info.hIcon);
+        }
+    }
+
+    private const uint SHGFI_ICON = 0x100;
+    private const uint SHGFI_LARGEICON = 0x0;
+    private const uint SHGFI_SMALLICON = 0x1;
+    private const uint SHGFI_USEFILEATTRIBUTES = 0x10;
+    private const uint FILE_ATTRIBUTE_NORMAL = 0x80;
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    private struct SHFILEINFO
+    {
+        public nint hIcon;
+        public int iIcon;
+        public uint dwAttributes;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] public string szDisplayName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)] public string szTypeName;
+    }
+
+    [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+    private static extern nint SHGetFileInfoW(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool DestroyIcon(nint hIcon);
 
     /// <summary>
     /// True when the shell can still resolve this Apps-folder entry, i.e. the app is installed.
@@ -190,12 +302,14 @@ public static class ShellApps
     /// </summary>
     private static Bitmap? BitmapFromHBitmap(nint hBitmap, int requestedSize)
     {
-        var info = new BITMAP();
-        if (GetObject(hBitmap, Marshal.SizeOf<BITMAP>(), ref info) == 0)
+        var section = new DIBSECTION();
+        int got = GetObject(hBitmap, Marshal.SizeOf<DIBSECTION>(), ref section);
+        if (got == 0)
         {
             return null;
         }
 
+        var info = section.dsBm;
         if (info.bmBits == 0 || info.bmBitsPixel != 32)
         {
             // Not a 32bpp DIB section: fall back to the lossy conversion.
@@ -203,8 +317,22 @@ public static class ShellApps
             return new Bitmap(plain);
         }
 
-        // The shell hands back a top-down DIB, so the stride is positive and row 0 is the top row.
-        using var source = new Bitmap(info.bmWidth, info.bmHeight, info.bmWidthBytes, PixelFormat.Format32bppArgb, info.bmBits);
+        // A DIB keeps its rows bottom-up unless the header says otherwise with a negative height,
+        // and the shell's are bottom-up: bmBits is the row at the foot of the picture. This used to
+        // assume the opposite, and every icon in the app picker was upside down from the first
+        // release — at 24 pixels a calculator flipped is still a calculator, and nobody looked twice
+        // until the palette drew a wolf. GDI+ reads a negative stride as "start at the top row and
+        // walk backwards", which is exactly the layout, so no pixel is copied to turn it over.
+        bool bottomUp = got < Marshal.SizeOf<DIBSECTION>() || section.dsBmih.biHeight > 0;
+        int stride = info.bmWidthBytes;
+        nint scan0 = info.bmBits;
+        if (bottomUp)
+        {
+            scan0 += (nint)((long)(info.bmHeight - 1) * stride);
+            stride = -stride;
+        }
+
+        using var source = new Bitmap(info.bmWidth, info.bmHeight, stride, PixelFormat.Format32bppArgb, scan0);
         var copy = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
         using (var g = Graphics.FromImage(copy))
         {
@@ -248,6 +376,35 @@ public static class ShellApps
         public nint bmBits;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    private struct BITMAPINFOHEADER
+    {
+        public uint biSize;
+        public int biWidth;
+        public int biHeight;
+        public ushort biPlanes;
+        public ushort biBitCount;
+        public uint biCompression;
+        public uint biSizeImage;
+        public int biXPelsPerMeter;
+        public int biYPelsPerMeter;
+        public uint biClrUsed;
+        public uint biClrImportant;
+    }
+
+    /// <summary>What GetObject fills in for a DIB section: the BITMAP, then the header that says which way up it is.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    private struct DIBSECTION
+    {
+        public BITMAP dsBm;
+        public BITMAPINFOHEADER dsBmih;
+        public uint dsBitfields0;
+        public uint dsBitfields1;
+        public uint dsBitfields2;
+        public nint dshSection;
+        public uint dsOffset;
+    }
+
     [ComImport]
     [Guid("bcc18b79-ba16-442f-80c4-8a59c30c463b")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -265,7 +422,7 @@ public static class ShellApps
         [MarshalAs(UnmanagedType.Interface)] out object ppv);
 
     [DllImport("gdi32.dll")]
-    private static extern int GetObject(nint hObject, int nCount, ref BITMAP lpObject);
+    private static extern int GetObject(nint hObject, int nCount, ref DIBSECTION lpObject);
 
     [DllImport("gdi32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]

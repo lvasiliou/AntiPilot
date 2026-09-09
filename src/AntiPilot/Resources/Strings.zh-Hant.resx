@@ -388,7 +388,7 @@ otepad.exe   或   https://example.com</value>
     <value>AntiPilot</value>
   </data>
   <data name="PaletteFilterPlaceholder" xml:space="preserve">
-    <value>輸入以篩選…</value>
+    <value>搜尋</value>
   </data>
   <data name="PaletteNoMatch" xml:space="preserve">
     <value>沒有相符的項目。</value>

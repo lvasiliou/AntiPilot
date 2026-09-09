@@ -406,7 +406,7 @@ otepad.exe   or   https://example.com</value>
     <value>AntiPilot</value>
   </data>
   <data name="PaletteFilterPlaceholder" xml:space="preserve">
-    <value>Type to filter…</value>
+    <value>Search</value>
   </data>
   <data name="PaletteNoMatch" xml:space="preserve">
     <value>Nothing matches.</value>

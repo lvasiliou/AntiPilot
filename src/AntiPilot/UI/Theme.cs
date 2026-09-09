@@ -25,6 +25,11 @@ public static class Theme
     private const int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
     private const int DWMWA_SYSTEMBACKDROP_TYPE = 38;
 
+    private const int DWMWCP_ROUND = 2;
+    private const int DWMSBT_NONE = 1;
+    private const int DWMSBT_MAINWINDOW = 2;
+    private const int DWMSBT_TRANSIENTWINDOW = 3;
+
     /// <summary>Set ANTIPILOT_COLORMODE to "dark" or "light" to ignore the system setting.</summary>
     private static string? Override =>
         Environment.GetEnvironmentVariable("ANTIPILOT_COLORMODE")?.Trim().ToLowerInvariant();
@@ -447,10 +452,10 @@ public static class Theme
     {
         try
         {
-            int round = 2; // DWMWCP_ROUND
+            int round = DWMWCP_ROUND;
             DwmSetWindowAttribute(form.Handle, DWMWA_WINDOW_CORNER_PREFERENCE, ref round, sizeof(int));
 
-            int backdrop = mica ? 2 : 1; // DWMSBT_MAINWINDOW : DWMSBT_NONE
+            int backdrop = mica ? DWMSBT_MAINWINDOW : DWMSBT_NONE;
             DwmSetWindowAttribute(form.Handle, DWMWA_SYSTEMBACKDROP_TYPE, ref backdrop, sizeof(int));
         }
         catch (Exception ex)
@@ -458,6 +463,56 @@ public static class Theme
             Log.Write($"Could not set the window backdrop: {ex.Message}");
         }
     }
+
+    /// <summary>
+    /// Turns a borderless window into an acrylic one: rounded corners, the transient-window
+    /// backdrop (the blur Windows 11 uses for flyouts), and the frame extended over the whole
+    /// client area so the backdrop shows through it.
+    ///
+    /// That last part is the catch, and it is why this is not on every window. Once the frame
+    /// covers the client, the desktop window manager composites the client using its alpha
+    /// channel — and everything GDI draws, which is every standard control and every TextRenderer
+    /// call, lands with alpha zero and becomes a hole. A window that takes this on has to paint
+    /// itself entirely through GDI+ into a bitmap with real alpha and blit that; see PaletteForm.
+    /// </summary>
+    /// <returns>False when the OS has no backdrop to offer, in which case nothing was changed and the caller should paint opaquely.</returns>
+    internal static bool ApplyAcrylic(Form form)
+    {
+        try
+        {
+            int backdrop = DWMSBT_TRANSIENTWINDOW;
+            if (DwmSetWindowAttribute(form.Handle, DWMWA_SYSTEMBACKDROP_TYPE, ref backdrop, sizeof(int)) != 0)
+            {
+                return false;
+            }
+
+            int round = DWMWCP_ROUND;
+            DwmSetWindowAttribute(form.Handle, DWMWA_WINDOW_CORNER_PREFERENCE, ref round, sizeof(int));
+
+            // The backdrop takes its tint from this, not from the pixels drawn over it.
+            ApplyTitleBar(form);
+
+            var margins = new MARGINS { Left = -1, Top = -1, Right = -1, Bottom = -1 };
+            return DwmExtendFrameIntoClientArea(form.Handle, ref margins) == 0;
+        }
+        catch (Exception ex)
+        {
+            Log.Write($"Could not make the window acrylic: {ex.Message}");
+            return false;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MARGINS
+    {
+        public int Left;
+        public int Right;
+        public int Top;
+        public int Bottom;
+    }
+
+    [DllImport("dwmapi.dll")]
+    private static extern int DwmExtendFrameIntoClientArea(nint hwnd, ref MARGINS margins);
 }
 
 /// <summary>

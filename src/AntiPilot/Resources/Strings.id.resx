@@ -388,7 +388,7 @@ otepad.exe   atau   https://example.com</value>
     <value>AntiPilot</value>
   </data>
   <data name="PaletteFilterPlaceholder" xml:space="preserve">
-    <value>Ketik untuk menyaring…</value>
+    <value>Cari</value>
   </data>
   <data name="PaletteNoMatch" xml:space="preserve">
     <value>Tidak ada yang cocok.</value>

@@ -398,7 +398,7 @@ public static partial class Strings
     /// <summary>AntiPilot</summary>
     public static string PaletteWindowTitle => Get("PaletteWindowTitle");
 
-    /// <summary>Type to filter…</summary>
+    /// <summary>Search</summary>
     public static string PaletteFilterPlaceholder => Get("PaletteFilterPlaceholder");
 
     /// <summary>Nothing matches.</summary>

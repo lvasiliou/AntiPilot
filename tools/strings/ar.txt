@@ -124,7 +124,7 @@ PaletteMoveDown = تحريك لأسفل
 PaletteNoEntries = لا توجد عناصر بعد.
 PaletteLabelCaption = الاسم (اختياري)
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = اكتب للتصفية…
+PaletteFilterPlaceholder = بحث
 PaletteNoMatch = لا توجد نتائج مطابقة.
 
 DoubleTapEnable = منح الضغطتين السريعتين إجراءً خاصًا بهما

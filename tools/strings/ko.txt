@@ -121,7 +121,7 @@ PaletteMoveDown = 아래로 이동
 PaletteNoEntries = 아직 항목이 없습니다.
 PaletteLabelCaption = 이름(선택 사항)
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = 입력하여 필터링…
+PaletteFilterPlaceholder = 검색
 PaletteNoMatch = 일치하는 항목이 없습니다.
 
 DoubleTapEnable = 빠르게 두 번 누르기에 별도의 동작 지정

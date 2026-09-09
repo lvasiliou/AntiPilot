@@ -388,7 +388,7 @@ otepad.exe   или   https://example.com</value>
     <value>AntiPilot</value>
   </data>
   <data name="PaletteFilterPlaceholder" xml:space="preserve">
-    <value>Печатайте для фильтрации…</value>
+    <value>Поиск</value>
   </data>
   <data name="PaletteNoMatch" xml:space="preserve">
     <value>Ничего не найдено.</value>

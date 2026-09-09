@@ -121,7 +121,7 @@ PaletteMoveDown = 下移
 PaletteNoEntries = 尚无条目。
 PaletteLabelCaption = 名称（可选）
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = 输入以筛选…
+PaletteFilterPlaceholder = 搜索
 PaletteNoMatch = 没有匹配项。
 
 DoubleTapEnable = 为两次快速按键设置单独的操作

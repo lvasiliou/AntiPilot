@@ -406,7 +406,7 @@ otepad.exe   ή   https://example.com</value>
     <value>AntiPilot</value>
   </data>
   <data name="PaletteFilterPlaceholder" xml:space="preserve">
-    <value>Πληκτρολογήστε για φιλτράρισμα…</value>
+    <value>Αναζήτηση</value>
   </data>
   <data name="PaletteNoMatch" xml:space="preserve">
     <value>Δεν βρέθηκε τίποτα.</value>

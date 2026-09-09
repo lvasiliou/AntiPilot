@@ -66,6 +66,9 @@ internal static class Typography
         public const string ChevronRight = "\uE76C";
         public const string Warning = "\uE7BA";
         public const string Accept = "\uE73E";
+        public const string Search = "\uE721";
+        public const string Globe = "\uE774";
+        public const string Folder = "\uE8B7";
     }
 
     private static string FirstAvailable(params string[] families)

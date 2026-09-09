@@ -145,7 +145,7 @@ PaletteMoveDown = Move down
 PaletteNoEntries = No entries yet.
 PaletteLabelCaption = Name (optional)
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = Type to filter…
+PaletteFilterPlaceholder = Search
 PaletteNoMatch = Nothing matches.
 
 # ---- double press -----------------------------------------------------------
