@@ -1,0 +1,194 @@
+# Ukrainian. 1.2% of installs, and the largest language that was not shipped — those users were
+# getting English, since uk-UA Windows falls back to the package's first resource, not to Russian.
+
+# ---- shared -----------------------------------------------------------------
+AppName = AntiPilot
+Nothing = Нічого
+NoApp = (немає програми)
+NoAppChosen = (програму не вибрано)
+Ok = OK
+Cancel = Скасувати
+Save = Зберегти
+Remove = Видалити
+Add = Додати
+Close = Закрити
+Edit = Змінити
+
+# ---- action descriptions ----------------------------------------------------
+MenuKeyShort = Клавіша меню
+PaletteShort = Панель швидкого запуску
+HotkeyShort = Сполучення клавіш
+
+# ---- settings window --------------------------------------------------------
+SettingsTitle = AntiPilot
+SettingsTagline = Вирішуйте, що насправді робить клавіша Copilot (і Win+C).
+OpenWindowsSettings = Відкрити параметри Windows
+TabSinglePress = Одне натискання
+TabDoublePress = Подвійне натискання
+TabPerApp = Для програм
+TabPalette = Панель
+TabGeneral = Загальні
+GeneralGroupBehaviour = Запуск і мова
+GeneralGroupTransfer = Файл параметрів
+GeneralGroupAbout = Про програму
+OpenLogDescription = Кожне натискання клавіші, і чому щось не спрацювало
+TrayDescription = Спосіб повернутися до цього вікна без меню «Пуск»
+DoThis = Виконати:
+TestIt = Перевірити
+OpenLog = Відкрити журнал
+About = Про програму
+ImportExport = Імпорт / експорт
+NothingHintTap = Клавіша нічого не робить. Виберіть щось вище.
+NothingHintDouble = Подвійне натискання робить те саме, що й одинарне.
+ShowTrayAndStart = Показувати значок в області сповіщень і запускати його під час входу
+TrayNeedsInstall = Значок в області сповіщень під час входу (потрібна встановлена версія)
+TrayBlocked = Значок в області сповіщень під час входу (вимкнено в диспетчері завдань)
+SaveBeforeClosing = Зберегти зміни перед закриттям?
+CouldNotSave = Не вдалося зберегти параметри.
+NothingConfiguredYet = Ще нічого не налаштовано.
+MenuKeyTestHint = Дію клавіші меню можна перевірити лише з клавіатури: закрийте це вікно, перейдіть до іншого і натисніть клавішу.
+HotkeyTestHint = Сполучення клавіш можна перевірити лише з клавіатури: закрийте це вікно, перейдіть до іншого і натисніть клавішу.
+Language = Мова
+LanguageSystem = Як у Windows
+LanguageRestartHint = Нова мова з'явиться, коли вікно відкриється наступного разу.
+
+# ---- key status -------------------------------------------------------------
+StatusUnpackaged = Налагоджувальна збірка — Windows бачить лише встановлений MSIX.
+StatusActive = Клавіша Copilot і Win+C запускають AntiPilot.
+StatusSearch = Клавіша Copilot відкриває пошук — виберіть AntiPilot →
+StatusOtherApp = Клавіша Copilot відкриває іншу програму — виберіть AntiPilot →
+StatusDefault = Клавіша Copilot досі робить те, що й за замовчуванням →
+
+# ---- action editor ----------------------------------------------------------
+ModeNothing = Нічого
+ModeShellApp = Запустити встановлену програму  (меню «Пуск» або Microsoft Store)
+ModeFile = Запустити програму, файл, папку або посилання
+ModeMenuKey = Працювати як клавіша меню  (стара клавіша контекстного меню)
+ModeHotkey = Надіслати сполучення клавіш
+ModePalette = Показати панель швидкого запуску
+ChooseApp = Вибрати програму…
+Browse = Огляд…
+AppHint = Підходить будь-що зі списку програм меню «Пуск», зокрема програми з Microsoft Store.
+FileCaptionPath = Програма, файл, папка або посилання
+FileCaptionArgs = Аргументи (необов'язково)
+FileCaptionWorkDir = Запускати в папці (необов'язково)
+FileHint = Змінні середовища, як-от %USERPROFILE%, розгортаються.
+FilePlaceholder = C:\Windows\System32\notepad.exe   або   https://example.com
+FileDialogTitle = Виберіть програму або файл
+FileDialogFilter = Програми та ярлики|*.exe;*.lnk;*.bat;*.cmd;*.ps1;*.url|Усі файли|*.*
+MenuKeyBody = Клавіша надсилає клавішу меню (VK_APPS), тому відкривається контекстне меню того, що має фокус — точно як після клацання правою кнопкою.
+ElevatedHint = Windows блокує синтетичне введення, спрямоване у вікна, запущені від імені адміністратора, тому це нічого не робить, поки на передньому плані така програма.
+PaletteBody = Клавіша відкриває невеликий список записів вашої панелі. Введіть текст, щоб відфільтрувати, натисніть 1–9, щоб запустити запис, Esc — щоб закрити.
+PaletteEmptyWarning = На панелі ще немає записів. Додайте їх на вкладці «Панель».
+WhenAlreadyRunning = Якщо вона вже запущена:
+BehaviourAlways = Запустити ще одну копію
+BehaviourFocus = Вивести наявне вікно на передній план
+BehaviourToggle = Вивести на передній план або згорнути, якщо воно вже там
+BehaviourHint = Щоб вивести наявне вікно на передній план, програма має бути запущена від вашого імені, а не від імені адміністратора.
+
+# ---- hotkey capture ---------------------------------------------------------
+HotkeyCaption = Сполучення для надсилання
+HotkeyPlaceholder = Клацніть тут, а потім натисніть сполучення
+HotkeyRecording = Натисніть сполучення зараз…
+HotkeyClear = Очистити
+HotkeyHint = Надсилається туди, де фокус. Самі лише модифікатори — не сполучення; додайте звичайну клавішу.
+HotkeyPresets = Готові варіанти:
+HotkeyInvalid = Таке сполучення AntiPilot надіслати не може.
+PresetTaskManager = Диспетчер завдань
+PresetClipboard = Журнал буфера обміну
+PresetSnip = Фрагмент екрана
+PresetExplorer = Провідник
+PresetEmoji = Панель емодзі
+PresetPrintScreen = Знімок екрана
+PresetLock = Заблокувати ПК
+PresetShowDesktop = Показати робочий стіл
+PresetPlayPause = Відтворити / пауза
+PresetMute = Вимкнути звук
+
+# ---- app picker -------------------------------------------------------------
+PickerTitle = Виберіть програму
+PickerSearch = Пошук програм
+PickerLoading = Читання списку програм…
+PickerCount = Програм: {0}
+PickerNoMatch = Нічого не знайдено.
+PickerColumnApp = Програма
+PickerSelect = Вибрати
+PickerFailed = Не вдалося прочитати список встановлених програм.
+
+# ---- per-app rules ----------------------------------------------------------
+PerAppIntro = Дайте клавіші іншу роботу, поки на передньому плані певна програма. Правила перевіряються згори донизу; усе, що не збігається, переходить до дії одинарного натискання.
+PerAppColumnApp = Коли на передньому плані
+PerAppColumnAction = Клавіша робить це
+PerAppAdd = Додати правило…
+PerAppEditAction = Змінити дію…
+PerAppProcess = Назва процесу
+PerAppProcessHint = Назва виконуваного файлу, з розширенням .exe або без — наприклад chrome або devenv.
+PerAppPickRunning = Вибрати запущену програму…
+PerAppNoRules = Правил ще немає. Клавіша всюди робить те саме.
+PerAppDuplicate = Для цієї програми вже є правило.
+
+# ---- palette ----------------------------------------------------------------
+PaletteIntro = Записи, які пропонуються, коли дію встановлено на «Показати панель швидкого запуску». Перші дев'ять можна запустити клавішами 1–9.
+PaletteColumnLabel = Назва
+PaletteColumnAction = Запускає
+PaletteAdd = Додати запис…
+PaletteMoveUp = Вище
+PaletteMoveDown = Нижче
+PaletteNoEntries = Записів ще немає.
+PaletteLabelCaption = Назва (необов'язково)
+PaletteWindowTitle = AntiPilot
+PaletteFilterPlaceholder = Пошук
+PaletteNoMatch = Нічого не знайдено.
+
+# ---- double press -----------------------------------------------------------
+DoubleTapEnable = Дати двом швидким натисканням власну дію
+DoubleTapEnableDescription = Друге натискання в межах інтервалу нижче запускає дію, задану внизу цієї сторінки.
+DoubleTapCostWarning = Одинарне натискання мусить чекати {0} мс, щоб з'ясувати, чи буде друге, тому кожне натискання відчувається настільки повільнішим. Не вмикайте це, якщо друга дія вам не потрібна.
+DoubleTapWindow = Чекати на друге натискання
+DoubleTapMilliseconds = {0} мс
+DoubleTapDisabledHint = Два швидких натискання просто двічі виконують дію одинарного.
+
+# ---- import / export --------------------------------------------------------
+ExportTitle = Експорт параметрів AntiPilot
+ImportTitle = Імпорт параметрів AntiPilot
+ConfigFilter = Параметри AntiPilot|*.json|Усі файли|*.*
+ExportDone = Параметри експортовано.
+ImportFailed = Цей файл не є придатним файлом параметрів AntiPilot.
+ImportConfirm = Замінити поточні параметри тими, що в цьому файлі?
+ImportDone = Параметри імпортовано.
+ExportButton = Експорт…
+ImportButton = Імпорт…
+
+# ---- tray -------------------------------------------------------------------
+TraySettings = Параметри…
+TrayRunAction = Виконати дію клавіші
+TrayRunNamed = Виконати: {0}
+TrayNothingConfigured = Нічого не налаштовано
+TrayCustomiseKey = Налаштувати клавішу Copilot у Windows…
+TrayStartWithSignIn = Запускати під час входу
+TrayStartBlocked = Запускати під час входу (вимкнено в диспетчері завдань)
+TrayAbout = Про AntiPilot…
+TrayExit = Вийти
+TrayTooltip = AntiPilot — {0}
+TrayNotSetUp = ще не налаштовано
+TrayIntroTitle = AntiPilot в області сповіщень
+TrayIntroBody = Windows ховає нові значки: клацніть ^ поруч із годинником і перетягніть AntiPilot на панель завдань, щоб він залишався видимим.
+TrayMenuKeyOnly = Дія клавіші меню має сенс лише тоді, коли клавішу натискаєте ви самі.
+TrayStartupBlockedBody = Windows пам'ятає, що це було вимкнено в диспетчері завдань, і лише ви можете ввімкнути це знову: Диспетчер завдань → Автозавантаження → «Значок AntiPilot в області сповіщень».
+TrayStartupFailed = Windows не дозволила ввімкнути завдання автозапуску.
+TrayCouldNotStart = Не вдалося запустити значок в області сповіщень.
+
+# ---- errors -----------------------------------------------------------------
+ActionFailedTitle = AntiPilot не зміг виконати дію
+ActionFailedBody = {0}
+TargetMissingApp = Цю програму вже видалено.
+TargetMissingFile = Цього файлу або папки більше немає.
+ValidationTitle = Перевірте це перед збереженням
+ValidationContinue = Усе одно зберегти
+
+# ---- about ------------------------------------------------------------------
+AboutTitle = Про AntiPilot
+AboutVersion = Версія {0}
+AboutVersionUnknown = Версія невідома
+AboutUnpackaged = Запущено без пакета
+AboutTagline = Змушує клавішу Copilot запускати вибрану вами програму, надсилати сполучення клавіш або працювати як клавіша меню.

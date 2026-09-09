@@ -194,7 +194,7 @@ $priConfig = Join-Path $buildDir 'priconfig.xml'
 # only en-US and Windows reports the package as English-only however many satellite assemblies are
 # in the layout. The .NET satellites resolve by folder and would work regardless; this is what makes
 # the Store listing say the app is available in these languages.
-$priLanguages = 'en-US_ru_es_zh-Hans_pt-BR_tr_ja_ko_ar_id_zh-Hant_el'
+$priLanguages = 'en-US_ru_es_zh-Hans_pt-BR_tr_ja_ko_ar_id_zh-Hant_el_uk'
 Invoke-Tool $makepri @('createconfig', '/cf', $priConfig, '/dq', $priLanguages, '/o')
 
 foreach ($arch in $Architectures) {

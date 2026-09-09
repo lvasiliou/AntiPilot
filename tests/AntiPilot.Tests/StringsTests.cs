@@ -8,7 +8,7 @@ public class StringsTests
 {
     /// <summary>Must match SatelliteResourceLanguages in AntiPilot.csproj.</summary>
     private static readonly string[] ShippedLanguages =
-        ["ru", "es", "zh-Hans", "pt-BR", "tr", "ja", "ko", "ar", "id", "zh-Hant", "el"];
+        ["ru", "es", "zh-Hans", "pt-BR", "tr", "ja", "ko", "ar", "id", "zh-Hant", "el", "uk"];
 
     private static IEnumerable<PropertyInfo> StringProperties => typeof(Strings)
         .GetProperties(BindingFlags.Public | BindingFlags.Static)
@@ -52,6 +52,7 @@ public class StringsTests
     [InlineData("id")]
     [InlineData("zh-Hant")]
     [InlineData("el")]
+    [InlineData("uk")]
     public void EveryShippedLanguageFallsBackToEnglishRatherThanToNothing(string tag)
     {
         var previous = Strings.Culture;

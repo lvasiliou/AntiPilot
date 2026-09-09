@@ -39,7 +39,7 @@ La ventana de configuración está hecha para parecerse a Windows 11: navegació
 
 EN TU IDIOMA
 
-Inglés, ruso, español, chino simplificado y tradicional, portugués de Brasil, turco, japonés, coreano, árabe, indonesio y griego. AntiPilot sigue el idioma de Windows de forma predeterminada, y en árabe refleja la ventana entera en lugar de solo traducir el texto.
+Inglés, ruso, español, chino simplificado y tradicional, portugués de Brasil, turco, japonés, coreano, árabe, indonesio, griego y ucraniano. AntiPilot sigue el idioma de Windows de forma predeterminada, y en árabe refleja la ventana entera en lugar de solo traducir el texto.
 
 TAMBIÉN FUNCIONA CON WIN+C
 
@@ -114,7 +114,7 @@ Una ventana de configuración al estilo de Windows 11, en tu color de énfasis
 Sigue el tema claro y oscuro de Windows, y se adapta cuando lo cambias
 
 [Feature14]
-Disponible en 12 idiomas, siguiendo el idioma de Windows de forma predeterminada
+Disponible en 13 idiomas, siguiendo el idioma de Windows de forma predeterminada
 
 [Feature15]
 Selector de aplicaciones con búsqueda e iconos reales de Windows

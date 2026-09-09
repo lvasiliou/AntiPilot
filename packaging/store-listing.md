@@ -134,7 +134,7 @@ MIT licensed. The full licence text ships in the app under About.
 11. Optional notification-area icon, off by default, with a sign-in switch
 12. A settings window built to match Windows 11, in your own accent colour
 13. Follows the Windows light and dark theme, and keeps up when you switch
-14. Available in 12 languages, following your Windows language by default
+14. Available in 13 languages, following your Windows language by default
 15. Searchable app picker with real Windows icons
 16. Export and import your setup, to move it between PCs
 17. Shows whether the Copilot key currently points at AntiPilot, and links straight to that setting

@@ -20,7 +20,7 @@
          here because it is the author's own language. Anything not listed is stripped from the
          output, so a new tools\strings\<tag>.txt has to be added here too, and to <Resources> in
          AppxManifest.xml and the makepri qualifier list in build.ps1, or it silently disappears. -->
-    <SatelliteResourceLanguages>en;ru;es;zh-Hans;pt-BR;tr;ja;ko;ar;id;zh-Hant;el</SatelliteResourceLanguages>
+    <SatelliteResourceLanguages>en;ru;es;zh-Hans;pt-BR;tr;ja;ko;ar;id;zh-Hant;el;uk</SatelliteResourceLanguages>
 
     <!-- Was true, which pins every culture to the invariant one and makes the translations
          unreachable. It costs nothing here: on Windows 10 1903 and later .NET uses the ICU that

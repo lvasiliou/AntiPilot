@@ -106,7 +106,7 @@ Two more things shape what a press does:
   to the ordinary single-press action.
 
 It follows the **Windows light/dark theme**, live: change the theme and open windows repaint rather
-than waiting to be reopened. The UI is translated into **ten languages besides English**. It never
+than waiting to be reopened. The UI is translated into **twelve languages besides English**. It never
 opens a window on a key press unless nothing is configured yet, and when an action fails it says so
 with a notification-area balloon rather than a dialog that steals focus from whatever you were
 typing into. Nothing runs in the background: each press starts the app, does the thing, and exits.
@@ -168,10 +168,12 @@ and hide it again.
 
 ## Languages
 
-English plus ten others, chosen from the Store acquisition report rather than from a list of big
+English plus twelve others, chosen from the Store acquisition report rather than from a list of big
 languages: Russian, Spanish, Simplified Chinese, Brazilian Portuguese, Turkish, Japanese, Korean,
-Arabic, Indonesian and Traditional Chinese. English covers 65% of installs on its own; those ten
-take it to about 97%.
+Arabic, Indonesian, Traditional Chinese and Ukrainian, plus Greek because it is the author's own.
+English covers 65% of installs on its own; the rest take it to about 97%. Ukrainian was the last
+added, at 1.2% of installs: until then those users were getting English, since Windows in uk-UA
+falls back to the package's first resource rather than to Russian.
 
 The language picker is on the **General** page of the settings window. Its default, and the value a
 fresh install has, is **"Same as Windows"** — stored as no value at all, so the app follows the

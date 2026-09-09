@@ -39,7 +39,7 @@ Jendela pengaturan dibuat agar serasi dengan Windows 11: navigasi di kiri, kartu
 
 DALAM BAHASA ANDA
 
-Inggris, Rusia, Spanyol, Tionghoa Sederhana dan Tradisional, Portugis Brasil, Turki, Jepang, Korea, Arab, Indonesia, dan Yunani. AntiPilot mengikuti bahasa Windows Anda secara bawaan, dan untuk bahasa Arab ia mencerminkan seluruh jendela, bukan sekadar menerjemahkan teksnya.
+Inggris, Rusia, Spanyol, Tionghoa Sederhana dan Tradisional, Portugis Brasil, Turki, Jepang, Korea, Arab, Indonesia, Yunani, dan Ukraina. AntiPilot mengikuti bahasa Windows Anda secara bawaan, dan untuk bahasa Arab ia mencerminkan seluruh jendela, bukan sekadar menerjemahkan teksnya.
 
 BERFUNGSI DENGAN WIN+C JUGA
 
@@ -114,7 +114,7 @@ Jendela pengaturan yang serasi dengan Windows 11, dalam warna aksen Anda sendiri
 Mengikuti tema terang dan gelap Windows, dan menyesuaikan saat Anda menggantinya
 
 [Feature14]
-Tersedia dalam 12 bahasa, mengikuti bahasa Windows Anda secara bawaan
+Tersedia dalam 13 bahasa, mengikuti bahasa Windows Anda secara bawaan
 
 [Feature15]
 Pemilih aplikasi yang bisa dicari dengan ikon Windows asli

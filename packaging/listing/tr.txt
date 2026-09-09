@@ -39,7 +39,7 @@ Ayarlar penceresi Windows 11'e uyacak şekilde tasarlandı: solda gezinme, ayar 
 
 KENDİ DİLİNİZDE
 
-İngilizce, Rusça, İspanyolca, Basitleştirilmiş ve Geleneksel Çince, Brezilya Portekizcesi, Türkçe, Japonca, Korece, Arapça, Endonezce ve Yunanca. AntiPilot varsayılan olarak Windows dilinizi izler; Arapçada ise metni çevirmekle kalmaz, pencerenin tamamını yansıtır.
+İngilizce, Rusça, İspanyolca, Basitleştirilmiş ve Geleneksel Çince, Brezilya Portekizcesi, Türkçe, Japonca, Korece, Arapça, Endonezce, Yunanca ve Ukraynaca. AntiPilot varsayılan olarak Windows dilinizi izler; Arapçada ise metni çevirmekle kalmaz, pencerenin tamamını yansıtır.
 
 WIN+C İLE DE ÇALIŞIR
 
@@ -114,7 +114,7 @@ Windows 11'e uyacak şekilde tasarlanmış, sizin vurgu renginizde bir ayarlar p
 Windows açık ve koyu temasını izler, siz değiştirdiğinizde de uyum sağlar
 
 [Feature14]
-12 dilde mevcut; varsayılan olarak Windows dilinizi izler
+13 dilde mevcut; varsayılan olarak Windows dilinizi izler
 
 [Feature15]
 Gerçek Windows simgeleriyle, aramalı uygulama seçici
