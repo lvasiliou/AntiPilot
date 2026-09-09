@@ -60,11 +60,15 @@ O Windows bloqueia teclas simuladas destinadas a janelas executadas como adminis
 O AntiPilot muda apenas o que a tecla Copilot abre. Ele não remapeia outras teclas e não remove o Copilot do seu PC.
 
 [ReleaseNotes]
-Corrigido: a janela de configurações abria pequena demais em telas com escala acima de 100%. Ela abria no tamanho de 100% enquanto o texto e os controles dentro dela cresciam, então os rótulos da esquerda ficavam cortados e, a 150%, a janela podia abrir mais alta que a tela, com o botão Salvar abaixo da borda inferior. Agora todas as janelas acompanham a escala da tela e são mantidas dentro dela.
+A tecla ficou mais rápida. Um toque agora inicia um pequeno programa nativo em vez do runtime .NET: cerca de 50 milissegundos da tecla até a ação, em vez de 130, medidos no caminho que o Windows realmente percorre. Tudo o que precisa de uma janela - a paleta, a janela de configurações na primeira execução, um aviso quando uma ação falha - continua lá, só que é iniciado apenas quando necessário.
 
-Corrigido: em uma instalação nova, pressionar Salvar sem mudar nada não gravava nada. Deixar a tecla em "Nada" é uma escolha legítima, mas também era o estado inicial, então não havia nada marcado como alterado e nenhum arquivo de configurações era criado - e sem ele a tecla continuava abrindo esta janela a cada pressionamento. Salvar agora sempre grava.
+A paleta de acesso rápido é nova: uma janela acrílica com cantos arredondados, o ícone real de cada aplicativo, programa, pasta ou link, linhas mais espaçosas que dizem o que cada entrada executa e um campo de pesquisa de verdade. Digitar filtra; 1-9 executam uma entrada na hora enquanto a pesquisa está vazia.
 
-Novo ícone do aplicativo.
+Corrigido: a página Paleta nas configurações abria vazia mesmo com entradas salvas. Nada se perdia, mas elas não podiam ser vistas nem editadas até que outra fosse adicionada.
+
+Corrigido: todos os ícones de aplicativos apareciam de cabeça para baixo - no seletor de aplicativos desde a primeira versão e na nova paleta. Uma calculadora invertida ainda parece uma calculadora; um lobo, não.
+
+O AntiPilot não se oferece mais no seletor de aplicativos. Apontar a tecla para o AntiPilot só iniciaria o AntiPilot.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 e Microsoft Copilot são marcas da Microsoft Corporation. O AntiPilot não é afiliado à Microsoft nem endossado por ela.
 

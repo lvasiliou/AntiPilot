@@ -60,11 +60,15 @@ Windows, yönetici olarak çalışan pencerelere yönelik yapay tuş vuruşları
 AntiPilot yalnızca Copilot tuşunun neyi başlattığını değiştirir. Başka tuşları yeniden atamaz ve Copilot'u bilgisayarınızdan kaldırmaz.
 
 [ReleaseNotes]
-Düzeltildi: ayarlar penceresi, %100'ün üzerinde ölçeklendirme kullanan ekranlarda çok küçük açılıyordu. Pencere %100 boyutunda açılırken içindeki yazılar ve denetimler büyüdüğü için soldaki etiketler kesiliyor, %150'de ise pencere ekrandan daha uzun açılabiliyor ve Kaydet düğmesi alt kenarın altında kalıyordu. Artık tüm pencereler ekranla birlikte ölçekleniyor ve ekranın içinde tutuluyor.
+Tuş artık daha hızlı. Bir basış artık .NET çalışma zamanı yerine küçük bir yerel program başlatıyor: tuştan eyleme 130 yerine yaklaşık 50 milisaniye; Windows'un gerçekten izlediği yolda ölçüldü. Pencere gerektiren her şey - palet, ilk çalıştırmadaki ayarlar penceresi, bir eylem başarısız olduğunda gösterilen ileti - yerinde duruyor, yalnızca gerektiğinde başlatılıyor.
 
-Düzeltildi: yeni bir kurulumda hiçbir şey değiştirmeden Kaydet'e basmak hiçbir şey yazmıyordu. Tuşu "Hiçbir şey" olarak bırakmak gerçek bir tercihtir, ama aynı zamanda başlangıç durumuydu; değişen bir şey işaretlenmediği için ayar dosyası oluşturulmuyor, dosya olmayınca da tuş her basışta bu pencereyi açmayı sürdürüyordu. Kaydet artık her zaman yazıyor.
+Hızlı başlatma paleti yenilendi: yuvarlatılmış köşeli akrilik bir pencere, her uygulamanın, programın, klasörün veya bağlantının gerçek simgesi, girişin neyi çalıştırdığını söyleyen daha ferah satırlar ve gerçek bir arama alanı. Yazmak filtreler; arama boşken 1-9 bir girişi doğrudan çalıştırır.
 
-Yeni uygulama simgesi.
+Düzeltildi: ayarlardaki Palet sayfası, kayıtlı girişler olsa bile boş açılıyordu. Hiçbir şey kaybolmuyordu, ancak bir tane daha eklenene kadar girişler görülemiyor ve düzenlenemiyordu.
+
+Düzeltildi: tüm uygulama simgeleri baş aşağı görünüyordu - uygulama seçicide ilk sürümden beri, yeni palette de. Baş aşağı bir hesap makinesi yine hesap makinesine benziyor; bir kurt benzemiyordu.
+
+AntiPilot artık uygulama seçicide kendisini sunmuyor. Tuşu AntiPilot'a yöneltmek yalnızca AntiPilot'u başlatırdı.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 ve Microsoft Copilot, Microsoft Corporation'ın ticari markalarıdır. AntiPilot, Microsoft ile bağlantılı değildir ve onaylanmamıştır.
 
