@@ -121,7 +121,7 @@ PaletteMoveDown = Bajar
 PaletteNoEntries = Todavía no hay entradas.
 PaletteLabelCaption = Nombre (opcional)
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = Escribe para filtrar…
+PaletteFilterPlaceholder = Buscar
 PaletteNoMatch = No hay coincidencias.
 
 DoubleTapEnable = Dar a dos pulsaciones rápidas su propia acción

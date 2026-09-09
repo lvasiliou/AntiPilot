@@ -121,7 +121,7 @@ PaletteMoveDown = Turunkan
 PaletteNoEntries = Belum ada entri.
 PaletteLabelCaption = Nama (opsional)
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = Ketik untuk menyaring…
+PaletteFilterPlaceholder = Cari
 PaletteNoMatch = Tidak ada yang cocok.
 
 DoubleTapEnable = Beri tindakan tersendiri untuk dua tekanan cepat

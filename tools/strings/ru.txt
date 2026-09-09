@@ -121,7 +121,7 @@ PaletteMoveDown = Вниз
 PaletteNoEntries = Записей пока нет.
 PaletteLabelCaption = Название (необязательно)
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = Печатайте для фильтрации…
+PaletteFilterPlaceholder = Поиск
 PaletteNoMatch = Ничего не найдено.
 
 DoubleTapEnable = Задать отдельное действие для двух быстрых нажатий

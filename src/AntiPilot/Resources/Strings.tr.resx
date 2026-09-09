@@ -388,7 +388,7 @@ otepad.exe   veya   https://example.com</value>
     <value>AntiPilot</value>
   </data>
   <data name="PaletteFilterPlaceholder" xml:space="preserve">
-    <value>Filtrelemek için yazın…</value>
+    <value>Ara</value>
   </data>
   <data name="PaletteNoMatch" xml:space="preserve">
     <value>Eşleşen bir şey yok.</value>

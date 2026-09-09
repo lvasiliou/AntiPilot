@@ -388,7 +388,7 @@ otepad.exe   o   https://example.com</value>
     <value>AntiPilot</value>
   </data>
   <data name="PaletteFilterPlaceholder" xml:space="preserve">
-    <value>Escribe para filtrar…</value>
+    <value>Buscar</value>
   </data>
   <data name="PaletteNoMatch" xml:space="preserve">
     <value>No hay coincidencias.</value>

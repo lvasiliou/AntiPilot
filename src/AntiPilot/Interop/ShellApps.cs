@@ -58,7 +58,7 @@ public static class ShellApps
 
                     var name = Invoke(item, "Name") as string;
                     var path = Invoke(item, "Path") as string;
-                    if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(path))
+                    if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(path) && !IsSelf(name!, path!))
                     {
                         result.Add(new ShellAppEntry(name!, path!));
                     }
@@ -113,6 +113,118 @@ public static class ShellApps
 
     private static object? Invoke(object target, string member, params object[] args) =>
         target.GetType().InvokeMember(member, BindingFlags.InvokeMethod | BindingFlags.GetProperty, null, target, args);
+
+    /// <summary>The Start-menu names the manifest gives this app's own entries. Not localised, so they can be matched.</summary>
+    private static readonly string[] OwnNames = ["AntiPilot", "AntiPilot Settings", "AntiPilot tray icon"];
+
+    /// <summary>
+    /// A package family of ours, whichever publisher it was signed under: the Store one is
+    /// "5676LambrosVasiliou.AntiPilot_ry1r8aenh16n2", a sideload is "AntiPilot_" and a different
+    /// hash, and the thirteen characters after the underscore are always the publisher hash.
+    /// </summary>
+    private static readonly System.Text.RegularExpressions.Regex OwnFamilyPattern =
+        new(@"(^|\.)AntiPilot_[a-z0-9]{13}!", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+    /// <summary>
+    /// True for this app's own Apps-folder entries, which are left out of every list the user
+    /// picks from. Pointing the key at AntiPilot starts AntiPilot, which reads the config and
+    /// points the key at AntiPilot: a loop with a very short fuse. The running package's family
+    /// is the exact test; the name and pattern checks cover a debug build, which has no family
+    /// but is looking at the same Start menu as the installed copy.
+    /// </summary>
+    internal static bool IsSelf(string name, string parsingName)
+    {
+        var family = NativeMethods.GetCurrentPackageFamilyName();
+        if (family is not null && parsingName.StartsWith(family + "!", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return OwnFamilyPattern.IsMatch(parsingName) ||
+            OwnNames.Any(own => own.Equals(name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
+    /// The shell's icon for a file, folder or program, at the given size. Null for anything the
+    /// shell cannot resolve, which includes URLs — those get a glyph from the caller instead.
+    /// </summary>
+    public static Bitmap? TryGetFileIcon(string path, int size)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            return null;
+        }
+
+        var expanded = Environment.ExpandEnvironmentVariables(path).Trim();
+        if (Uri.TryCreate(expanded, UriKind.Absolute, out var uri) && !uri.IsFile)
+        {
+            return null;
+        }
+
+        uint flags = SHGFI_ICON | (size > 16 ? SHGFI_LARGEICON : SHGFI_SMALLICON);
+        var info = new SHFILEINFO();
+
+        // A path that no longer exists still has an extension, and the extension still has an
+        // icon; asking by attributes gets that rather than nothing.
+        bool exists = File.Exists(expanded) || Directory.Exists(expanded);
+        nint result = exists
+            ? SHGetFileInfoW(expanded, 0, ref info, (uint)Marshal.SizeOf<SHFILEINFO>(), flags)
+            : SHGetFileInfoW(expanded, FILE_ATTRIBUTE_NORMAL, ref info, (uint)Marshal.SizeOf<SHFILEINFO>(), flags | SHGFI_USEFILEATTRIBUTES);
+
+        if (result == 0 || info.hIcon == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            using var icon = Icon.FromHandle(info.hIcon);
+            using var source = icon.ToBitmap();
+            if (source.Width == size && source.Height == size)
+            {
+                return new Bitmap(source);
+            }
+
+            var scaled = new Bitmap(size, size, PixelFormat.Format32bppArgb);
+            using var g = Graphics.FromImage(scaled);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            g.DrawImage(source, 0, 0, size, size);
+            return scaled;
+        }
+        catch (Exception ex)
+        {
+            Log.Write($"Could not read the icon for '{path}': {ex.Message}");
+            return null;
+        }
+        finally
+        {
+            DestroyIcon(info.hIcon);
+        }
+    }
+
+    private const uint SHGFI_ICON = 0x100;
+    private const uint SHGFI_LARGEICON = 0x0;
+    private const uint SHGFI_SMALLICON = 0x1;
+    private const uint SHGFI_USEFILEATTRIBUTES = 0x10;
+    private const uint FILE_ATTRIBUTE_NORMAL = 0x80;
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    private struct SHFILEINFO
+    {
+        public nint hIcon;
+        public int iIcon;
+        public uint dwAttributes;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] public string szDisplayName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)] public string szTypeName;
+    }
+
+    [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+    private static extern nint SHGetFileInfoW(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool DestroyIcon(nint hIcon);
 
     /// <summary>
     /// True when the shell can still resolve this Apps-folder entry, i.e. the app is installed.

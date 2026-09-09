@@ -127,7 +127,7 @@ PaletteMoveDown = Μετακίνηση κάτω
 PaletteNoEntries = Δεν υπάρχουν ακόμη καταχωρήσεις.
 PaletteLabelCaption = Όνομα (προαιρετικό)
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = Πληκτρολογήστε για φιλτράρισμα…
+PaletteFilterPlaceholder = Αναζήτηση
 PaletteNoMatch = Δεν βρέθηκε τίποτα.
 
 DoubleTapEnable = Δώστε στα δύο γρήγορα πατήματα δική τους ενέργεια

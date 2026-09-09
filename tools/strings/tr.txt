@@ -121,7 +121,7 @@ PaletteMoveDown = Aşağı taşı
 PaletteNoEntries = Henüz girdi yok.
 PaletteLabelCaption = Ad (isteğe bağlı)
 PaletteWindowTitle = AntiPilot
-PaletteFilterPlaceholder = Filtrelemek için yazın…
+PaletteFilterPlaceholder = Ara
 PaletteNoMatch = Eşleşen bir şey yok.
 
 DoubleTapEnable = İki hızlı basışa kendi eylemini ver
