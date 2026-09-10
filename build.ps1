@@ -14,7 +14,7 @@
 
         <prefix>.<(year - 2020) * 1000 + day of year>.<revision>
 
-    so 26 July 2026 gives 1.1.6207.0 — always increasing, and it fits the 65535 ceiling on each
+    so 26 July 2026 gives 1.2.6207.0 — always increasing, and it fits the 65535 ceiling on each
     part until 2085. For sideload builds the revision counts two-minute blocks since midnight, so
     rebuilding the same day still installs over itself; Store builds keep the revision at 0,
     because the Store reserves that part and requires it to be zero.
@@ -49,7 +49,7 @@
 param(
     [string]$Version,
 
-    [string]$VersionPrefix = "1.1",
+    [string]$VersionPrefix = "1.2",
 
     [ValidateSet('Sideload', 'Store')]
     [string]$Target = 'Sideload',
