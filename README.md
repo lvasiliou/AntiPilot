@@ -301,7 +301,7 @@ Whichever you pick, the URL must stay reachable while the app is listed.
 Worth knowing before submitting:
 
 - **Versions come from the date.** With no `-Version`, the build number is
-  `(year - 2020) * 1000 + day of year`, so 26 July 2026 gives `1.1.6207.0`. It only ever increases
+  `(year - 2020) * 1000 + day of year`, so 26 July 2026 gives `1.2.6207.0`. It only ever increases
   and stays under the 65535 ceiling until 2085. Sideload builds put two-minute blocks since midnight
   in the revision so several builds a day still install over each other; Store builds keep it at `0`,
   which the Store requires. Pass `-Version` to override, or `-VersionPrefix 2.0` to move the
