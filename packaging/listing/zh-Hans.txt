@@ -69,6 +69,8 @@ AntiPilot 只改变 Copilot 键启动的内容。它不会重新映射其他按�
 修复：所有应用图标都是上下颠倒的 - 应用选择器自首个版本起就是如此，新面板中也一样。倒过来的计算器看起来仍像计算器；狼就不是了。
 
 AntiPilot 不再在应用选择器中列出自己。把按键指向 AntiPilot 只会启动 AntiPilot 本身。
+
+修复：开启通知区域图标后，AntiPilot 的每次更新都会停滞 30 秒，等待图标关闭，随后 Windows 将其报告为无响应。现在图标会按要求关闭。
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows、Windows 11 和 Microsoft Copilot 是 Microsoft Corporation 的商标。AntiPilot 与 Microsoft 无关联，也未获其认可。
 

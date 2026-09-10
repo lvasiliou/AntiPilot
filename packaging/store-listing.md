@@ -155,26 +155,17 @@ older UI). Never shown to customers; they only feed Store search. These seven us
 
 ## What's new in this version  *(max 1500)*
 
-One key, more than one job.
+The key is faster. A press now starts a small native program instead of the .NET runtime: about 50 milliseconds from key to action instead of 130, measured on the path Windows really takes. Anything that needs a window - the palette, the settings window on a first run, a message when an action fails - is still there, just started only when it is needed.
 
-• Send any keyboard shortcut — Ctrl+Shift+Esc, Win+V, Print Screen, the media keys, or F13 to F24
-for macro software. Press the shortcut to capture it, or take a preset.
-• Give two quick presses their own action, separate from a single press.
-• Change what the key does depending on which app is in front.
-• Open a quick-launch palette: type to filter, press 1 to 9 to run an entry, Esc to dismiss.
-• Bring an app you already have open to the front instead of starting another copy — or minimise it
-if you are already looking at it.
+The quick-launch palette is new: an acrylic window with rounded corners, the real icon of each app, program, folder or link, roomier rows that say what an entry runs, and a proper search field. Typing filters; 1-9 run an entry outright while the search is empty.
 
-A new settings window, built to match Windows 11: navigation down the left, settings cards, and your
-own accent colour throughout. It follows light and dark as you switch them.
+Fixed: the Palette page in settings opened empty even with entries saved. Nothing was lost, but they could not be seen or edited until another was added.
 
-Now in 12 languages — English, Russian, Spanish, Simplified and Traditional Chinese, Brazilian
-Portuguese, Turkish, Japanese, Korean, Arabic, Indonesian and Greek — following your Windows
-language by default. Arabic mirrors the layout.
+Fixed: every app icon was upside down - in the app picker since the first release, and in the new palette. A calculator upside down still looks like a calculator; a wolf did not.
 
-Smaller things: export and import your setup to move it between PCs; a failed action now tells you
-with a notification instead of a dialog that steals your focus; and every key press starts a little
-faster.
+AntiPilot no longer offers itself in the app picker. Pointing the key at AntiPilot would only have started AntiPilot.
+
+Fixed: with the notification-area icon on, every update of AntiPilot stalled for 30 seconds while Windows waited for the icon to close, then reported it as not responding. The icon now closes when asked.
 
 ## Copyright and trademark info  *(max 200 — this is 178)*
 

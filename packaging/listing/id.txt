@@ -69,6 +69,8 @@ Diperbaiki: halaman Palet di pengaturan terbuka kosong meski ada entri yang ters
 Diperbaiki: semua ikon aplikasi tampil terbalik - di pemilih aplikasi sejak rilis pertama, dan di palet baru. Kalkulator terbalik masih tampak seperti kalkulator; serigala tidak.
 
 AntiPilot tidak lagi menawarkan dirinya sendiri di pemilih aplikasi. Mengarahkan tombol ke AntiPilot hanya akan menjalankan AntiPilot.
+
+Diperbaiki: dengan ikon area notifikasi aktif, setiap pembaruan AntiPilot tertahan 30 detik sementara Windows menunggu ikon ditutup, lalu melaporkannya tidak merespons. Ikon kini menutup saat diminta.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11, dan Microsoft Copilot adalah merek dagang Microsoft Corporation. AntiPilot tidak berafiliasi dengan maupun didukung oleh Microsoft.
 

@@ -78,6 +78,8 @@ Fixed: the Palette page in settings opened empty even with entries saved. Nothin
 Fixed: every app icon was upside down - in the app picker since the first release, and in the new palette. A calculator upside down still looks like a calculator; a wolf did not.
 
 AntiPilot no longer offers itself in the app picker. Pointing the key at AntiPilot would only have started AntiPilot.
+
+Fixed: with the notification-area icon on, every update of AntiPilot stalled for 30 seconds while Windows waited for the icon to close, then reported it as not responding. The icon now closes when asked.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 and Microsoft Copilot are trademarks of Microsoft Corporation. AntiPilot is not affiliated with or endorsed by Microsoft.
 

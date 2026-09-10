@@ -69,6 +69,8 @@ Corrigido: a página Paleta nas configurações abria vazia mesmo com entradas s
 Corrigido: todos os ícones de aplicativos apareciam de cabeça para baixo - no seletor de aplicativos desde a primeira versão e na nova paleta. Uma calculadora invertida ainda parece uma calculadora; um lobo, não.
 
 O AntiPilot não se oferece mais no seletor de aplicativos. Apontar a tecla para o AntiPilot só iniciaria o AntiPilot.
+
+Corrigido: com o ícone da área de notificação ativado, cada atualização do AntiPilot travava por 30 segundos enquanto o Windows esperava o ícone fechar, e depois o marcava como sem resposta. Agora o ícone fecha quando solicitado.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 e Microsoft Copilot são marcas da Microsoft Corporation. O AntiPilot não é afiliado à Microsoft nem endossado por ela.
 

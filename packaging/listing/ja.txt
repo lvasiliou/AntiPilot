@@ -69,6 +69,8 @@ AntiPilot が変えるのは Copilot キーが起動するものだけです。�
 修正: すべてのアプリ アイコンが上下逆さまでした - アプリ選択画面では初回リリース以来、新しいパレットでも同様でした。逆さまの電卓は電卓に見えますが、オオカミはそうではありませんでした。
 
 AntiPilot はアプリ選択画面に自分自身を表示しなくなりました。キーを AntiPilot に向けても、AntiPilot が起動するだけでした。
+
+修正：通知領域アイコンをオンにしていると、AntiPilot の更新のたびに Windows がアイコンの終了を 30 秒待ち、その後「応答なし」として報告していました。アイコンは求められればすぐ終了するようになりました。
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows、Windows 11、Microsoft Copilot は Microsoft Corporation の商標です。AntiPilot は Microsoft と提携しておらず、その承認も受けていません。
 

@@ -69,6 +69,8 @@ AntiPilot은 Copilot 키가 실행하는 대상만 바꿉니다. 다른 키를 �
 수정: 모든 앱 아이콘이 위아래가 뒤집혀 있었습니다 - 앱 선택 창에서는 첫 릴리스부터, 새 팔레트에서도 마찬가지였습니다. 뒤집힌 계산기는 여전히 계산기처럼 보이지만 늑대는 그렇지 않았습니다.
 
 AntiPilot이 앱 선택 창에서 더 이상 자기 자신을 제안하지 않습니다. 키를 AntiPilot으로 향하게 해도 AntiPilot이 실행될 뿐이었습니다.
+
+수정: 알림 영역 아이콘을 켜 두면 AntiPilot을 업데이트할 때마다 Windows가 아이콘이 닫히기를 30초 동안 기다린 뒤 응답 없음으로 보고했습니다. 이제 아이콘은 요청을 받으면 바로 닫힙니다.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 및 Microsoft Copilot은 Microsoft Corporation의 상표입니다. AntiPilot은 Microsoft와 제휴하거나 승인을 받지 않았습니다.
 

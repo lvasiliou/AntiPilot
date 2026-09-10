@@ -69,6 +69,8 @@ AntiPilot 只會改變 Copilot 鍵所啟動的內容。它不會重新對應其�
 修正：所有應用程式圖示都上下顛倒 - 應用程式選擇器自第一個版本起便是如此，新面板中也一樣。倒過來的計算機看起來仍像計算機；狼就不是了。
 
 AntiPilot 不再在應用程式選擇器中列出自己。把按鍵指向 AntiPilot 只會啟動 AntiPilot 本身。
+
+修正：開啟通知區域圖示後，AntiPilot 的每次更新都會停滯 30 秒，等待圖示關閉，隨後 Windows 將其回報為沒有回應。現在圖示會依要求關閉。
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows、Windows 11 與 Microsoft Copilot 為 Microsoft Corporation 的商標。AntiPilot 與 Microsoft 並無關聯，亦未獲其背書。
 

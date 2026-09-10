@@ -69,6 +69,8 @@ Düzeltildi: ayarlardaki Palet sayfası, kayıtlı girişler olsa bile boş aç�
 Düzeltildi: tüm uygulama simgeleri baş aşağı görünüyordu - uygulama seçicide ilk sürümden beri, yeni palette de. Baş aşağı bir hesap makinesi yine hesap makinesine benziyor; bir kurt benzemiyordu.
 
 AntiPilot artık uygulama seçicide kendisini sunmuyor. Tuşu AntiPilot'a yöneltmek yalnızca AntiPilot'u başlatırdı.
+
+Düzeltildi: bildirim alanı simgesi açıkken AntiPilot'un her güncellemesi, Windows simgenin kapanmasını beklerken 30 saniye takılıyor ve ardından yanıt vermiyor olarak bildiriliyordu. Simge artık istendiğinde kapanıyor.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 ve Microsoft Copilot, Microsoft Corporation'ın ticari markalarıdır. AntiPilot, Microsoft ile bağlantılı değildir ve onaylanmamıştır.
 
