@@ -18,7 +18,7 @@ public sealed class SettingsForm : Form
     /// written the way its own speakers write it.
     /// </summary>
     private static readonly string[] Languages =
-        ["en", "ru", "es", "zh-Hans", "pt-BR", "tr", "ja", "ko", "ar", "id", "zh-Hant", "el"];
+        ["en", "ru", "es", "zh-Hans", "pt-BR", "tr", "ja", "ko", "ar", "id", "zh-Hant", "el", "uk"];
 
     private AppConfig _config = AppConfig.Load();
 

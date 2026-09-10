@@ -39,7 +39,7 @@ A janela de configurações foi feita para combinar com o Windows 11: navegaçã
 
 NO SEU IDIOMA
 
-Inglês, russo, espanhol, chinês simplificado e tradicional, português do Brasil, turco, japonês, coreano, árabe, indonésio e grego. O AntiPilot segue o idioma do Windows por padrão e, em árabe, espelha a janela inteira em vez de apenas traduzir o texto.
+Inglês, russo, espanhol, chinês simplificado e tradicional, português do Brasil, turco, japonês, coreano, árabe, indonésio, grego e ucraniano. O AntiPilot segue o idioma do Windows por padrão e, em árabe, espelha a janela inteira em vez de apenas traduzir o texto.
 
 FUNCIONA COM WIN+C TAMBÉM
 
@@ -114,7 +114,7 @@ Uma janela de configurações no estilo do Windows 11, na sua cor de destaque
 Acompanha o tema claro e escuro do Windows, e se ajusta quando você troca
 
 [Feature14]
-Disponível em 12 idiomas, seguindo o idioma do Windows por padrão
+Disponível em 13 idiomas, seguindo o idioma do Windows por padrão
 
 [Feature15]
 Seletor de aplicativos com busca e ícones reais do Windows

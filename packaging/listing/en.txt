@@ -48,7 +48,7 @@ The settings window is built to match Windows 11, with navigation down the left,
 
 IN YOUR LANGUAGE
 
-English, Russian, Spanish, Simplified and Traditional Chinese, Brazilian Portuguese, Turkish, Japanese, Korean, Arabic, Indonesian and Greek. AntiPilot follows your Windows language by default, and Arabic mirrors the whole window rather than just translating it.
+English, Russian, Spanish, Simplified and Traditional Chinese, Brazilian Portuguese, Turkish, Japanese, Korean, Arabic, Indonesian, Greek and Ukrainian. AntiPilot follows your Windows language by default, and Arabic mirrors the whole window rather than just translating it.
 
 WORKS WITH WIN+C TOO
 
@@ -123,7 +123,7 @@ A settings window built to match Windows 11, in your own accent colour
 Follows the Windows light and dark theme, and keeps up when you switch
 
 [Feature14]
-Available in 12 languages, following your Windows language by default
+Available in 13 languages, following your Windows language by default
 
 [Feature15]
 Searchable app picker with real Windows icons

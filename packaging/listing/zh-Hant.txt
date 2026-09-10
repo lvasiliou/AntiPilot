@@ -39,7 +39,7 @@ AntiPilot 做了。在設定中選擇它一次，接著決定這個鍵要做什�
 
 以你的語言呈現
 
-英文、俄文、西班牙文、簡體與繁體中文、巴西葡萄牙文、土耳其文、日文、韓文、阿拉伯文、印尼文與希臘文。AntiPilot 預設跟隨 Windows 的語言；至於阿拉伯文，它會鏡射整個視窗，而不只是翻譯文字。
+英文、俄文、西班牙文、簡體與繁體中文、巴西葡萄牙文、土耳其文、日文、韓文、阿拉伯文、印尼文、希臘文與烏克蘭文。AntiPilot 預設跟隨 Windows 的語言；至於阿拉伯文，它會鏡射整個視窗，而不只是翻譯文字。
 
 也支援 Win+C
 
@@ -114,7 +114,7 @@ Copyright (c) 2026 Lambros Vasiliou. Windows、Windows 11 與 Microsoft Copilot 
 跟隨 Windows 淺色與深色佈景主題，切換時同步更新
 
 [Feature14]
-提供 12 種語言，預設跟隨 Windows 的語言
+提供 13 種語言，預設跟隨 Windows 的語言
 
 [Feature15]
 可搜尋的應用程式選擇器，顯示真實的 Windows 圖示
