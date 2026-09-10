@@ -1,3 +1,5 @@
+using AntiPilot.Interop;
+
 namespace AntiPilot.UI;
 
 /// <summary>
@@ -17,11 +19,14 @@ public sealed class TrayApplication : ApplicationContext
     /// <summary>The tray icon of this process, when this process is the one hosting it.</summary>
     private static TrayApplication? _current;
 
-    /// <summary>Marshals the cross-process exit request onto the UI thread.</summary>
-    private readonly Control _marshaller = new();
+    /// <summary>Where Windows, and a settings window in another process, ask the icon to go.</summary>
+    private readonly TrayWindow _window;
     private EventWaitHandle? _exitSignal;
     private RegisteredWaitHandle? _exitWait;
     private bool _exitWhenSettingsClose;
+
+    /// <summary>Windows sends a close request in three messages; the answer is one exit.</summary>
+    private bool _exiting;
 
     private readonly NotifyIcon _icon;
     private readonly ToolStripMenuItem _actionItem;
@@ -56,7 +61,7 @@ public sealed class TrayApplication : ApplicationContext
         };
         _icon.DoubleClick += (_, _) => OpenSettings();
 
-        _marshaller.CreateControl();
+        _window = new TrayWindow(HideAndExit);
         _current = this;
         ListenForExitRequest();
 
@@ -98,19 +103,10 @@ public sealed class TrayApplication : ApplicationContext
         try
         {
             _exitSignal = new EventWaitHandle(false, EventResetMode.AutoReset, ExitEventName);
+            var target = _window.Handle;
             _exitWait = ThreadPool.RegisterWaitForSingleObject(
                 _exitSignal,
-                (_, _) =>
-                {
-                    try
-                    {
-                        _marshaller.BeginInvoke(HideAndExit);
-                    }
-                    catch (Exception)
-                    {
-                        // The window is already gone; nothing to do.
-                    }
-                },
+                (_, _) => NativeMethods.PostMessageW(target, TrayWindow.WM_EXIT_REQUEST, 0, 0),
                 null,
                 Timeout.Infinite,
                 executeOnlyOnce: true);
@@ -123,6 +119,12 @@ public sealed class TrayApplication : ApplicationContext
 
     private void HideAndExit()
     {
+        if (_exiting)
+        {
+            return;
+        }
+
+        _exiting = true;
         _icon.Visible = false;
 
         // The settings window may be a child of this process; let it finish first.
@@ -291,7 +293,7 @@ public sealed class TrayApplication : ApplicationContext
             _exitSignal?.Dispose();
             _icon.Visible = false;
             _icon.Dispose();
-            _marshaller.Dispose();
+            _window.DestroyHandle();
             _settings?.Dispose();
             _singleInstance?.ReleaseMutex();
             _singleInstance?.Dispose();
@@ -299,6 +301,67 @@ public sealed class TrayApplication : ApplicationContext
         }
 
         base.Dispose(disposing);
+    }
+
+    /// <summary>
+    /// The process's own top-level window, never shown. Windows talks to a process through its
+    /// top-level windows: before updating or removing the package, and at sign-out, it asks each
+    /// one to close and gives the process thirty seconds before killing it and filing a hang
+    /// report. A notification icon's window lets those requests fall through to the default
+    /// handling, which answers "fine" and then does nothing, so the icon sat there until the
+    /// deadline on every update. This window answers by leaving.
+    /// </summary>
+    private sealed class TrayWindow : NativeWindow
+    {
+        /// <summary>Posted from the thread that watches the cross-process exit event.</summary>
+        public const int WM_EXIT_REQUEST = 0x8000 + 1;
+
+        private const int WM_CLOSE = 0x0010;
+        private const int WM_QUERYENDSESSION = 0x0011;
+        private const int WM_ENDSESSION = 0x0016;
+        private const int ENDSESSION_CLOSEAPP = 0x00000001;
+
+        private readonly Action _close;
+
+        public TrayWindow(Action close)
+        {
+            _close = close;
+            CreateHandle(new CreateParams { Caption = Strings.AppName, ExStyle = NativeMethods.WS_EX_TOOLWINDOW });
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case WM_QUERYENDSESSION:
+                    Log.Write((m.LParam & ENDSESSION_CLOSEAPP) != 0
+                        ? "Windows is updating or removing the package; the tray icon will close."
+                        : "The session is ending; the tray icon will close.");
+                    m.Result = 1;
+                    return;
+
+                case WM_ENDSESSION:
+                    if (m.WParam != 0)
+                    {
+                        _close();
+                    }
+
+                    m.Result = 0;
+                    return;
+
+                case WM_CLOSE:
+                    _close();
+                    m.Result = 0;
+                    return;
+
+                case WM_EXIT_REQUEST:
+                    _close();
+                    m.Result = 0;
+                    return;
+            }
+
+            base.WndProc(ref m);
+        }
     }
 }
 

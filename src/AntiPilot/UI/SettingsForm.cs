@@ -1203,8 +1203,10 @@ public sealed class SettingsForm : Form
 
     private void OnFormClosing(object? sender, FormClosingEventArgs e)
     {
-        if (!_dirty)
+        if (!_dirty || e.CloseReason == CloseReason.WindowsShutDown)
         {
+            // Windows is signing out or replacing the package and will not wait for an answer.
+            // A prompt here stalls it for thirty seconds and the edits are lost anyway.
             return;
         }
 
