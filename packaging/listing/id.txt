@@ -60,11 +60,17 @@ Windows memblokir ketukan tombol sintetis yang ditujukan ke jendela yang berjala
 AntiPilot hanya mengubah apa yang dijalankan tombol Copilot. Ia tidak memetakan ulang tombol lain, dan tidak menghapus Copilot dari PC Anda.
 
 [ReleaseNotes]
-Diperbaiki: jendela pengaturan terbuka terlalu kecil pada layar dengan penskalaan di atas 100%. Jendela terbuka pada ukuran 100% sementara teks dan kontrol di dalamnya membesar, sehingga label di sebelah kiri terpotong dan, pada 150%, jendela bisa terbuka lebih tinggi daripada layar dengan tombol Simpan berada di bawah tepi bawah. Kini semua jendela ikut menyesuaikan skala layar dan tetap berada di dalamnya.
+Tombolnya lebih cepat. Satu tekanan kini menjalankan program native kecil, bukan runtime .NET: sekitar 50 milidetik dari tombol ke aksi, bukan 130, diukur pada jalur yang benar-benar dilalui Windows. Semua yang membutuhkan jendela - palet, jendela pengaturan saat pertama kali dijalankan, pesan saat sebuah aksi gagal - tetap ada, hanya dijalankan ketika diperlukan.
 
-Diperbaiki: pada instalasi baru, menekan Simpan tanpa mengubah apa pun tidak menulis apa pun. Membiarkan tombol pada "Tidak ada" adalah pilihan yang sah, tetapi itu juga keadaan awalnya, jadi tidak ada yang ditandai berubah dan berkas pengaturan tidak dibuat - dan tanpa berkas itu tombol terus membuka jendela ini setiap kali ditekan. Simpan kini selalu menulis.
+Palet peluncur cepat kini baru: jendela akrilik bersudut membulat, ikon asli setiap aplikasi, program, folder, atau tautan, baris yang lebih lega dan menyebutkan apa yang dijalankan tiap entri, serta kolom pencarian yang sesungguhnya. Mengetik akan menyaring; 1-9 langsung menjalankan entri selama pencarian kosong.
 
-Ikon aplikasi baru.
+Diperbaiki: halaman Palet di pengaturan terbuka kosong meski ada entri yang tersimpan. Tidak ada yang hilang, tetapi entri tidak bisa dilihat atau diubah sampai satu entri lagi ditambahkan.
+
+Diperbaiki: semua ikon aplikasi tampil terbalik - di pemilih aplikasi sejak rilis pertama, dan di palet baru. Kalkulator terbalik masih tampak seperti kalkulator; serigala tidak.
+
+AntiPilot tidak lagi menawarkan dirinya sendiri di pemilih aplikasi. Mengarahkan tombol ke AntiPilot hanya akan menjalankan AntiPilot.
+
+Diperbaiki: dengan ikon area notifikasi aktif, setiap pembaruan AntiPilot tertahan 30 detik sementara Windows menunggu ikon ditutup, lalu melaporkannya tidak merespons. Ikon kini menutup saat diminta.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11, dan Microsoft Copilot adalah merek dagang Microsoft Corporation. AntiPilot tidak berafiliasi dengan maupun didukung oleh Microsoft.
 

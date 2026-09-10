@@ -69,11 +69,17 @@ Windows blocks simulated keystrokes aimed at windows running as administrator, s
 AntiPilot changes only what the Copilot key launches. It does not remap other keys, and it does not remove Copilot from your PC.
 
 [ReleaseNotes]
-Fixed: the settings window came up too small on any display running above 100% scaling. It opened at its 100% size while the text and controls inside it grew, so the labels down the left were cut short and, at 150%, the window could open taller than the screen with the Save button below the bottom edge. Every window now scales with the display and is kept inside it.
+The key is faster. A press now starts a small native program instead of the .NET runtime: about 50 milliseconds from key to action instead of 130, measured on the path Windows really takes. Anything that needs a window - the palette, the settings window on a first run, a message when an action fails - is still there, just started only when it is needed.
 
-Fixed: on a fresh install, pressing Save without changing anything wrote nothing. Leaving the key set to "Nothing" is a real choice, but it was also the starting state, so there was nothing marked as changed and no settings file was written - and with no settings file the key went on opening this window on every press. Save now always writes.
+The quick-launch palette is new: an acrylic window with rounded corners, the real icon of each app, program, folder or link, roomier rows that say what an entry runs, and a proper search field. Typing filters; 1-9 run an entry outright while the search is empty.
 
-New app icon.
+Fixed: the Palette page in settings opened empty even with entries saved. Nothing was lost, but they could not be seen or edited until another was added.
+
+Fixed: every app icon was upside down - in the app picker since the first release, and in the new palette. A calculator upside down still looks like a calculator; a wolf did not.
+
+AntiPilot no longer offers itself in the app picker. Pointing the key at AntiPilot would only have started AntiPilot.
+
+Fixed: with the notification-area icon on, every update of AntiPilot stalled for 30 seconds while Windows waited for the icon to close, then reported it as not responding. The icon now closes when asked.
 [CopyrightTrademarkInformation]
 Copyright (c) 2026 Lambros Vasiliou. Windows, Windows 11 and Microsoft Copilot are trademarks of Microsoft Corporation. AntiPilot is not affiliated with or endorsed by Microsoft.
 
