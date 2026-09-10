@@ -138,6 +138,10 @@ internal static unsafe partial class NativeMethods
     [LibraryImport("user32.dll")]
     public static partial nint GetWindow(nint hWnd, uint uCmd);
 
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool PostMessageW(nint hWnd, uint msg, nint wParam, nint lParam);
+
     [LibraryImport("user32.dll", EntryPoint = "GetWindowLongPtrW")]
     public static partial nint GetWindowLongPtr(nint hWnd, int nIndex);
 
