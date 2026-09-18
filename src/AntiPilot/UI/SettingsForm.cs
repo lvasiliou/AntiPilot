@@ -187,7 +187,6 @@ public sealed class SettingsForm : Form
         _statusCard.Glyph = Typography.Glyphs.Keyboard;
         _statusCard.Title = CopilotKeyStatus.Describe();
         _statusCard.Action = open;
-        _statusCard.Height = 60;
         _statusCard.Dock = DockStyle.Top;
         _statusCard.Margin = Padding.Empty;
 
@@ -198,7 +197,6 @@ public sealed class SettingsForm : Form
             AutoSizeMode = AutoSizeMode.GrowAndShrink,
             BackColor = Color.Transparent,
             Padding = new Padding(Theme.PagePadding, 0, Theme.PagePadding, 8),
-            Height = 68,
         };
         host.Controls.Add(_statusCard);
         return host;
@@ -308,13 +306,37 @@ public sealed class SettingsForm : Form
     /// </summary>
     private static Panel NewPage(int minHeight)
     {
-        return new Panel
+        var page = new Panel
         {
             Dock = DockStyle.Fill,
             BackColor = Color.Transparent,
             AutoScroll = true,
-            AutoScrollMinSize = new Size(0, minHeight),
         };
+
+        // A design-time measurement, so it has to grow with the display. Left in raw pixels it was
+        // right at 100% and short everywhere above it, which is the other half of why content went
+        // out of reach at 200% and 300%: the canvas stopped where the content no longer did.
+        page.HandleCreated += (_, _) => page.AutoScrollMinSize = new Size(0, FluentPaint.Dpi(page, minHeight));
+        return page;
+    }
+
+    /// <summary>
+    /// Keeps a docked, non-auto-sized label as tall as its own wrapped text.
+    ///
+    /// These labels hold the longest strings in the window, so a fixed height was whatever fitted
+    /// the English at 100% and cut the rest off. Anchored rather than auto-sized because an
+    /// auto-sized label docks to the leading edge and strands itself on the wrong side in Arabic.
+    /// </summary>
+    private static Label FitToText(Label label)
+    {
+        void Fit() => label.Height =
+            FluentPaint.WrappedHeight(label.Text, label.Font, label.Width - label.Padding.Horizontal) +
+            label.Padding.Vertical;
+
+        label.Resize += (_, _) => Fit();
+        label.TextChanged += (_, _) => Fit();
+        label.HandleCreated += (_, _) => Fit();
+        return label;
     }
 
     private Control BuildSinglePage()
@@ -348,7 +370,6 @@ public sealed class SettingsForm : Form
             Title = Strings.DoubleTapEnable,
             Description = Strings.DoubleTapEnableDescription,
             Action = _doubleEnabled,
-            Height = 64,
         };
 
         _doubleWindow.Minimum = AppConfig.MinDoubleTapWindowMs;
@@ -367,15 +388,14 @@ public sealed class SettingsForm : Form
         _doubleWindowCard.Glyph = Typography.Glyphs.Stopwatch;
         _doubleWindowCard.Title = Strings.DoubleTapWindow;
         _doubleWindowCard.Action = _doubleWindow;
-        _doubleWindowCard.Height = 60;
 
-        var group = new CardStack { Height = 130 };
+        var group = new CardStack();
         group.Add(enableCard);
         group.Add(_doubleWindowCard);
 
         _doubleWarning.AutoSize = false;
         _doubleWarning.Dock = DockStyle.Top;
-        _doubleWarning.Height = 54;
+        FitToText(_doubleWarning);
         _doubleWarning.Font = Typography.Caption;
         _doubleWarning.ForeColor = Theme.SecondaryText;
         _doubleWarning.Tag = Theme.SecondaryTag;
@@ -520,18 +540,17 @@ public sealed class SettingsForm : Form
         layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
 
-        layout.Controls.Add(new Label
+        layout.Controls.Add(FitToText(new Label
         {
             Text = intro,
             AutoSize = false,
-            Height = 44,
             Dock = DockStyle.Top,
             Font = Typography.Caption,
             ForeColor = Theme.SecondaryText,
             Tag = Theme.SecondaryTag,
             BackColor = Color.Transparent,
             Margin = new Padding(2, 0, 2, 10),
-        }, 0, 0);
+        }), 0, 0);
 
         // The list and the message that stands in for it when there is nothing to list. Both fill
         // the same space and exactly one of them is ever visible.
@@ -619,7 +638,7 @@ public sealed class SettingsForm : Form
         var page = NewPage(560);
 
         // Groups are docked top in reverse, so the last one added ends up first on screen.
-        var about = new CardStack { Height = 128 };
+        var about = new CardStack();
         about.Add(LinkCard(Typography.Glyphs.Page, Strings.OpenLog, Strings.OpenLogDescription, () =>
         {
             Log.Write("Log opened from settings.");
@@ -631,7 +650,7 @@ public sealed class SettingsForm : Form
             dialog.ShowDialog(this);
         }));
 
-        var transfer = new CardStack { Height = 128 };
+        var transfer = new CardStack();
         transfer.Add(LinkCard(Typography.Glyphs.Export, Strings.ExportButton, Strings.ExportTitle, Export));
         transfer.Add(LinkCard(Typography.Glyphs.Import, Strings.ImportButton, Strings.ImportTitle, Import));
 
@@ -639,7 +658,6 @@ public sealed class SettingsForm : Form
         _startupCard.Glyph = Typography.Glyphs.Ringer;
         _startupCard.Title = Strings.ShowTrayAndStart;
         _startupCard.Action = _startupToggle;
-        _startupCard.Height = 64;
 
         _languageCombo.DropDownStyle = ComboBoxStyle.DropDownList;
         _languageCombo.FlatStyle = FlatStyle.System;
@@ -654,10 +672,9 @@ public sealed class SettingsForm : Form
             Title = Strings.Language,
             Description = Strings.LanguageRestartHint,
             Action = _languageCombo,
-            Height = 64,
         };
 
-        var behaviour = new CardStack { Height = 132 };
+        var behaviour = new CardStack();
         behaviour.Add(_startupCard);
         behaviour.Add(languageCard);
 
@@ -705,7 +722,6 @@ public sealed class SettingsForm : Form
             Title = title,
             Description = description,
             Action = chevron,
-            Height = 60,
             Interactive = true,
             Cursor = Cursors.Hand,
         };

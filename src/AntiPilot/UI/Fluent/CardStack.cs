@@ -57,6 +57,9 @@ internal sealed class CardStack : Panel
                         : i == 0 ? SettingsCard.Position.Top
                         : i == cards.Count - 1 ? SettingsCard.Position.Bottom
                         : SettingsCard.Position.Middle;
+
+                    // Now that the card knows how wide it is, let it say how tall it needs to be.
+                    settings.RefreshHeight();
                 }
 
                 y += card.Height + gap;

@@ -64,6 +64,21 @@ internal static class FluentPaint
     public const TextFormatFlags Text =
         TextFormatFlags.NoPrefix | TextFormatFlags.NoPadding | TextFormatFlags.EndEllipsis;
 
+    /// <summary>
+    /// Text that wraps instead of being cut off. The ellipsis stays as a last resort for a single
+    /// word too long to break, which a file path can be.
+    /// </summary>
+    public const TextFormatFlags TextWrap = Text | TextFormatFlags.WordBreak;
+
+    /// <summary>
+    /// Height <paramref name="text"/> needs when wrapped into <paramref name="width"/>. Used both to
+    /// size a control and to draw inside it, so the two cannot drift apart.
+    /// </summary>
+    public static int WrappedHeight(string text, Font font, int width) =>
+        string.IsNullOrEmpty(text) || width <= 0
+            ? 0
+            : TextRenderer.MeasureText(text, font, new Size(width, int.MaxValue), TextWrap).Height;
+
     public const TextFormatFlags TextLeft = Text | TextFormatFlags.VerticalCenter;
 
     public const TextFormatFlags TextCentre = Text | TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter;

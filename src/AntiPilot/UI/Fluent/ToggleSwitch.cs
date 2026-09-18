@@ -43,6 +43,7 @@ internal sealed class ToggleSwitch : Control, IThemedControl
 
             _checked = value;
             Invalidate();
+            AccessibilityNotifyClients(AccessibleEvents.StateChange, -1);
             CheckedChanged?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -52,6 +53,24 @@ internal sealed class ToggleSwitch : Control, IThemedControl
     {
         _checked = value;
         Invalidate();
+        AccessibilityNotifyClients(AccessibleEvents.StateChange, -1);
+    }
+
+    /// <summary>
+    /// Without this the switch is an anonymous rectangle: a painted control reports the generic
+    /// client role and no on or off state, so a screen reader can say neither what it is nor which
+    /// way it is set. The name comes from the settings card around it.
+    /// </summary>
+    protected override AccessibleObject CreateAccessibilityInstance() => new SwitchAccessibleObject(this);
+
+    private sealed class SwitchAccessibleObject(ToggleSwitch owner) : ControlAccessibleObject(owner)
+    {
+        public override AccessibleRole Role => AccessibleRole.CheckButton;
+
+        public override AccessibleStates State =>
+            base.State | (owner.Checked ? AccessibleStates.Checked : AccessibleStates.None);
+
+        public override void DoDefaultAction() => owner.Checked = !owner.Checked;
     }
 
     public void OnThemeChanged() => Invalidate();

@@ -23,12 +23,51 @@ internal class SettingsCard : Panel, IThemedControl
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer |
                  ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
 
-        Height = 60;
         Padding = new Padding(16, 10, 16, 10);
         Margin = new Padding(0, 0, 0, Theme.CardGap);
         BackColor = Theme.Card;
         ForeColor = Theme.Text;
+        AccessibleRole = AccessibleRole.Grouping;
     }
+
+    /// <summary>
+    /// Height the card needs so its text fits at <paramref name="width"/>.
+    ///
+    /// The card used to be told its height, which is why a long line in a translated build was cut
+    /// off rather than wrapped, and why it got worse the further the display was scaled: the text
+    /// grew with the DPI and the box did not.
+    /// </summary>
+    public int MeasuredHeight(int width)
+    {
+        int textWidth = TextWidth(width);
+        int text = FluentPaint.WrappedHeight(_title, Typography.Body, textWidth);
+
+        if (!string.IsNullOrEmpty(_description))
+        {
+            text += FluentPaint.Dpi(this, 2) + FluentPaint.WrappedHeight(_description, Typography.Caption, textWidth);
+        }
+
+        int content = Math.Max(text, _action?.Height ?? 0);
+        return Math.Max(Padding.Top + content + Padding.Bottom, FluentPaint.Dpi(this, 40));
+    }
+
+    /// <summary>Re-measures against the current width. Safe to call repeatedly.</summary>
+    public void RefreshHeight()
+    {
+        int wanted = MeasuredHeight(Width);
+        if (Height != wanted)
+        {
+            Height = wanted;
+        }
+    }
+
+    /// <summary>Where the text starts: past the icon when there is one.</summary>
+    private int TextLeft() => Padding.Left +
+        (string.IsNullOrEmpty(_glyph) ? 0 : FluentPaint.Dpi(this, 28) + FluentPaint.Dpi(this, 12));
+
+    /// <summary>Room the text has, once the icon and the action on the far side are taken out.</summary>
+    private int TextWidth(int width) => width - TextLeft() - Padding.Right -
+        (_action is null ? 0 : _action.Width + FluentPaint.Dpi(this, 16));
 
     /// <summary>Which corners to round, so a group of cards looks like one surface.</summary>
     internal enum Position
@@ -50,7 +89,7 @@ internal class SettingsCard : Panel, IThemedControl
     public string Glyph
     {
         get => _glyph;
-        set { _glyph = value; Invalidate(); }
+        set { _glyph = value; RefreshHeight(); Invalidate(); }
     }
 
     [Browsable(false)]
@@ -58,7 +97,7 @@ internal class SettingsCard : Panel, IThemedControl
     public string Title
     {
         get => _title;
-        set { _title = value; Invalidate(); }
+        set { _title = value; AccessibleName = value; NameAction(); RefreshHeight(); Invalidate(); }
     }
 
     [Browsable(false)]
@@ -66,7 +105,7 @@ internal class SettingsCard : Panel, IThemedControl
     public string Description
     {
         get => _description;
-        set { _description = value; Invalidate(); }
+        set { _description = value; AccessibleDescription = value; RefreshHeight(); Invalidate(); }
     }
 
     /// <summary>Highlights the row under the pointer. Off for cards that are not themselves clickable.</summary>
@@ -92,8 +131,24 @@ internal class SettingsCard : Panel, IThemedControl
             if (_action is not null)
             {
                 Controls.Add(_action);
+                NameAction();
                 LayoutAction();
             }
+        }
+    }
+
+    /// <summary>
+    /// Lends the card's title to the control on the right. A toggle or a slider has no text of its
+    /// own, so without this a screen reader announces the row and then an unnamed switch.
+    ///
+    /// A button is left alone: its own label is the more useful thing to hear, and borrowing the
+    /// title made "Open Windows settings" announce itself as the sentence above it.
+    /// </summary>
+    private void NameAction()
+    {
+        if (_action is not null && string.IsNullOrEmpty(_action.AccessibleName) && string.IsNullOrEmpty(_action.Text))
+        {
+            _action.AccessibleName = _title;
         }
     }
 
@@ -107,6 +162,7 @@ internal class SettingsCard : Panel, IThemedControl
     protected override void OnLayout(LayoutEventArgs e)
     {
         base.OnLayout(e);
+        RefreshHeight();
         LayoutAction();
     }
 
@@ -150,47 +206,36 @@ internal class SettingsCard : Panel, IThemedControl
 
         // Everything below is laid out from the leading edge and mirrored at the end, so the
         // arithmetic only has to be right once.
-        int x = Padding.Left;
-        int iconWidth = FluentPaint.Dpi(this, 28);
-
         if (!string.IsNullOrEmpty(_glyph))
         {
-            var iconBounds = FluentPaint.Mirror(new Rectangle(x, 0, iconWidth, Height), Width);
+            var iconBounds = FluentPaint.Mirror(new Rectangle(Padding.Left, 0, FluentPaint.Dpi(this, 28), Height), Width);
             TextRenderer.DrawText(g, _glyph, Typography.Icon, iconBounds, Theme.Text,
                 FluentPaint.Leading(FluentPaint.Text | TextFormatFlags.VerticalCenter));
-            x += iconWidth + FluentPaint.Dpi(this, 12);
         }
 
-        int actionWidth = _action is null ? 0 : _action.Width + FluentPaint.Dpi(this, 16);
-        int textWidth = Width - x - Padding.Right - actionWidth;
+        int x = TextLeft();
+        int textWidth = TextWidth(Width);
 
         if (textWidth <= 0)
         {
             return;
         }
 
-        var titleFlags = FluentPaint.Leading(FluentPaint.Text);
+        // The same measurement the card sized itself by, so what was budgeted is what gets drawn.
+        var flags = FluentPaint.Leading(FluentPaint.TextWrap);
+        int titleHeight = FluentPaint.WrappedHeight(_title, Typography.Body, textWidth);
+        int descriptionHeight = FluentPaint.WrappedHeight(_description, Typography.Caption, textWidth);
+        int gap = descriptionHeight == 0 ? 0 : FluentPaint.Dpi(this, 2);
+        int top = (Height - (titleHeight + gap + descriptionHeight)) / 2;
 
-        if (!string.IsNullOrEmpty(_description))
+        TextRenderer.DrawText(g, _title, Typography.Body,
+            FluentPaint.Mirror(new Rectangle(x, top, textWidth, titleHeight), Width), Theme.Text, flags);
+
+        if (descriptionHeight > 0)
         {
-            var titleSize = TextRenderer.MeasureText(g, _title, Typography.Body, new Size(textWidth, int.MaxValue), FluentPaint.Text);
-            var descriptionSize = TextRenderer.MeasureText(g, _description, Typography.Caption, new Size(textWidth, int.MaxValue), FluentPaint.Text);
-
-            int total = titleSize.Height + descriptionSize.Height + FluentPaint.Dpi(this, 2);
-            int top = (Height - total) / 2;
-
-            TextRenderer.DrawText(g, _title, Typography.Body,
-                FluentPaint.Mirror(new Rectangle(x, top, textWidth, titleSize.Height), Width), Theme.Text, titleFlags);
-
             TextRenderer.DrawText(g, _description, Typography.Caption,
-                FluentPaint.Mirror(new Rectangle(x, top + titleSize.Height + FluentPaint.Dpi(this, 2), textWidth, descriptionSize.Height), Width),
-                Theme.SecondaryText, titleFlags);
-        }
-        else
-        {
-            TextRenderer.DrawText(g, _title, Typography.Body,
-                FluentPaint.Mirror(new Rectangle(x, 0, textWidth, Height), Width), Theme.Text,
-                FluentPaint.Leading(FluentPaint.Text | TextFormatFlags.VerticalCenter));
+                FluentPaint.Mirror(new Rectangle(x, top + titleHeight + gap, textWidth, descriptionHeight), Width),
+                Theme.SecondaryText, flags);
         }
     }
 
