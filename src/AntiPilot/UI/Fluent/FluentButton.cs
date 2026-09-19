@@ -22,6 +22,9 @@ internal sealed class FluentButton : Control, IThemedControl
         TabStop = true;
         Cursor = Cursors.Hand;
         AutoSize = false;
+
+        // Painted rather than a real Button, so nothing tells a screen reader what it is.
+        AccessibleRole = AccessibleRole.PushButton;
     }
 
     /// <summary>Filled with the user's accent colour. At most one per window, by convention.</summary>

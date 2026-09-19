@@ -69,6 +69,8 @@ internal sealed class NavigationRail : Control, IThemedControl
 
             _selected = clamped;
             Invalidate();
+            AccessibilityNotifyClients(AccessibleEvents.SelectionAdd, clamped);
+            AccessibilityNotifyClients(AccessibleEvents.Focus, clamped);
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -77,6 +79,64 @@ internal sealed class NavigationRail : Control, IThemedControl
     {
         _items.Add((glyph, label));
         Invalidate();
+    }
+
+    /// <summary>The y of item <paramref name="index"/>, matching what <see cref="OnPaint"/> draws.</summary>
+    private int ItemTop(int index) => index * (ItemHeight + FluentPaint.Dpi(this, 4));
+
+    /// <summary>
+    /// The rail is five painted rows inside one control, so to anything assistive it was a single
+    /// nameless box: no way to hear which page you were on, or that there were other pages. This
+    /// gives it the tab list it looks like, with one child per page.
+    /// </summary>
+    protected override AccessibleObject CreateAccessibilityInstance() => new RailAccessibleObject(this);
+
+    private sealed class RailAccessibleObject(NavigationRail owner) : ControlAccessibleObject(owner)
+    {
+        public override AccessibleRole Role => AccessibleRole.PageTabList;
+
+        public override int GetChildCount() => owner._items.Count;
+
+        public override AccessibleObject? GetChild(int index) =>
+            index >= 0 && index < owner._items.Count ? new PageAccessibleObject(owner, index) : null;
+
+        public override AccessibleObject? GetSelected() => GetChild(owner.SelectedIndex);
+
+        public override AccessibleObject? GetFocused() => GetChild(owner.SelectedIndex);
+    }
+
+    private sealed class PageAccessibleObject(NavigationRail owner, int index) : AccessibleObject
+    {
+        public override AccessibleRole Role => AccessibleRole.PageTab;
+
+        public override string Name => owner._items[index].Label;
+
+        public override AccessibleObject Parent => owner.AccessibilityObject;
+
+        public override Rectangle Bounds =>
+            owner.RectangleToScreen(new Rectangle(0, owner.ItemTop(index), owner.Width, owner.ItemHeight));
+
+        public override AccessibleStates State
+        {
+            get
+            {
+                var state = AccessibleStates.Selectable | AccessibleStates.Focusable;
+                if (owner.SelectedIndex == index)
+                {
+                    state |= AccessibleStates.Selected;
+                    if (owner.Focused)
+                    {
+                        state |= AccessibleStates.Focused;
+                    }
+                }
+
+                return state;
+            }
+        }
+
+        public override void Select(AccessibleSelection flags) => owner.SelectedIndex = index;
+
+        public override void DoDefaultAction() => owner.SelectedIndex = index;
     }
 
     public void OnThemeChanged() => Invalidate();

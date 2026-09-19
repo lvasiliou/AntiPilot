@@ -55,6 +55,7 @@ internal sealed class FluentSlider : Control, IThemedControl
 
             _value = snapped;
             Invalidate();
+            AccessibilityNotifyClients(AccessibleEvents.ValueChange, -1);
             ValueChanged?.Invoke(this, EventArgs.Empty);
         }
     }
@@ -64,6 +65,24 @@ internal sealed class FluentSlider : Control, IThemedControl
     {
         _value = Snap(value);
         Invalidate();
+        AccessibilityNotifyClients(AccessibleEvents.ValueChange, -1);
+    }
+
+    /// <summary>
+    /// A painted control reports no role and no value, so the wait before a double press was a
+    /// number only a sighted user could read. The name comes from the settings card around it.
+    /// </summary>
+    protected override AccessibleObject CreateAccessibilityInstance() => new SliderAccessibleObject(this);
+
+    private sealed class SliderAccessibleObject(FluentSlider owner) : ControlAccessibleObject(owner)
+    {
+        public override AccessibleRole Role => AccessibleRole.Slider;
+
+        public override string? Value
+        {
+            get => owner.Value.ToString(System.Globalization.CultureInfo.CurrentCulture);
+            set { }
+        }
     }
 
     public void OnThemeChanged() => Invalidate();
