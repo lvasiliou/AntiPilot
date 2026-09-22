@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="AntiPilot.Shell.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="AntiPilot">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <!--
+        The same five pages as the WinForms window, same glyphs, same order. The strings are
+        English literals until the string pipeline learns to emit resw; see tools\Update-Strings.ps1.
+    -->
+    <NavigationView
+        x:Name="Navigation"
+        IsBackButtonVisible="Collapsed"
+        IsSettingsVisible="False"
+        PaneDisplayMode="Left"
+        OpenPaneLength="220">
+
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Single press" Tag="single" IsSelected="True">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE765;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="Double press" Tag="double">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE916;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="Per-app" Tag="rules">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xECAA;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="Palette" Tag="palette">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE71D;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="General" Tag="general">
+                <NavigationViewItem.Icon>
+                    <FontIcon Glyph="&#xE713;" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+
+        <Frame x:Name="Content" Margin="24,0,24,24" />
+    </NavigationView>
+</Window>

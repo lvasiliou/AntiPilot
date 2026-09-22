@@ -210,17 +210,27 @@ are not among them, so a handful of framework-supplied strings stay English ther
 
 Needs the .NET 10 SDK, the Windows 10/11 SDK (for `makeappx`, `makepri` and `signtool`), and
 Visual Studio with the **Desktop development with C++** workload — the MSVC x64 and ARM64 build
-tools — for the native key path.
+tools — for the native key path, plus its **Windows App SDK C++ Templates** component for the
+WinUI 3 shell.
 
 ```powershell
 .\build.ps1
 ```
 
 This publishes the .NET app self-contained (logos included, see the `Content` item in the csproj),
-builds `AntiPilot.Key.exe` with MSBuild (found through `vswhere`, since `dotnet` cannot build a C++
-project and the key path is therefore not in `AntiPilot.sln`), stages the two side by side, indexes
-resources with `makepri`, packs `build\out\AntiPilot.msix`, and signs it with a self-signed
-certificate created in `Cert:\CurrentUser\My` on first run.
+builds `AntiPilot.Key.exe` and `AntiPilot.Shell.exe` with MSBuild (found through `vswhere`, since
+`dotnet` cannot build a C++ project and neither is therefore in `AntiPilot.sln`), stages the three
+side by side, indexes resources with `makepri`, packs `build\out\AntiPilot.msix`, and signs it with
+a self-signed certificate created in `Cert:\CurrentUser\My` on first run.
+
+The shell, `src/AntiPilot.Shell`, is the settings window being rewritten as a C++/WinRT WinUI 3
+app. It restores its NuGet packages from a `packages.config` — the only shape under which the
+Windows App SDK's XAML compiler runs for a native project — which needs `nuget.exe`; the script
+uses the one on `PATH` if there is one and otherwise fetches the official build once into `build\`.
+Its own build makes a dev package layout under `bin\`, registrable on its own while the window is
+being written, and the script lifts the executable and compiled XAML out of that. It is the one
+binary with framework dependencies: the Windows App Runtime and the C++ runtime, both declared in
+the manifest and both installed by the Store.
 
 The key path is `src/AntiPilot.Key`: C++20, static CRT so the package picks up no framework
 dependency, about 460 KB. It is what makes a press cost 20 ms rather than 102 — Windows starts a
@@ -346,6 +356,12 @@ src/AntiPilot.Key/        the key press itself (C++20, static CRT, no dependenci
   Main.cpp                the flow; Config, Json, Hotkey, Tap, Input, Focus and Launch do the same
                           jobs as the .NET files of those names, and Launch::Delegate starts
                           AntiPilot.exe for anything that needs a window
+src/AntiPilot.Shell/      the settings window, in progress, as C++/WinRT WinUI 3: reachable from
+                          the package as the hidden "Shell" entry until it can replace "Settings"
+  MainWindow.xaml         the window; NavigationView with the same five pages as the WinForms one
+  packages.config         the four Windows App SDK packages — must stay packages.config, see the
+                          note at the top of the .vcxproj
+  Package.appxmanifest    dev-only identity so the bin\ layout can be registered and run alone
 src/AntiPilot/            the app: tray icon + settings UI, and the windows the key path borrows
                           (WinForms, .NET 10)
   Program.cs              entry point; picks settings / tray / palette / notify from args or AUMID
@@ -370,9 +386,10 @@ tests/AntiPilot.Key.Tests/  the native side's tests, mirroring the above; exit c
 tools/strings/            en.txt and one file per translation — the source of truth
 tools/Update-Strings.ps1  generates Resources\*.resx and Strings.g.cs from the above
 tools/Capture-Window.ps1  screenshots the settings window, for reviewing the hand-drawn UI
-.github/workflows/ci.yml  build, test, string-table check, native key path build + tests, Store package
-packaging/AppxManifest.xml  three entry points across two executables, the key-provider extension,
-                          one capability
+.github/workflows/ci.yml  build, test, string-table check, native key path build + tests, shell
+                          build, Store package
+packaging/AppxManifest.xml  four entry points across three executables, the key-provider extension,
+                          two framework dependencies, one capability
 packaging/Images/         logos shipped *inside* the MSIX — scale-* and targetsize-* variants,
                           copied into the build by the Content item in AntiPilot.csproj and
                           resolved from their base names by makepri

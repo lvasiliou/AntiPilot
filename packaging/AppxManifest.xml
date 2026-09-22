@@ -23,6 +23,13 @@
   <Dependencies>
     <!-- Copilot hardware key providers are supported from build 22621 onwards. -->
     <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22621.0" MaxVersionTested="10.0.26200.0" />
+    <!--
+      For AntiPilot.Shell.exe, the WinUI 3 window. The Store installs both alongside the app;
+      a sideload needs them present already, which any machine with a WinUI 3 app on it has.
+      The versions are the ones the Windows App SDK 1.7 build writes into its own manifest.
+    -->
+    <PackageDependency Name="Microsoft.WindowsAppRuntime.1.7" MinVersion="7000.522.1444.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
+    <PackageDependency Name="Microsoft.VCLibs.140.00.UWPDesktop" MinVersion="14.0.33728.0" Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" />
   </Dependencies>
 
   <!--
@@ -49,7 +56,7 @@
   </Resources>
 
   <!--
-    Three entry points, two executables. Windows launches a Copilot key provider by AUMID with no
+    Four entry points, three executables. Windows launches a Copilot key provider by AUMID with no
     command line, so the .NET executable works out what it was started for from
     GetCurrentApplicationUserModelId().
       AntiPilot  - the key target; carries out the configured action. This one is the native
@@ -62,6 +69,8 @@
                    Tested the hard way.
       Settings   - opens the settings window
       Tray       - hidden entry, target of the sign-in shortcut, owns the notification-area icon
+      Shell      - hidden entry: the WinUI 3 settings window while it is being built, in
+                   AntiPilot.Shell.exe; takes over "Settings" when it is complete
   -->
   <Applications>
     <Application Id="AntiPilot" Executable="AntiPilot.Key.exe" EntryPoint="Windows.FullTrustApplication">
@@ -133,6 +142,21 @@
         never see a task declared on this one. AntiPilot writes a Startup-folder shortcut instead —
         see TrayStartup.cs — which every entry point can read and write.
       -->
+    </Application>
+
+    <!--
+      The WinUI 3 settings window while it is being built, reachable for testing but not listed.
+      When it has everything the WinForms one has, the Settings entry above moves to this
+      executable and this entry goes.
+    -->
+    <Application Id="Shell" Executable="AntiPilot.Shell.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        AppListEntry="none"
+        DisplayName="AntiPilot Settings (preview)"
+        Description="The next settings window."
+        BackgroundColor="#0C2F76"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png" />
     </Application>
   </Applications>
 
