@@ -24,3 +24,7 @@ build/
 .vs/
 .idea/
 .claude/settings.local.json
+
+# NuGet packages restored for the C++ WinUI 3 project (packages.config, so no lock file)
+src/AntiPilot.Shell/packages/
+src/AntiPilot.Shell/Generated Files/

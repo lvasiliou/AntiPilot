@@ -53,6 +53,15 @@ jobs:
       - name: Build the key path
         run: msbuild src\AntiPilot.Key\AntiPilot.Key.vcxproj /nologo /v:minimal /p:Configuration=Release /p:Platform=x64
 
+      # The WinUI 3 shell is C++ too, and packages.config, which only nuget.exe can restore.
+      - name: Build the shell
+        shell: pwsh
+        run: |
+          nuget restore src\AntiPilot.Shell\packages.config -PackagesDirectory src\AntiPilot.Shell\packages
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          msbuild src\AntiPilot.Shell\AntiPilot.Shell.vcxproj /nologo /v:minimal /p:Configuration=Release /p:Platform=x64
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Test the key path
         shell: pwsh
         run: |

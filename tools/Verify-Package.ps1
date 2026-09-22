@@ -55,6 +55,26 @@ function Get-KeyEntryTarget([xml]$manifest) {
     return '(no AntiPilot entry)'
 }
 
+# The WinUI 3 shell ships as a second window executable with its compiled XAML beside it. A manifest
+# entry pointing at an exe that is not there is a dead Start menu tile; the exe without its .xbf is a
+# window that dies before it opens.
+function Show-Shell([bool]$exePresent, [long]$exeBytes, [bool]$xamlPresent, [string]$manifestTarget) {
+    $ok = $exePresent -and $xamlPresent -and $manifestTarget -eq 'AntiPilot.Shell.exe'
+    $mark = if ($ok) { 'yes' } else { 'NO ' }
+    $colour = if ($ok) { 'Green' } else { 'Red' }
+    $parts = @()
+    $parts += if ($exePresent) { "AntiPilot.Shell.exe present ($([math]::Round($exeBytes / 1KB)) KB)" } else { 'AntiPilot.Shell.exe missing' }
+    $parts += if ($xamlPresent) { 'compiled XAML present' } else { 'compiled XAML missing' }
+    $parts += "manifest Shell entry -> $manifestTarget"
+    Write-Host ("      {0}  WinUI 3 shell: {1}" -f $mark, ($parts -join ', ')) -ForegroundColor $colour
+}
+
+function Get-ShellEntryTarget([xml]$manifest) {
+    $entry = @($manifest.Package.Applications.Application) | Where-Object { $_.Id -eq 'Shell' } | Select-Object -First 1
+    if ($entry) { return [string]$entry.Executable }
+    return '(no Shell entry)'
+}
+
 function Show-Payload([string]$msix, [string]$label) {
     $zip = [IO.Compression.ZipFile]::OpenRead($msix)
     try {
@@ -90,6 +110,10 @@ function Show-Payload([string]$msix, [string]$label) {
 
         $keyExe = $zip.Entries | Where-Object { $_.FullName -eq 'AntiPilot.Key.exe' }
         Show-KeyPath ($null -ne $keyExe) $(if ($keyExe) { $keyExe.Length } else { 0 }) (Get-KeyEntryTarget $xml)
+
+        $shellExe = $zip.Entries | Where-Object { $_.FullName -eq 'AntiPilot.Shell.exe' }
+        $shellXaml = $zip.Entries | Where-Object { $_.FullName -eq 'MainWindow.xbf' }
+        Show-Shell ($null -ne $shellExe) $(if ($shellExe) { $shellExe.Length } else { 0 }) ($null -ne $shellXaml) (Get-ShellEntryTarget $xml)
     }
     finally { $zip.Dispose() }
 }
@@ -152,4 +176,8 @@ foreach ($p in $installed) {
     $installedManifest = [xml](Get-Content (Join-Path $p.InstallLocation 'AppxManifest.xml') -Raw)
     $keyBytes = if (Test-Path $keyExePath) { (Get-Item $keyExePath).Length } else { 0 }
     Show-KeyPath (Test-Path $keyExePath) $keyBytes (Get-KeyEntryTarget $installedManifest)
+
+    $shellExePath = Join-Path $p.InstallLocation 'AntiPilot.Shell.exe'
+    $shellBytes = if (Test-Path $shellExePath) { (Get-Item $shellExePath).Length } else { 0 }
+    Show-Shell (Test-Path $shellExePath) $shellBytes (Test-Path (Join-Path $p.InstallLocation 'MainWindow.xbf')) (Get-ShellEntryTarget $installedManifest)
 }

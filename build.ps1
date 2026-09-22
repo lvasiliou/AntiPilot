@@ -166,6 +166,19 @@ function Invoke-Tool([string]$exe, [string[]]$toolArgs) {
 # The native key path is a C++ project, which dotnet cannot build, so it is not in AntiPilot.sln
 # and is built here through MSBuild proper. vswhere is the supported way to find one that has the
 # C++ tools; the one on PATH, if any, is not guaranteed to.
+# packages.config restore needs nuget.exe, which neither the SDK nor Visual Studio installs. CI has it on
+# the path; a dev box usually does not, so fetch the official build once into build (ignored).
+function Find-NuGet {
+    $onPath = Get-Command nuget.exe -ErrorAction SilentlyContinue
+    if ($onPath) { return $onPath.Source }
+    $local = Join-Path $buildDir 'nuget.exe'
+    if (-not (Test-Path $local)) {
+        Write-Host "Fetching nuget.exe..." -ForegroundColor DarkGray
+        Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe' -OutFile $local
+    }
+    return $local
+}
+
 function Find-MSBuild {
     $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
     if (-not (Test-Path $vswhere)) { throw "vswhere.exe not found. Install Visual Studio with the 'Desktop development with C++' workload." }
@@ -181,6 +194,7 @@ function Find-MSBuild {
 $makepri = Find-SdkTool 'makepri.exe'
 $makeappx = Find-SdkTool 'makeappx.exe'
 $msbuild = Find-MSBuild
+$nuget = Find-NuGet
 
 foreach ($dir in @($packagesDir)) {
     if (Test-Path $dir) { Get-ChildItem $dir -File | Remove-Item -Force }
@@ -235,6 +249,24 @@ foreach ($arch in $Architectures) {
     $keyExe = Join-Path $root "src\AntiPilot.Key\bin\$vcPlatform\Release\AntiPilot.Key.exe"
     if (-not (Test-Path $keyExe)) { throw "AntiPilot.Key.exe was not produced for $arch." }
 
+    # --- the WinUI 3 shell ---------------------------------------------------
+
+    # The settings window, being rewritten in C++ WinUI 3; see src\AntiPilot.Shell. Its project
+    # builds a dev package layout of its own, and the pieces the real package needs are lifted out
+    # of that at the staging step. Unlike the key path it uses the dynamic CRT and the Windows App
+    # Runtime, both declared as framework dependencies in packaging\AppxManifest.xml.
+    Write-Host "Building the shell..." -ForegroundColor Cyan
+    $shellDir = Join-Path $root 'src\AntiPilot.Shell'
+    if (-not (Test-Path (Join-Path $shellDir 'packages\Microsoft.WindowsAppSDK.1.7.250606001'))) {
+        Invoke-Tool $nuget @('restore', (Join-Path $shellDir 'packages.config'), '-PackagesDirectory', (Join-Path $shellDir 'packages'))
+    }
+    Invoke-Tool $msbuild @((Join-Path $shellDir 'AntiPilot.Shell.vcxproj'), '/nologo', '/v:minimal', '/p:Configuration=Release', "/p:Platform=$vcPlatform")
+
+    # For a packaged project the output folder is the package layout: exe, .xbf, .pri and the dev
+    # manifest all sit directly in it.
+    $shellLayout = Join-Path $shellDir "bin\$vcPlatform\Release"
+    if (-not (Test-Path (Join-Path $shellLayout 'AntiPilot.Shell.exe'))) { throw "AntiPilot.Shell.exe was not produced for $arch." }
+
     # --- stage --------------------------------------------------------------
 
     Write-Host "Staging package layout..." -ForegroundColor Cyan
@@ -246,6 +278,13 @@ foreach ($arch in $Architectures) {
 
     # Next to AntiPilot.exe, which it starts for anything that needs a window.
     Copy-Item $keyExe $stageDir -Force
+
+    # The shell: its executable, the compiled XAML it loads through the package resource map, the
+    # metadata that has to share its name, and the WebView2 loader WinUI links against whether or
+    # not a WebView is ever shown. makepri below indexes the .xbf files with everything else.
+    foreach ($name in 'AntiPilot.Shell.exe', 'AntiPilot.Shell.winmd', '*.xbf', 'Microsoft.Web.WebView2.Core.dll') {
+        Copy-Item (Join-Path $shellLayout $name) $stageDir -Force
+    }
 
     # The logos travel with the publish output (see the Content item in AntiPilot.csproj).
     $logoCount = (Get-ChildItem (Join-Path $stageDir 'Images') -Filter '*.png' -ErrorAction SilentlyContinue | Measure-Object).Count
