@@ -1,0 +1,8 @@
+namespace AntiPilot.Shell
+{
+    [default_interface]
+    runtimeclass PalettePage : Microsoft.UI.Xaml.Controls.Page
+    {
+        PalettePage();
+    }
+}

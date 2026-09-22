@@ -113,33 +113,22 @@ typing into. Nothing runs in the background: each press starts the app, does the
 
 ## The settings window
 
-Laid out the way Windows 11 lays settings out: a navigation rail down the left, a page of cards on
-the right, the commit buttons along the bottom.
+`AntiPilot.Shell.exe`, C++/WinRT on WinUI 3, in `src/AntiPilot.Shell`. Laid out the way Windows 11
+lays settings out: a navigation view down the left, a page of cards on the right, the commit
+buttons along the bottom, Mica behind it all and the app's own title bar rather than the system
+one. The cards, toggles, sliders and lists are WinUI's, so they come with the theme, the accent
+colour, the type ramp, high-DPI layout and an accessibility tree, none of which had to be written.
 
-None of that is WinForms' own. WinForms has no card, no toggle switch, no navigation rail, and its
-buttons and sliders are drawn by the common controls library, which has looked its age for a decade.
-So `UI/Fluent/` is a small design system — rounded surfaces, the WinUI type ramp in Segoe UI
-Variable, settings cards, a toggle, a slider, a button with an accent variant, and the rail — all
-custom-painted from one set of tokens in [Theme.cs](src/AntiPilot/UI/Theme.cs). The colours are the
-ones WinUI specifies rather than ones invented to look close, and the **accent colour is the user's
-own**, read from `AccentPalette` in the shade WinUI would pick for the current theme: the light
-variant on dark backgrounds, the dark variant on light ones, so text on top of it stays readable
-whatever colour they chose.
+It used to be WinForms with a hand-painted design system, on the argument that WinUI 3's runtime
+start would cost the key press. Measured, it does not: the App SDK window is on screen in about
+150 ms from activation where the WinForms one took 320, because the .NET runtime was the slow part.
+What the move did cost is the packaging, which is why `build.ps1` and the manifest carry the
+framework dependencies described under **Build**.
 
-The alternative was WinUI 3, which would have been the authentic stack and the wrong choice here: it
-pulls in the Windows App SDK, adds tens of megabytes to a package that ships per-architecture, and
-puts a runtime initialisation in front of a window that a key press might open. This app's whole
-premise is that it is small and starts fast.
-
-Because every pixel is hand-drawn, looking at it is the only way to review it —
-[tools/Capture-Window.ps1](tools/Capture-Window.ps1) opens the window, screenshots it and closes it
-again, in either theme, any language, on any page:
-
-```powershell
-.\tools\Capture-Window.ps1 -ColorMode dark -Page 1
-```
-
-That is not a nicety. It is how the Arabic layout bug below was found.
+The window edits one config in place and writes it on **Save**, through the same C++ writer the
+key path reads with; **Cancel** discards; closing with edits asks. **Test it** runs the single-press
+action the way the key would. The shell is single-instance: starting it again brings the open
+window forward.
 
 An optional **notification-area icon** (settings, run the action, status) is **off by default** — a
 resident process just to host one icon is a poor trade when the Start menu already opens the
@@ -356,23 +345,26 @@ src/AntiPilot.Key/        the key press itself (C++20, static CRT, no dependenci
   Main.cpp                the flow; Config, Json, Hotkey, Tap, Input, Focus and Launch do the same
                           jobs as the .NET files of those names, and Launch::Delegate starts
                           AntiPilot.exe for anything that needs a window
-src/AntiPilot.Shell/      the settings window, in progress, as C++/WinRT WinUI 3: reachable from
-                          the package as the hidden "Shell" entry until it can replace "Settings"
-  MainWindow.xaml         the window; NavigationView with the same five pages as the WinForms one,
-                          owns the config the pages edit, Save and Cancel, the close prompt
-  SinglePressPage.xaml    the first page: one card, the action editor inside it
+src/AntiPilot.Shell/      the settings window: C++/WinRT, WinUI 3, the "Settings" entry
+  main.cpp                wWinMain: single-instance via AppInstance, then the XAML app
+  MainWindow.xaml         title bar, heading, key status card, NavigationView, footer; owns the
+                          config the pages edit, Save (with validation), Cancel, Test it, close prompt
+  *Page.xaml              Single press, Double press, Per-app rules, Palette, General
   ActionEditor.xaml       "Do this:" and the six modes; reads and writes the shared KeyAction
+  SettingsCard.xaml       icon, title, description, action on the right — the Windows 11 row
+  AppPicker.cpp / Apps    the installed-apps list with icons, from shell:AppsFolder
+  Actions / Validate      describing an action for a list; checking it still points at something
+  KeyStatus / Startup     what the Copilot key points at; the sign-in shortcut and the tray process
   Str.idl / Strings.cpp   {local:Str Key=…} in XAML and Strings::Get in code: the same keys as the
-                          .NET window, read from the package resource index
-                          Config, Json, Hotkey, Text, Paths and Log are compiled in from
-                          src/AntiPilot.Key, not copied: one reader and one writer of the settings
-                          file, and they are the same code
+                          .NET side, read from the package resource index
+                          Config, Json, Hotkey, Text, Paths, Log, Launch, Focus and Activation are
+                          compiled in from src/AntiPilot.Key, not copied: one reader and one
+                          writer of the settings file, and they are the same code
   Strings/<lang>/         generated .resw, one folder per language, indexed by makepri
   packages.config         the four Windows App SDK packages — must stay packages.config, see the
                           note at the top of the .vcxproj
   Package.appxmanifest    dev-only identity so the bin\ layout can be registered and run alone
-src/AntiPilot/            the app: tray icon + settings UI, and the windows the key path borrows
-                          (WinForms, .NET 10)
+src/AntiPilot/            the .NET half: tray icon, the palette, failure balloons (WinForms)
   Program.cs              entry point; picks settings / tray / palette / notify from args or AUMID
                           (and the key press too, for running unpackaged with --key)
   ActionRunner.cs         carries out a configured action
@@ -385,20 +377,17 @@ src/AntiPilot/            the app: tray icon + settings UI, and the windows the 
   Resources/              generated: Strings.resx and one satellite per language
   Interop/                SendInput, app activation, Apps-folder enumeration and icons,
                           window/foreground lookup for focus-or-launch and per-app rules
-  UI/                     settings window, action editor, hotkey capture, app picker,
-                          rule and palette editors, the palette itself, tray icon
-  UI/Theme.cs             the design tokens: Fluent palette, the user's accent, metrics
-  UI/Fluent/              the controls WinForms does not have — settings card, toggle,
-                          slider, accent button, navigation rail, type ramp, paint helpers
+  UI/                     the palette, the tray icon, the about dialog, the failure balloon
+  UI/Theme.cs             the design tokens the palette paints with: Fluent palette, accent, metrics
+  UI/Fluent/              type ramp and paint helpers for the palette
 tests/AntiPilot.Tests/    xunit; the decision-making parts, no UI automation
 tests/AntiPilot.Key.Tests/  the native side's tests, mirroring the above; exit code = failures
 tools/strings/            en.txt and one file per translation — the source of truth
 tools/Update-Strings.ps1  generates Resources\*.resx, Strings.g.cs and AntiPilot.Shell\Strings\*\
                           Resources.resw from the above
-tools/Capture-Window.ps1  screenshots the settings window, for reviewing the hand-drawn UI
 .github/workflows/ci.yml  build, test, string-table check, native key path build + tests, shell
                           build, Store package
-packaging/AppxManifest.xml  four entry points across three executables, the key-provider extension,
+packaging/AppxManifest.xml  three entry points across three executables, the key-provider extension,
                           two framework dependencies, one capability
 packaging/Images/         logos shipped *inside* the MSIX — scale-* and targetsize-* variants,
                           copied into the build by the Content item in AntiPilot.csproj and

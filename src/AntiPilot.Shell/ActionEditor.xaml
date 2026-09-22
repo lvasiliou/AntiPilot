@@ -36,7 +36,6 @@
         <!-- An installed app -->
         <StackPanel x:Name="AppPanel" Visibility="Collapsed" Margin="0,8,0,0">
             <StackPanel Orientation="Horizontal" Spacing="12">
-                <!-- ponytail: collapsed until the app picker brings icon lookup with it. -->
                 <Image x:Name="AppIcon" Width="48" Height="48" Visibility="Collapsed" />
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock x:Name="AppName" FontWeight="SemiBold" />
@@ -44,8 +43,7 @@
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
             </StackPanel>
-            <!-- ponytail: disabled until the app picker is ported; that is its own pull request. -->
-            <Button x:Name="ChooseApp" Content="{local:Str Key=ChooseApp}" Margin="0,12,0,0" IsEnabled="False" />
+            <Button x:Name="ChooseApp" Content="{local:Str Key=ChooseApp}" Margin="0,12,0,0" Click="OnChooseApp" />
             <TextBlock Text="{local:Str Key=WhenAlreadyRunning}" Style="{StaticResource Caption}" />
             <ComboBox x:Name="AppBehaviour" AutomationProperties.Name="{local:Str Key=WhenAlreadyRunning}" HorizontalAlignment="Stretch" SelectionChanged="OnBehaviourChanged">
                 <ComboBoxItem Content="{local:Str Key=BehaviourAlways}" />

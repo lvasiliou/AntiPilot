@@ -28,4 +28,31 @@ namespace AntiPilot::Shell::Strings
 
         return winrt::hstring{ L"!" + std::wstring{ key } + L"!" };
     }
+
+    namespace
+    {
+        template <typename T>
+        winrt::hstring FormatWith(std::wstring_view key, T const& value)
+        {
+            const std::wstring pattern{ Get(key) };
+            try
+            {
+                return winrt::hstring{ std::vformat(pattern, std::make_wformat_args(value)) };
+            }
+            catch (std::format_error const&)
+            {
+                return winrt::hstring{ pattern };
+            }
+        }
+    }
+
+    winrt::hstring Format(std::wstring_view key, int value)
+    {
+        return FormatWith(key, value);
+    }
+
+    winrt::hstring Format(std::wstring_view key, std::wstring_view value)
+    {
+        return FormatWith(key, value);
+    }
 }

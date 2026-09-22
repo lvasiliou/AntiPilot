@@ -4,6 +4,7 @@
 #include "ActionEditor.g.cpp"
 #endif
 
+#include "AppPicker.h"
 #include "Hotkey.h"
 #include "Strings.h"
 #include "Text.h"
@@ -88,17 +89,72 @@ namespace winrt::AntiPilot::Shell::implementation
         auto found = std::find(_modes.begin(), _modes.end(), _action.kind);
         Mode().SelectedIndex(found == _modes.end() ? 0 : static_cast<int>(found - _modes.begin()));
 
-        AppName().Text(Text::IsBlank(_action.displayName) ? ::AntiPilot::Shell::Strings::Get(L"NoAppChosen") : hstring{ _action.displayName });
-        AppAumid().Text(hstring{ _action.aumid });
+        ShowApp();
         PathBox().Text(hstring{ _action.path });
         ArgsBox().Text(hstring{ _action.arguments });
         WorkDirBox().Text(hstring{ _action.workingDirectory });
         SyncBehaviourCombos();
         ShowHotkey();
         ShowPanelForKind();
-
-        // ponytail: no app icon yet; that arrives with the app picker, which owns the icon lookup.
         _loading = false;
+    }
+
+    void ActionEditor::ShowApp()
+    {
+        AppName().Text(Text::IsBlank(_action.displayName) ? ::AntiPilot::Shell::Strings::Get(L"NoAppChosen") : hstring{ _action.displayName });
+        AppAumid().Text(hstring{ _action.aumid });
+        AppIcon().Source(nullptr);
+        AppIcon().Visibility(Visibility::Collapsed);
+        LoadIcon();
+    }
+
+    fire_and_forget ActionEditor::LoadIcon()
+    {
+        auto strong = get_strong();
+        std::wstring aumid = _action.aumid;
+        if (Text::IsBlank(aumid))
+        {
+            co_return;
+        }
+
+        // The size depends on the display scale, which is only known once the editor is in the
+        // tree. A page loads its editor before it is shown, so come back when it is.
+        auto root = XamlRoot();
+        if (!root)
+        {
+            auto token = std::make_shared<event_token>();
+            *token = Loaded([weak = get_weak(), token](auto&&, auto&&)
+            {
+                if (auto self = weak.get())
+                {
+                    self->Loaded(*token);
+                    self->LoadIcon();
+                }
+            });
+            co_return;
+        }
+
+        auto source = co_await ::AntiPilot::Shell::AppPicker::IconFor(aumid, static_cast<int>(48 * root.RasterizationScale()));
+
+        // The action may have moved on while the shell was drawing; only the current one gets the icon.
+        if (source && _action.aumid == aumid)
+        {
+            AppIcon().Source(source);
+            AppIcon().Visibility(Visibility::Visible);
+        }
+    }
+
+    fire_and_forget ActionEditor::OnChooseApp(IInspectable const&, RoutedEventArgs const&)
+    {
+        auto strong = get_strong();
+        auto picked = std::make_shared<::AntiPilot::Shell::Apps::Entry>();
+        if (co_await ::AntiPilot::Shell::AppPicker::Show(XamlRoot(), _action.aumid, picked))
+        {
+            _action.aumid = picked->parsingName;
+            _action.displayName = picked->name;
+            ShowApp();
+            Changed();
+        }
     }
 
     void ActionEditor::Changed()

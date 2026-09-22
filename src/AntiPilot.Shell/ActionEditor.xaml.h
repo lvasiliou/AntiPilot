@@ -36,6 +36,7 @@ namespace winrt::AntiPilot::Shell::implementation
 
         // ---- handlers wired in the markup ----------------------------------------
 
+        fire_and_forget OnChooseApp(Windows::Foundation::IInspectable const&, Microsoft::UI::Xaml::RoutedEventArgs const&);
         void OnModeChanged(Windows::Foundation::IInspectable const&, Microsoft::UI::Xaml::Controls::SelectionChangedEventArgs const&);
         void OnBehaviourChanged(Windows::Foundation::IInspectable const&, Microsoft::UI::Xaml::Controls::SelectionChangedEventArgs const&);
         void OnPathChanged(Windows::Foundation::IInspectable const&, Microsoft::UI::Xaml::Controls::TextChangedEventArgs const&);
@@ -56,6 +57,8 @@ namespace winrt::AntiPilot::Shell::implementation
         bool _syncingBehaviour = false;
 
         void Changed();
+        void ShowApp();
+        fire_and_forget LoadIcon();
         void ShowPanelForKind();
         void ShowHotkey();
         void SetHotkey(std::optional<::AntiPilot::HotkeyDefinition> const& hotkey);

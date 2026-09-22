@@ -100,7 +100,8 @@
       <AdditionalOptions>%(AdditionalOptions) /bigobj /utf-8</AdditionalOptions>
       <!-- The config, JSON, hotkey and text modules are the key path's, compiled in here as well. -->
       <AdditionalIncludeDirectories>$(ProjectDir)..\AntiPilot.Key;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- DISABLE_XAML_GENERATED_MAIN: main.cpp supplies wWinMain, for single-instance activation. -->
+      <PreprocessorDefinitions>NOMINMAX;DISABLE_XAML_GENERATED_MAIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -119,8 +120,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <Link>
-      <!-- Paths.cpp (shared with the key path) resolves the config folder through the shell API. -->
-      <AdditionalDependencies>shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <!-- shell32: Paths.cpp resolves the config folder through the shell API. gdi32: app icons come out of the shell as HBITMAPs. -->
+      <AdditionalDependencies>shell32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -144,6 +145,27 @@
     <ClInclude Include="SinglePressPage.xaml.h">
       <DependentUpon>SinglePressPage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="DoublePressPage.xaml.h">
+      <DependentUpon>DoublePressPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="GeneralPage.xaml.h">
+      <DependentUpon>GeneralPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="SettingsCard.xaml.h">
+      <DependentUpon>SettingsCard.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="RulesPage.xaml.h">
+      <DependentUpon>RulesPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="PalettePage.xaml.h">
+      <DependentUpon>PalettePage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Actions.h" />
+    <ClInclude Include="Apps.h" />
+    <ClInclude Include="AppPicker.h" />
+    <ClInclude Include="Validate.h" />
+    <ClInclude Include="KeyStatus.h" />
+    <ClInclude Include="Startup.h" />
     <ClInclude Include="Str.h" />
     <ClInclude Include="Strings.h" />
   </ItemGroup>
@@ -151,12 +173,18 @@
     <ApplicationDefinition Include="App.xaml" />
     <Page Include="MainWindow.xaml" />
     <Page Include="ActionEditor.xaml" />
+    <Page Include="SettingsCard.xaml" />
     <Page Include="SinglePressPage.xaml" />
+    <Page Include="DoublePressPage.xaml" />
+    <Page Include="GeneralPage.xaml" />
+    <Page Include="RulesPage.xaml" />
+    <Page Include="PalettePage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
@@ -169,6 +197,27 @@
     <ClCompile Include="SinglePressPage.xaml.cpp">
       <DependentUpon>SinglePressPage.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="DoublePressPage.xaml.cpp">
+      <DependentUpon>DoublePressPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="GeneralPage.xaml.cpp">
+      <DependentUpon>GeneralPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="SettingsCard.xaml.cpp">
+      <DependentUpon>SettingsCard.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="RulesPage.xaml.cpp">
+      <DependentUpon>RulesPage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="PalettePage.xaml.cpp">
+      <DependentUpon>PalettePage.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="Actions.cpp" />
+    <ClCompile Include="Apps.cpp" />
+    <ClCompile Include="AppPicker.cpp" />
+    <ClCompile Include="Validate.cpp" />
+    <ClCompile Include="KeyStatus.cpp" />
+    <ClCompile Include="Startup.cpp" />
     <ClCompile Include="Str.cpp" />
     <ClCompile Include="Strings.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
@@ -178,7 +227,16 @@
       Shared with AntiPilot.Key, not copied: the settings file has one reader and one writer and
       they are the same code. These do not use this project's precompiled header.
     -->
+    <ClCompile Include="..\AntiPilot.Key\Activation.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\AntiPilot.Key\Config.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\AntiPilot.Key\Focus.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\AntiPilot.Key\Launch.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\AntiPilot.Key\Hotkey.cpp">
@@ -209,6 +267,26 @@
     <Midl Include="SinglePressPage.idl">
       <SubType>Code</SubType>
       <DependentUpon>SinglePressPage.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="DoublePressPage.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>DoublePressPage.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="GeneralPage.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>GeneralPage.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="SettingsCard.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>SettingsCard.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="RulesPage.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>RulesPage.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="PalettePage.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>PalettePage.xaml</DependentUpon>
     </Midl>
     <Midl Include="Str.idl" />
   </ItemGroup>

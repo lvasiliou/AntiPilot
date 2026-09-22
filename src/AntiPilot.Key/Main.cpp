@@ -101,7 +101,7 @@ namespace
         case KeyPressOutcome::OpenSettings:
             // Nothing set up yet — the friendliest thing to do is show the settings window.
             Log::Write(L"Nothing has been set up yet; opening settings.");
-            Launch::Delegate({ L"--settings" });
+            Launch::Settings();
             return;
 
         case KeyPressOutcome::DoNothing:

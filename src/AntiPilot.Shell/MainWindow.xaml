@@ -10,12 +10,37 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <!--
+            The window draws its own title bar: the icon and name at the top left, the backdrop
+            running right up to the caption buttons, the way Windows 11 Settings does. This grid is
+            the drag region; see SetTitleBar in the code-behind.
+        -->
+        <Grid x:Name="TitleBar" Height="36" Background="Transparent">
+            <StackPanel Orientation="Horizontal" Spacing="10" Margin="14,0,0,0" VerticalAlignment="Center">
+                <Image Source="ms-appx:///Images/Square44x44Logo.png" Width="16" Height="16" />
+                <TextBlock x:Name="TitleText" Style="{StaticResource CaptionTextBlockStyle}" VerticalAlignment="Center" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Heading and the one card that matters before anything else: is the key pointed here. -->
+        <StackPanel Grid.Row="1" Padding="24,8,24,12" Spacing="4">
+            <TextBlock Text="{local:Str Key=AppName}" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock Text="{local:Str Key=SettingsTagline}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       TextWrapping="Wrap" Margin="1,0,0,10" />
+            <local:SettingsCard x:Name="StatusCard" Glyph="&#xE765;">
+                <local:SettingsCard.Action>
+                    <Button Content="{local:Str Key=OpenWindowsSettings}" Click="OnOpenWindowsSettings" />
+                </local:SettingsCard.Action>
+            </local:SettingsCard>
+        </StackPanel>
+
         <!--
             The same five pages as the WinForms window, same glyphs, same order. Text comes from
             tools\strings through {local:Str}, by the same keys the .NET window uses.
         -->
         <NavigationView
+            Grid.Row="2"
             x:Name="Navigation"
             IsBackButtonVisible="Collapsed"
             IsSettingsVisible="False"
@@ -56,7 +81,13 @@
                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
         </NavigationView>
 
-        <Grid Grid.Row="1" Padding="24,12,24,16" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+        <Grid Grid.Row="3" Padding="24,12,24,16" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+            <Button HorizontalAlignment="Left" Click="OnTest" AutomationProperties.Name="{local:Str Key=TestIt}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon Glyph="&#xE768;" FontSize="14" />
+                    <TextBlock Text="{local:Str Key=TestIt}" />
+                </StackPanel>
+            </Button>
             <Button Grid.Column="1" MinWidth="96" Content="{local:Str Key=Cancel}" Click="OnCancel" />
             <Button Grid.Column="2" MinWidth="96" Content="{local:Str Key=Save}" Click="OnSave"
                     Style="{StaticResource AccentButtonStyle}" />

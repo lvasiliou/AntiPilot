@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using AntiPilot.Interop;
 
 namespace AntiPilot.UI;
@@ -23,7 +24,6 @@ public sealed class TrayApplication : ApplicationContext
     private readonly TrayWindow _window;
     private EventWaitHandle? _exitSignal;
     private RegisteredWaitHandle? _exitWait;
-    private bool _exitWhenSettingsClose;
 
     /// <summary>Windows sends a close request in three messages; the answer is one exit.</summary>
     private bool _exiting;
@@ -31,7 +31,6 @@ public sealed class TrayApplication : ApplicationContext
     private readonly NotifyIcon _icon;
     private readonly ToolStripMenuItem _actionItem;
     private readonly ToolStripMenuItem _startupItem;
-    private SettingsForm? _settings;
 
     public TrayApplication()
     {
@@ -126,13 +125,6 @@ public sealed class TrayApplication : ApplicationContext
 
         _exiting = true;
         _icon.Visible = false;
-
-        // The settings window may be a child of this process; let it finish first.
-        if (_settings is { IsDisposed: false })
-        {
-            _exitWhenSettingsClose = true;
-            return;
-        }
 
         Log.Write("Tray icon closed.");
         ExitThread();
@@ -229,36 +221,18 @@ public sealed class TrayApplication : ApplicationContext
         RefreshLabels();
     }
 
-    private void OpenSettings()
+    /// <summary>The settings window is its own process, AntiPilot.Shell.exe, and single-instance on its own.</summary>
+    private static void OpenSettings()
     {
-        if (_settings is { IsDisposed: false })
+        var shell = Path.Combine(AppContext.BaseDirectory, "AntiPilot.Shell.exe");
+        try
         {
-            if (_settings.WindowState == FormWindowState.Minimized)
-            {
-                _settings.WindowState = FormWindowState.Normal;
-            }
-
-            _settings.Activate();
-            return;
+            Process.Start(new ProcessStartInfo(shell) { UseShellExecute = false })?.Dispose();
         }
-
-        _settings = new SettingsForm();
-        _settings.FormClosed += (_, _) =>
+        catch (Exception ex)
         {
-            _settings = null;
-
-            if (_exitWhenSettingsClose)
-            {
-                Log.Write("Tray icon closed.");
-                ExitThread();
-                return;
-            }
-
-            RefreshLabels();
-        };
-
-        _settings.Show();
-        _settings.Activate();
+            Log.Write($"Could not start the settings window '{shell}': {ex.Message}");
+        }
     }
 
     private static void ShowAbout()
@@ -294,7 +268,6 @@ public sealed class TrayApplication : ApplicationContext
             _icon.Visible = false;
             _icon.Dispose();
             _window.DestroyHandle();
-            _settings?.Dispose();
             _singleInstance?.ReleaseMutex();
             _singleInstance?.Dispose();
             _singleInstance = null;

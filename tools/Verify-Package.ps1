@@ -31,7 +31,6 @@ $markers = [ordered]@{
     'HotkeyDefinition'  = 'keyboard shortcut action'
     'TapCoordinator'    = 'double press'
     'WindowFinder'      = 'launch-or-focus and per-app rules'
-    'NavigationRail'    = 'Fluent settings window'
     'AccentFromPalette' = 'accent colour fix (RGBA)'
     'OutcomeFor'        = 'issue #1 fix: Nothing does nothing'
     'ShowFailure'       = 'entry points the native key path delegates to (--palette, --notify)'
@@ -65,14 +64,14 @@ function Show-Shell([bool]$exePresent, [long]$exeBytes, [bool]$xamlPresent, [str
     $parts = @()
     $parts += if ($exePresent) { "AntiPilot.Shell.exe present ($([math]::Round($exeBytes / 1KB)) KB)" } else { 'AntiPilot.Shell.exe missing' }
     $parts += if ($xamlPresent) { 'compiled XAML present' } else { 'compiled XAML missing' }
-    $parts += "manifest Shell entry -> $manifestTarget"
+    $parts += "manifest Settings entry -> $manifestTarget"
     Write-Host ("      {0}  WinUI 3 shell: {1}" -f $mark, ($parts -join ', ')) -ForegroundColor $colour
 }
 
 function Get-ShellEntryTarget([xml]$manifest) {
-    $entry = @($manifest.Package.Applications.Application) | Where-Object { $_.Id -eq 'Shell' } | Select-Object -First 1
+    $entry = @($manifest.Package.Applications.Application) | Where-Object { $_.Id -eq 'Settings' } | Select-Object -First 1
     if ($entry) { return [string]$entry.Executable }
-    return '(no Shell entry)'
+    return '(no Settings entry)'
 }
 
 function Show-Payload([string]$msix, [string]$label) {

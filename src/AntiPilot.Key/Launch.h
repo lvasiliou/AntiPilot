@@ -20,8 +20,14 @@ namespace AntiPilot::Launch
 
     /// <summary>
     /// Starts the .NET half of the app with the given arguments and returns without waiting. This
-    /// is how the parts that need a window — the palette, the settings window, a failure balloon —
-    /// are reached from a process that deliberately has none.
+    /// is how the parts that need a window — the palette, a failure balloon — are reached from a
+    /// process that deliberately has none.
     /// </summary>
     bool Delegate(std::initializer_list<std::wstring_view> arguments);
+
+    /// <summary>The settings window, which is its own executable, AntiPilot.Shell.exe.</summary>
+    bool Settings();
+
+    /// <summary>Starts an executable that ships next to this one, with arguments, without waiting.</summary>
+    bool Sibling(std::wstring_view exeName, std::initializer_list<std::wstring_view> arguments);
 }
