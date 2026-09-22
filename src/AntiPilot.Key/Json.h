@@ -59,4 +59,23 @@ namespace AntiPilot::Json
     /// </summary>
     /// <returns>The document, or nothing with <paramref name="error"/> describing the first problem.</returns>
     std::optional<Value> Parse(std::string_view utf8, std::wstring* error = nullptr);
+
+    /// <summary>
+    /// The value as UTF-8 text, laid out the way System.Text.Json's indented writer lays it out:
+    /// two-space indent, a space after each colon, an empty array as "[]" on one line. Strings are
+    /// escaped only where JSON requires it and are otherwise written as UTF-8, where .NET would
+    /// write \u escapes; both readers accept both.
+    /// </summary>
+    std::string Serialize(const Value& value);
+
+    // Builders, so a document can be assembled without spelling out the struct each time.
+    Value Null();
+    Value Boolean(bool value);
+    Value Number(int value);
+    Value String(std::wstring_view value);
+    Value Array();
+    Value Object();
+
+    /// <summary>Appends a member to an object. Insertion order is the written order.</summary>
+    void Set(Value& object, std::wstring_view key, Value value);
 }

@@ -463,3 +463,111 @@ namespace AntiPilot
         return action.IsConfigured() ? KeyPressOutcome::RunAction : KeyPressOutcome::OpenSettings;
     }
 }
+
+// ---- writing ---------------------------------------------------------------
+
+namespace AntiPilot
+{
+    namespace
+    {
+        /// <summary>A string member the way the .NET side writes an unset one: null, not "".</summary>
+        Json::Value StringOrNull(std::wstring_view value)
+        {
+            return value.empty() ? Json::Null() : Json::String(value);
+        }
+
+        Json::Value WriteAction(const KeyAction& action)
+        {
+            auto object = Json::Object();
+            Json::Set(object, L"Kind", Json::String(KindName(action.kind)));
+            Json::Set(object, L"Aumid", StringOrNull(action.aumid));
+            Json::Set(object, L"DisplayName", StringOrNull(action.displayName));
+            Json::Set(object, L"Path", StringOrNull(action.path));
+            Json::Set(object, L"Arguments", StringOrNull(action.arguments));
+            Json::Set(object, L"WorkingDirectory", StringOrNull(action.workingDirectory));
+            Json::Set(object, L"Hotkey", StringOrNull(action.hotkey));
+            Json::Set(object, L"Behaviour", Json::String(BehaviourNames[static_cast<int>(action.behaviour)]));
+            Json::Set(object, L"Label", StringOrNull(action.label));
+            return object;
+        }
+
+        std::wstring WriteWholeFile(const std::wstring& path, std::string_view content)
+        {
+            HANDLE file = CreateFileW(path.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+            if (file == INVALID_HANDLE_VALUE)
+            {
+                return Text::DescribeError(GetLastError());
+            }
+
+            DWORD written = 0;
+            const bool ok = WriteFile(file, content.data(), static_cast<DWORD>(content.size()), &written, nullptr)
+                && written == content.size();
+            const DWORD error = ok ? 0 : GetLastError();
+            CloseHandle(file);
+            return ok ? std::wstring{} : Text::DescribeError(error);
+        }
+    }
+
+    std::string AppConfig::ToJson() const
+    {
+        auto root = Json::Object();
+        Json::Set(root, L"Schema", Json::Number(CurrentSchema));
+        Json::Set(root, L"Tap", WriteAction(tap));
+        Json::Set(root, L"DoubleTap", WriteAction(doubleTap));
+        Json::Set(root, L"DoubleTapEnabled", Json::Boolean(doubleTapEnabled));
+        Json::Set(root, L"DoubleTapWindowMs", Json::Number(doubleTapWindowMs));
+
+        auto rules = Json::Array();
+        for (const AppRule& rule : appRules)
+        {
+            auto object = Json::Object();
+            Json::Set(object, L"ProcessName", StringOrNull(rule.processName));
+            Json::Set(object, L"Action", WriteAction(rule.action));
+            rules.array.push_back(std::move(object));
+        }
+        Json::Set(root, L"AppRules", std::move(rules));
+
+        auto entries = Json::Array();
+        for (const KeyAction& entry : palette)
+        {
+            entries.array.push_back(WriteAction(entry));
+        }
+        Json::Set(root, L"Palette", std::move(entries));
+
+        Json::Set(root, L"TrayIntroShown", Json::Boolean(trayIntroShown));
+        Json::Set(root, L"Language", StringOrNull(language));
+        return Json::Serialize(root);
+    }
+
+    std::wstring AppConfig::SaveTo(const std::wstring& path)
+    {
+        schema = CurrentSchema;
+
+        const std::wstring directory = Text::DirectoryName(path);
+        if (!directory.empty() && !Paths::EnsureDirectory(directory))
+        {
+            return std::format(L"could not create '{}'", directory);
+        }
+
+        const std::wstring temporary = path + L".tmp";
+        if (std::wstring error = WriteWholeFile(temporary, ToJson()); !error.empty())
+        {
+            return error;
+        }
+
+        if (!MoveFileExW(temporary.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH))
+        {
+            std::wstring error = Text::DescribeError(GetLastError());
+            DeleteFileW(temporary.c_str());
+            return error;
+        }
+
+        hasBeenSaved = true;
+        return {};
+    }
+
+    std::wstring AppConfig::Save()
+    {
+        return SaveTo(Paths::ConfigPath());
+    }
+}

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="AntiPilot.Shell.ActionEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AntiPilot.Shell">
+
+    <UserControl.Resources>
+        <!-- The quieter line under a control that says what it will and will not do. -->
+        <Style x:Key="Hint" TargetType="TextBlock" BasedOn="{StaticResource CaptionTextBlockStyle}">
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,10,0,0" />
+        </Style>
+        <Style x:Key="Caption" TargetType="TextBlock" BasedOn="{StaticResource BodyTextBlockStyle}">
+            <Setter Property="Margin" Value="0,12,0,4" />
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Spacing="4">
+        <TextBlock Text="{local:Str Key=DoThis}" Margin="0,0,0,4" />
+
+        <!-- Items are in ActionKind order; the last is removed when the palette is not on offer. -->
+        <ComboBox x:Name="Mode" AutomationProperties.Name="{local:Str Key=DoThis}" HorizontalAlignment="Stretch" SelectionChanged="OnModeChanged">
+            <ComboBoxItem Content="{local:Str Key=ModeNothing}" />
+            <ComboBoxItem Content="{local:Str Key=ModeShellApp}" />
+            <ComboBoxItem Content="{local:Str Key=ModeFile}" />
+            <ComboBoxItem Content="{local:Str Key=ModeMenuKey}" />
+            <ComboBoxItem Content="{local:Str Key=ModeHotkey}" />
+            <ComboBoxItem Content="{local:Str Key=ModePalette}" />
+        </ComboBox>
+
+        <!-- Nothing -->
+        <TextBlock x:Name="NothingPanel" Style="{StaticResource Hint}" Visibility="Collapsed" />
+
+        <!-- An installed app -->
+        <StackPanel x:Name="AppPanel" Visibility="Collapsed" Margin="0,8,0,0">
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <!-- ponytail: collapsed until the app picker brings icon lookup with it. -->
+                <Image x:Name="AppIcon" Width="48" Height="48" Visibility="Collapsed" />
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="AppName" FontWeight="SemiBold" />
+                    <TextBlock x:Name="AppAumid" Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+            </StackPanel>
+            <!-- ponytail: disabled until the app picker is ported; that is its own pull request. -->
+            <Button x:Name="ChooseApp" Content="{local:Str Key=ChooseApp}" Margin="0,12,0,0" IsEnabled="False" />
+            <TextBlock Text="{local:Str Key=WhenAlreadyRunning}" Style="{StaticResource Caption}" />
+            <ComboBox x:Name="AppBehaviour" AutomationProperties.Name="{local:Str Key=WhenAlreadyRunning}" HorizontalAlignment="Stretch" SelectionChanged="OnBehaviourChanged">
+                <ComboBoxItem Content="{local:Str Key=BehaviourAlways}" />
+                <ComboBoxItem Content="{local:Str Key=BehaviourFocus}" />
+                <ComboBoxItem Content="{local:Str Key=BehaviourToggle}" />
+            </ComboBox>
+            <TextBlock x:Name="AppHint" Style="{StaticResource Hint}" />
+        </StackPanel>
+
+        <!-- A program, file, folder or link -->
+        <StackPanel x:Name="FilePanel" Visibility="Collapsed" Margin="0,8,0,0">
+            <TextBlock Text="{local:Str Key=FileCaptionPath}" Margin="0,0,0,4" />
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <TextBox x:Name="PathBox" AutomationProperties.Name="{local:Str Key=FileCaptionPath}" PlaceholderText="{local:Str Key=FilePlaceholder}" TextChanged="OnPathChanged" />
+                <Button Grid.Column="1" Content="{local:Str Key=Browse}" Click="OnBrowse" />
+            </Grid>
+            <TextBlock Text="{local:Str Key=FileCaptionArgs}" Style="{StaticResource Caption}" />
+            <TextBox x:Name="ArgsBox" AutomationProperties.Name="{local:Str Key=FileCaptionArgs}" TextChanged="OnArgsChanged" />
+            <TextBlock Text="{local:Str Key=FileCaptionWorkDir}" Style="{StaticResource Caption}" />
+            <TextBox x:Name="WorkDirBox" AutomationProperties.Name="{local:Str Key=FileCaptionWorkDir}" TextChanged="OnWorkDirChanged" />
+            <TextBlock Text="{local:Str Key=WhenAlreadyRunning}" Style="{StaticResource Caption}" />
+            <ComboBox x:Name="FileBehaviour" AutomationProperties.Name="{local:Str Key=WhenAlreadyRunning}" HorizontalAlignment="Stretch" SelectionChanged="OnBehaviourChanged">
+                <ComboBoxItem Content="{local:Str Key=BehaviourAlways}" />
+                <ComboBoxItem Content="{local:Str Key=BehaviourFocus}" />
+                <ComboBoxItem Content="{local:Str Key=BehaviourToggle}" />
+            </ComboBox>
+            <TextBlock Text="{local:Str Key=FileHint}" Style="{StaticResource Hint}" />
+        </StackPanel>
+
+        <!-- The Menu key -->
+        <StackPanel x:Name="MenuPanel" Visibility="Collapsed" Margin="0,8,0,0">
+            <TextBlock Text="{local:Str Key=MenuKeyBody}" TextWrapping="Wrap" />
+            <TextBlock Text="{local:Str Key=ElevatedHint}" Style="{StaticResource Hint}" />
+        </StackPanel>
+
+        <!-- A keyboard shortcut -->
+        <StackPanel x:Name="HotkeyPanel" Visibility="Collapsed" Margin="0,8,0,0">
+            <TextBlock Text="{local:Str Key=HotkeyCaption}" Margin="0,0,0,4" />
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                <!--
+                    Read-only, and the chord is taken from the key press itself. The Windows key is
+                    a checkbox: Windows opens Start before any app sees it.
+                -->
+                <TextBox x:Name="HotkeyBox" AutomationProperties.Name="{local:Str Key=HotkeyCaption}" IsReadOnly="True" TextAlignment="Center"
+                         PlaceholderText="{local:Str Key=HotkeyPlaceholder}" PreviewKeyDown="OnHotkeyKeyDown" />
+                <CheckBox x:Name="WinKey" Grid.Column="1" Content="Win" MinWidth="0" VerticalAlignment="Center"
+                          Checked="OnWinChanged" Unchecked="OnWinChanged" />
+                <Button Grid.Column="2" Content="{local:Str Key=HotkeyClear}" Click="OnHotkeyClear" />
+            </Grid>
+            <TextBlock Text="{local:Str Key=HotkeyPresets}" Style="{StaticResource Caption}" />
+            <ComboBox x:Name="Presets" AutomationProperties.Name="{local:Str Key=HotkeyPresets}" HorizontalAlignment="Stretch" SelectionChanged="OnPresetChanged" />
+            <TextBlock x:Name="HotkeyHint" Style="{StaticResource Hint}" />
+        </StackPanel>
+
+        <!-- The quick-launch palette -->
+        <StackPanel x:Name="PalettePanel" Visibility="Collapsed" Margin="0,8,0,0">
+            <TextBlock Text="{local:Str Key=PaletteBody}" TextWrapping="Wrap" />
+            <TextBlock Text="{local:Str Key=PaletteEmptyWarning}" Style="{StaticResource Hint}" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

@@ -470,3 +470,162 @@ namespace AntiPilot::Json
         return result;
     }
 }
+
+// ---- writing ---------------------------------------------------------------
+
+namespace AntiPilot::Json
+{
+    namespace
+    {
+        void WriteString(std::string& out, std::wstring_view text)
+        {
+            out += '"';
+            for (char c : Text::ToUtf8(text))
+            {
+                switch (c)
+                {
+                case '"': out += "\\\""; break;
+                case '\\': out += "\\\\"; break;
+                case '\n': out += "\\n"; break;
+                case '\r': out += "\\r"; break;
+                case '\t': out += "\\t"; break;
+                case '\b': out += "\\b"; break;
+                case '\f': out += "\\f"; break;
+                default:
+                    if (static_cast<unsigned char>(c) < 0x20)
+                    {
+                        out += std::format("\\u{:04x}", static_cast<unsigned char>(c));
+                    }
+                    else
+                    {
+                        out += c;
+                    }
+                }
+            }
+
+            out += '"';
+        }
+
+        void Write(std::string& out, const Value& value, int depth)
+        {
+            const std::string indent(static_cast<size_t>(depth) * 2, ' ');
+            const std::string inner(static_cast<size_t>(depth + 1) * 2, ' ');
+
+            switch (value.type)
+            {
+            case Value::Type::Null:
+                out += "null";
+                break;
+
+            case Value::Type::Boolean:
+                out += value.boolean ? "true" : "false";
+                break;
+
+            case Value::Type::Number:
+                if (value.number == std::floor(value.number) && std::abs(value.number) < 1e15)
+                {
+                    out += std::format("{}", static_cast<long long>(value.number));
+                }
+                else
+                {
+                    out += std::format("{}", value.number);
+                }
+                break;
+
+            case Value::Type::String:
+                WriteString(out, value.string);
+                break;
+
+            case Value::Type::Array:
+                if (value.array.empty())
+                {
+                    out += "[]";
+                    break;
+                }
+
+                out += "[\n";
+                for (size_t i = 0; i < value.array.size(); i++)
+                {
+                    out += inner;
+                    Write(out, value.array[i], depth + 1);
+                    out += i + 1 < value.array.size() ? ",\n" : "\n";
+                }
+
+                out += indent + "]";
+                break;
+
+            case Value::Type::Object:
+                if (value.object.empty())
+                {
+                    out += "{}";
+                    break;
+                }
+
+                out += "{\n";
+                for (size_t i = 0; i < value.object.size(); i++)
+                {
+                    out += inner;
+                    WriteString(out, value.object[i].first);
+                    out += ": ";
+                    Write(out, value.object[i].second, depth + 1);
+                    out += i + 1 < value.object.size() ? ",\n" : "\n";
+                }
+
+                out += indent + "}";
+                break;
+            }
+        }
+    }
+
+    std::string Serialize(const Value& value)
+    {
+        std::string out;
+        Write(out, value, 0);
+        return out;
+    }
+
+    Value Null() { return Value{}; }
+
+    Value Boolean(bool value)
+    {
+        Value result;
+        result.type = Value::Type::Boolean;
+        result.boolean = value;
+        return result;
+    }
+
+    Value Number(int value)
+    {
+        Value result;
+        result.type = Value::Type::Number;
+        result.number = value;
+        return result;
+    }
+
+    Value String(std::wstring_view value)
+    {
+        Value result;
+        result.type = Value::Type::String;
+        result.string = value;
+        return result;
+    }
+
+    Value Array()
+    {
+        Value result;
+        result.type = Value::Type::Array;
+        return result;
+    }
+
+    Value Object()
+    {
+        Value result;
+        result.type = Value::Type::Object;
+        return result;
+    }
+
+    void Set(Value& object, std::wstring_view key, Value value)
+    {
+        object.object.emplace_back(std::wstring{ key }, std::move(value));
+    }
+}
