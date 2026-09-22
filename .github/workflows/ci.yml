@@ -32,9 +32,9 @@ jobs:
         shell: pwsh
         run: |
           ./tools/Update-Strings.ps1
-          git diff --exit-code -- src/AntiPilot/Resources src/AntiPilot/Strings.g.cs
+          git diff --exit-code -- src/AntiPilot/Resources src/AntiPilot/Strings.g.cs src/AntiPilot.Shell/Strings
           if ($LASTEXITCODE -ne 0) {
-            Write-Host "::error::Resources\Strings*.resx or Strings.g.cs is stale. Run tools\Update-Strings.ps1 and commit the result."
+            Write-Host "::error::Resources\Strings*.resx, Strings.g.cs or AntiPilot.Shell\Strings\*.resw is stale. Run tools\Update-Strings.ps1 and commit the result."
             exit 1
           }
 

@@ -286,6 +286,10 @@ foreach ($arch in $Architectures) {
         Copy-Item (Join-Path $shellLayout $name) $stageDir -Force
     }
 
+    # The shell's strings, one .resw per language, go in for makepri to index and come out again
+    # before packing: their content lives in resources.pri after that and the files are not payload.
+    Copy-Item (Join-Path $shellDir 'Strings') (Join-Path $stageDir 'Strings') -Recurse -Force
+
     # The logos travel with the publish output (see the Content item in AntiPilot.csproj).
     $logoCount = (Get-ChildItem (Join-Path $stageDir 'Images') -Filter '*.png' -ErrorAction SilentlyContinue | Measure-Object).Count
     if ($logoCount -eq 0) { throw "No logos in the staged Images folder." }
@@ -306,6 +310,7 @@ foreach ($arch in $Architectures) {
 
     Write-Host "Indexing resources..." -ForegroundColor Cyan
     Invoke-Tool $makepri @('new', '/pr', $stageDir, '/cf', $priConfig, '/of', (Join-Path $stageDir 'resources.pri'), '/o')
+    Remove-Item -LiteralPath (Join-Path $stageDir 'Strings') -Recurse -Force
 
     # --- pack ---------------------------------------------------------------
 

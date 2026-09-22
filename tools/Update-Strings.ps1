@@ -1,6 +1,7 @@
 <#
 .SYNOPSIS
-    Turns tools\strings\*.txt into the .resx files the app embeds and the Strings accessor it calls.
+    Turns tools\strings\*.txt into the .resx files the app embeds, the Strings accessor it calls,
+    and the .resw files the WinUI 3 shell reads through the package resource index.
 
 .DESCRIPTION
     en.txt is the source of truth: every key in it becomes a property on AntiPilot.Strings, so a
@@ -15,6 +16,10 @@ param(
     [string]$StringsDir = (Join-Path $PSScriptRoot 'strings'),
     [string]$ResourceDir = (Join-Path $PSScriptRoot '..\src\AntiPilot\Resources'),
     [string]$AccessorPath = (Join-Path $PSScriptRoot '..\src\AntiPilot\Strings.g.cs'),
+
+    # The same tables again as .resw, one folder per language, for the WinUI 3 shell. makepri
+    # indexes them into the package resource index, which is how XAML and C++ read them.
+    [string]$ReswDir = (Join-Path $PSScriptRoot '..\src\AntiPilot.Shell\Strings'),
 
     # Fails instead of writing when a translation carries a key English does not have, or when a
     # format string has lost a placeholder. Used by CI.
@@ -152,6 +157,7 @@ foreach ($file in $translations) {
     Write-Host ("{0,-8} {1,3}/{2} translated ({3}%)" -f $tag, ($english.Count - $missing.Count), $english.Count, $coverage)
 
     Write-Resx (Join-Path $ResourceDir "Strings.$tag.resx") $table $file.Name
+    Write-Resx (Join-Path $ReswDir "$tag\Resources.resw") $table $file.Name
 }
 
 if ($problems.Count -gt 0) {
@@ -160,6 +166,10 @@ if ($problems.Count -gt 0) {
 }
 
 Write-Resx (Join-Path $ResourceDir 'Strings.resx') $english 'en.txt'
+
+# A .resw and a .resx are the same document; only the folder name differs, and makepri wants the
+# language spelled out where .NET is content with "neutral". en-US is the package default.
+Write-Resx (Join-Path $ReswDir 'en-US\Resources.resw') $english 'en.txt'
 
 # ---- the accessor -----------------------------------------------------------
 

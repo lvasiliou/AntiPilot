@@ -1,0 +1,12 @@
+namespace AntiPilot.Shell
+{
+    // {local:Str Key=SomeKey} in XAML: the string for that key from tools\strings, looked up
+    // through the package resource index. Keeps the key names exactly as the translations have
+    // them, where x:Uid would want every one renamed Key.Property.
+    [default_interface]
+    runtimeclass Str : Microsoft.UI.Xaml.Markup.MarkupExtension
+    {
+        Str();
+        String Key;
+    }
+}
