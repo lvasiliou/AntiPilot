@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="AntiPilot.Shell.GeneralPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AntiPilot.Shell">
+
+    <Page.Resources>
+        <Style x:Key="GroupHeader" TargetType="TextBlock" BasedOn="{StaticResource BodyStrongTextBlockStyle}">
+            <Setter Property="Margin" Value="2,0,0,6" />
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Spacing="4">
+            <TextBlock Text="{local:Str Key=GeneralGroupBehaviour}" Style="{StaticResource GroupHeader}" />
+            <local:SettingsCard x:Name="StartupCard" Glyph="&#xEA8F;" Title="{local:Str Key=ShowTrayAndStart}">
+                <local:SettingsCard.Action>
+                    <ToggleSwitch x:Name="Startup" OnContent="" OffContent="" MinWidth="0" Toggled="OnStartupToggled" />
+                </local:SettingsCard.Action>
+            </local:SettingsCard>
+            <local:SettingsCard Glyph="&#xF2B7;" Title="{local:Str Key=Language}" Description="{local:Str Key=LanguageRestartHint}">
+                <local:SettingsCard.Action>
+                    <ComboBox x:Name="Languages" MinWidth="190" SelectionChanged="OnLanguageChanged" />
+                </local:SettingsCard.Action>
+            </local:SettingsCard>
+
+            <TextBlock Text="{local:Str Key=GeneralGroupTransfer}" Style="{StaticResource GroupHeader}" Margin="2,20,0,6" />
+            <Button Style="{StaticResource CardButton}" Click="OnExport" AutomationProperties.Name="{local:Str Key=ExportButton}">
+                <local:SettingsCard Flat="True" Glyph="&#xEDE1;" Title="{local:Str Key=ExportButton}" Description="{local:Str Key=ExportTitle}">
+                    <local:SettingsCard.Action>
+                        <FontIcon Glyph="&#xE76C;" FontSize="12" />
+                    </local:SettingsCard.Action>
+                </local:SettingsCard>
+            </Button>
+            <Button Style="{StaticResource CardButton}" Click="OnImport" AutomationProperties.Name="{local:Str Key=ImportButton}">
+                <local:SettingsCard Flat="True" Glyph="&#xE8B5;" Title="{local:Str Key=ImportButton}" Description="{local:Str Key=ImportTitle}">
+                    <local:SettingsCard.Action>
+                        <FontIcon Glyph="&#xE76C;" FontSize="12" />
+                    </local:SettingsCard.Action>
+                </local:SettingsCard>
+            </Button>
+
+            <TextBlock Text="{local:Str Key=GeneralGroupAbout}" Style="{StaticResource GroupHeader}" Margin="2,20,0,6" />
+            <Button Style="{StaticResource CardButton}" Click="OnOpenLog" AutomationProperties.Name="{local:Str Key=OpenLog}">
+                <local:SettingsCard Flat="True" Glyph="&#xE7C3;" Title="{local:Str Key=OpenLog}" Description="{local:Str Key=OpenLogDescription}">
+                    <local:SettingsCard.Action>
+                        <FontIcon Glyph="&#xE76C;" FontSize="12" />
+                    </local:SettingsCard.Action>
+                </local:SettingsCard>
+            </Button>
+            <Button Style="{StaticResource CardButton}" Click="OnAbout" AutomationProperties.Name="{local:Str Key=About}">
+                <local:SettingsCard Flat="True" Glyph="&#xE946;" Title="{local:Str Key=About}" Description="{local:Str Key=AboutTagline}">
+                    <local:SettingsCard.Action>
+                        <FontIcon Glyph="&#xE76C;" FontSize="12" />
+                    </local:SettingsCard.Action>
+                </local:SettingsCard>
+            </Button>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

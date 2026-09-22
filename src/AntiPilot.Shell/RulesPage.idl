@@ -1,0 +1,8 @@
+namespace AntiPilot.Shell
+{
+    [default_interface]
+    runtimeclass RulesPage : Microsoft.UI.Xaml.Controls.Page
+    {
+        RulesPage();
+    }
+}

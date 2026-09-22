@@ -56,7 +56,7 @@
   </Resources>
 
   <!--
-    Four entry points, three executables. Windows launches a Copilot key provider by AUMID with no
+    Three entry points, three executables. Windows launches a Copilot key provider by AUMID with no
     command line, so the .NET executable works out what it was started for from
     GetCurrentApplicationUserModelId().
       AntiPilot  - the key target; carries out the configured action. This one is the native
@@ -67,10 +67,9 @@
                    from the "Customize Copilot key" picker in Settings, even though the app
                    extension is still registered and the already-stored choice keeps working.
                    Tested the hard way.
-      Settings   - opens the settings window
+      Settings   - opens the settings window: AntiPilot.Shell.exe, C++ WinUI 3
       Tray       - hidden entry, target of the sign-in shortcut, owns the notification-area icon
-      Shell      - hidden entry: the WinUI 3 settings window while it is being built, in
-                   AntiPilot.Shell.exe; takes over "Settings" when it is complete
+                   (AntiPilot.exe, .NET, which also hosts the palette and failure balloons)
   -->
   <Applications>
     <Application Id="AntiPilot" Executable="AntiPilot.Key.exe" EntryPoint="Windows.FullTrustApplication">
@@ -113,7 +112,7 @@
       </Extensions>
     </Application>
 
-    <Application Id="Settings" Executable="AntiPilot.exe" EntryPoint="Windows.FullTrustApplication">
+    <Application Id="Settings" Executable="AntiPilot.Shell.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
         DisplayName="AntiPilot Settings"
         Description="Choose what the Copilot key and Win+C do: launch an app, a file or a link, or act as the Menu key."
@@ -142,21 +141,6 @@
         never see a task declared on this one. AntiPilot writes a Startup-folder shortcut instead —
         see TrayStartup.cs — which every entry point can read and write.
       -->
-    </Application>
-
-    <!--
-      The WinUI 3 settings window while it is being built, reachable for testing but not listed.
-      When it has everything the WinForms one has, the Settings entry above moves to this
-      executable and this entry goes.
-    -->
-    <Application Id="Shell" Executable="AntiPilot.Shell.exe" EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements
-        AppListEntry="none"
-        DisplayName="AntiPilot Settings (preview)"
-        Description="The next settings window."
-        BackgroundColor="#0C2F76"
-        Square150x150Logo="Images\Square150x150Logo.png"
-        Square44x44Logo="Images\Square44x44Logo.png" />
     </Application>
   </Applications>
 

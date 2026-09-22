@@ -6,6 +6,7 @@
 // by its implementation type, and only sees the headers the XAML-backed classes include. Str is
 // not XAML-backed, so it is declared here for that table's benefit.
 #include "Str.h"
+#include "SettingsCard.xaml.h"
 
 namespace winrt::AntiPilot::Shell::implementation
 {

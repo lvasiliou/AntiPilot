@@ -1,0 +1,19 @@
+namespace AntiPilot.Shell
+{
+    // The row Windows 11 Settings is built out of: an icon, a title, a quieter description, and
+    // the control that does something on the right, set in markup as <SettingsCard.Action>.
+    // (ContentProperty would let it be the child element, but midlrt rejects the attribute here.)
+    [default_interface]
+    runtimeclass SettingsCard : Microsoft.UI.Xaml.Controls.UserControl
+    {
+        SettingsCard();
+
+        String Glyph;
+        String Title;
+        String Description;
+        Microsoft.UI.Xaml.UIElement Action;
+
+        // No surface of its own: for a card that sits inside a CardButton, which draws the surface.
+        Boolean Flat;
+    }
+}

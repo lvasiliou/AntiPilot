@@ -210,15 +210,21 @@ internal static class Program
         }
     }
 
+    /// <summary>
+    /// The settings window is AntiPilot.Shell.exe now, WinUI 3. Anything still starting this
+    /// executable for it — an old shortcut, --settings on the command line — is passed across.
+    /// </summary>
     private static void ShowSettings()
     {
-        if (TryFocusExistingWindow())
+        var shell = Path.Combine(AppContext.BaseDirectory, "AntiPilot.Shell.exe");
+        try
         {
-            return;
+            Process.Start(new ProcessStartInfo(shell) { UseShellExecute = false })?.Dispose();
         }
-
-        WinFormsHost.Ensure();
-        Application.Run(new SettingsForm());
+        catch (Exception ex)
+        {
+            Log.Write($"Could not start the settings window '{shell}': {ex.Message}");
+        }
     }
 
     /// <summary>The palette, on behalf of the native key path. Same call the key path here makes, so it behaves identically.</summary>

@@ -9,4 +9,9 @@ namespace AntiPilot::Shell::Strings
     // Never throws: a key that is not there comes back as !Key!, the way the .NET accessor does,
     // so a typo shows on screen instead of taking the window down.
     winrt::hstring Get(std::wstring_view key);
+
+    // A string that carries a {0} placeholder, with the value in it. A translation with a broken
+    // placeholder shows the raw text rather than taking the window down.
+    winrt::hstring Format(std::wstring_view key, int value);
+    winrt::hstring Format(std::wstring_view key, std::wstring_view value);
 }

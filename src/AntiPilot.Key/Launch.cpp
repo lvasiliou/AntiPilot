@@ -172,7 +172,17 @@ namespace AntiPilot::Launch
 
     bool Delegate(std::initializer_list<std::wstring_view> arguments)
     {
-        std::wstring exe = Paths::Sibling(L"AntiPilot.exe");
+        return Sibling(L"AntiPilot.exe", arguments);
+    }
+
+    bool Settings()
+    {
+        return Sibling(L"AntiPilot.Shell.exe", {});
+    }
+
+    bool Sibling(std::wstring_view exeName, std::initializer_list<std::wstring_view> arguments)
+    {
+        std::wstring exe = Paths::Sibling(exeName);
 
         std::wstring commandLine = QuoteArgument(exe);
         for (std::wstring_view argument : arguments)
