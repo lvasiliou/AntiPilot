@@ -3,6 +3,7 @@
     x:Class="AntiPilot.Shell.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AntiPilot.Shell"
     Title="AntiPilot">
 
     <Window.SystemBackdrop>
@@ -10,8 +11,8 @@
     </Window.SystemBackdrop>
 
     <!--
-        The same five pages as the WinForms window, same glyphs, same order. The strings are
-        English literals until the string pipeline learns to emit resw; see tools\Update-Strings.ps1.
+        The same five pages as the WinForms window, same glyphs, same order. Text comes from
+        tools\strings through {local:Str}, by the same keys the .NET window uses.
     -->
     <NavigationView
         x:Name="Navigation"
@@ -21,27 +22,27 @@
         OpenPaneLength="220">
 
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Single press" Tag="single" IsSelected="True">
+            <NavigationViewItem Content="{local:Str Key=TabSinglePress}" Tag="single" IsSelected="True">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE765;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="Double press" Tag="double">
+            <NavigationViewItem Content="{local:Str Key=TabDoublePress}" Tag="double">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE916;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="Per-app" Tag="rules">
+            <NavigationViewItem Content="{local:Str Key=TabPerApp}" Tag="rules">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xECAA;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="Palette" Tag="palette">
+            <NavigationViewItem Content="{local:Str Key=TabPalette}" Tag="palette">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE71D;" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem Content="General" Tag="general">
+            <NavigationViewItem Content="{local:Str Key=TabGeneral}" Tag="general">
                 <NavigationViewItem.Icon>
                     <FontIcon Glyph="&#xE713;" />
                 </NavigationViewItem.Icon>

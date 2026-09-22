@@ -359,6 +359,9 @@ src/AntiPilot.Key/        the key press itself (C++20, static CRT, no dependenci
 src/AntiPilot.Shell/      the settings window, in progress, as C++/WinRT WinUI 3: reachable from
                           the package as the hidden "Shell" entry until it can replace "Settings"
   MainWindow.xaml         the window; NavigationView with the same five pages as the WinForms one
+  Str.idl / Strings.cpp   {local:Str Key=…} in XAML and Strings::Get in code: the same keys as the
+                          .NET window, read from the package resource index
+  Strings/<lang>/         generated .resw, one folder per language, indexed by makepri
   packages.config         the four Windows App SDK packages — must stay packages.config, see the
                           note at the top of the .vcxproj
   Package.appxmanifest    dev-only identity so the bin\ layout can be registered and run alone
@@ -384,7 +387,8 @@ src/AntiPilot/            the app: tray icon + settings UI, and the windows the 
 tests/AntiPilot.Tests/    xunit; the decision-making parts, no UI automation
 tests/AntiPilot.Key.Tests/  the native side's tests, mirroring the above; exit code = failures
 tools/strings/            en.txt and one file per translation — the source of truth
-tools/Update-Strings.ps1  generates Resources\*.resx and Strings.g.cs from the above
+tools/Update-Strings.ps1  generates Resources\*.resx, Strings.g.cs and AntiPilot.Shell\Strings\*\
+                          Resources.resw from the above
 tools/Capture-Window.ps1  screenshots the settings window, for reviewing the hand-drawn UI
 .github/workflows/ci.yml  build, test, string-table check, native key path build + tests, shell
                           build, Store package
