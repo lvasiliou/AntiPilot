@@ -358,9 +358,15 @@ src/AntiPilot.Key/        the key press itself (C++20, static CRT, no dependenci
                           AntiPilot.exe for anything that needs a window
 src/AntiPilot.Shell/      the settings window, in progress, as C++/WinRT WinUI 3: reachable from
                           the package as the hidden "Shell" entry until it can replace "Settings"
-  MainWindow.xaml         the window; NavigationView with the same five pages as the WinForms one
+  MainWindow.xaml         the window; NavigationView with the same five pages as the WinForms one,
+                          owns the config the pages edit, Save and Cancel, the close prompt
+  SinglePressPage.xaml    the first page: one card, the action editor inside it
+  ActionEditor.xaml       "Do this:" and the six modes; reads and writes the shared KeyAction
   Str.idl / Strings.cpp   {local:Str Key=…} in XAML and Strings::Get in code: the same keys as the
                           .NET window, read from the package resource index
+                          Config, Json, Hotkey, Text, Paths and Log are compiled in from
+                          src/AntiPilot.Key, not copied: one reader and one writer of the settings
+                          file, and they are the same code
   Strings/<lang>/         generated .resw, one folder per language, indexed by makepri
   packages.config         the four Windows App SDK packages — must stay packages.config, see the
                           note at the top of the .vcxproj

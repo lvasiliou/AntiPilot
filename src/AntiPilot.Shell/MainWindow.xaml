@@ -10,45 +10,56 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <!--
-        The same five pages as the WinForms window, same glyphs, same order. Text comes from
-        tools\strings through {local:Str}, by the same keys the .NET window uses.
-    -->
-    <NavigationView
-        x:Name="Navigation"
-        IsBackButtonVisible="Collapsed"
-        IsSettingsVisible="False"
-        PaneDisplayMode="Left"
-        OpenPaneLength="220">
+    <Grid RowDefinitions="*,Auto">
+        <!--
+            The same five pages as the WinForms window, same glyphs, same order. Text comes from
+            tools\strings through {local:Str}, by the same keys the .NET window uses.
+        -->
+        <NavigationView
+            x:Name="Navigation"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            PaneDisplayMode="Left"
+            OpenPaneLength="220"
+            SelectionChanged="OnNavigationChanged">
 
-        <NavigationView.MenuItems>
-            <NavigationViewItem Content="{local:Str Key=TabSinglePress}" Tag="single" IsSelected="True">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xE765;" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-            <NavigationViewItem Content="{local:Str Key=TabDoublePress}" Tag="double">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xE916;" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-            <NavigationViewItem Content="{local:Str Key=TabPerApp}" Tag="rules">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xECAA;" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-            <NavigationViewItem Content="{local:Str Key=TabPalette}" Tag="palette">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xE71D;" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-            <NavigationViewItem Content="{local:Str Key=TabGeneral}" Tag="general">
-                <NavigationViewItem.Icon>
-                    <FontIcon Glyph="&#xE713;" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-        </NavigationView.MenuItems>
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="{local:Str Key=TabSinglePress}" Tag="single" IsSelected="True">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE765;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="{local:Str Key=TabDoublePress}" Tag="double">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE916;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="{local:Str Key=TabPerApp}" Tag="rules">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xECAA;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="{local:Str Key=TabPalette}" Tag="palette">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE71D;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="{local:Str Key=TabGeneral}" Tag="general">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE713;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
 
-        <Frame x:Name="Content" Margin="24,0,24,24" />
-    </NavigationView>
+            <!-- Pages are created in code and set here; each is a Page, but no Frame is involved. -->
+            <ContentControl x:Name="PageHost" Margin="0,4,24,0"
+                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        </NavigationView>
+
+        <Grid Grid.Row="1" Padding="24,12,24,16" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+            <Button Grid.Column="1" MinWidth="96" Content="{local:Str Key=Cancel}" Click="OnCancel" />
+            <Button Grid.Column="2" MinWidth="96" Content="{local:Str Key=Save}" Click="OnSave"
+                    Style="{StaticResource AccentButtonStyle}" />
+        </Grid>
+    </Grid>
 </Window>

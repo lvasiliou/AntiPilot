@@ -1,0 +1,11 @@
+namespace AntiPilot.Shell
+{
+    // "Do this:" and the editor for whichever kind of action is chosen. The action itself is a
+    // plain C++ struct shared with the key path, so it is read and written through the
+    // implementation type (winrt::get_self) rather than projected here.
+    [default_interface]
+    runtimeclass ActionEditor : Microsoft.UI.Xaml.Controls.UserControl
+    {
+        ActionEditor();
+    }
+}

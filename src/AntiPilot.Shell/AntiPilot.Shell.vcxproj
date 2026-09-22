@@ -97,7 +97,10 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj /utf-8</AdditionalOptions>
+      <!-- The config, JSON, hotkey and text modules are the key path's, compiled in here as well. -->
+      <AdditionalIncludeDirectories>$(ProjectDir)..\AntiPilot.Key;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -112,6 +115,12 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <!-- Paths.cpp (shared with the key path) resolves the config folder through the shell API. -->
+      <AdditionalDependencies>shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -129,12 +138,20 @@
     <ClInclude Include="MainWindow.xaml.h">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="ActionEditor.xaml.h">
+      <DependentUpon>ActionEditor.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="SinglePressPage.xaml.h">
+      <DependentUpon>SinglePressPage.xaml</DependentUpon>
+    </ClInclude>
     <ClInclude Include="Str.h" />
     <ClInclude Include="Strings.h" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
     <Page Include="MainWindow.xaml" />
+    <Page Include="ActionEditor.xaml" />
+    <Page Include="SinglePressPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -146,14 +163,52 @@
     <ClCompile Include="MainWindow.xaml.cpp">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="ActionEditor.xaml.cpp">
+      <DependentUpon>ActionEditor.xaml</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="SinglePressPage.xaml.cpp">
+      <DependentUpon>SinglePressPage.xaml</DependentUpon>
+    </ClCompile>
     <ClCompile Include="Str.cpp" />
     <ClCompile Include="Strings.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <!--
+      Shared with AntiPilot.Key, not copied: the settings file has one reader and one writer and
+      they are the same code. These do not use this project's precompiled header.
+    -->
+    <ClCompile Include="..\AntiPilot.Key\Config.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\AntiPilot.Key\Hotkey.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\AntiPilot.Key\Json.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\AntiPilot.Key\Log.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\AntiPilot.Key\Paths.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\AntiPilot.Key\Text.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
     <Midl Include="MainWindow.idl">
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="ActionEditor.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>ActionEditor.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="SinglePressPage.idl">
+      <SubType>Code</SubType>
+      <DependentUpon>SinglePressPage.xaml</DependentUpon>
     </Midl>
     <Midl Include="Str.idl" />
   </ItemGroup>

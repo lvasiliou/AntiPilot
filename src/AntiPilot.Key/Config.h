@@ -143,6 +143,21 @@ namespace AntiPilot
         /// <summary>Fills in whatever an older or hand-edited file left out, and clamps what it got wrong.</summary>
         void Normalise();
 
+        /// <summary>
+        /// The config as the text the settings window saves: the members the .NET serialiser
+        /// writes, in its order, with a blank string written as null the way its defaults come out.
+        /// </summary>
+        std::string ToJson() const;
+
+        /// <summary>
+        /// Writes the file the way the .NET side does, through a temporary next to it and a rename,
+        /// so a crash mid-write leaves the previous file rather than half of a new one.
+        /// </summary>
+        /// <returns>Empty on success, otherwise what went wrong in words.</returns>
+        std::wstring SaveTo(const std::wstring& path);
+
+        std::wstring Save();
+
         /// <summary>The action a press should run, once foreground-app rules have had their say.</summary>
         const KeyAction& ResolveTap(std::wstring_view foregroundProcess) const;
 

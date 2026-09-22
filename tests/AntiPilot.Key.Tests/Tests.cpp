@@ -518,6 +518,115 @@ namespace
         ULONGLONG elapsed = GetTickCount64() - started;
         CHECK(elapsed >= 250 && elapsed <= 1500);
     }
+
+    // ---- writing the config ----------------------------------------------------
+
+    AppConfig FullyPopulated()
+    {
+        AppConfig config;
+        config.tap.kind = ActionKind::ShellApp;
+        config.tap.aumid = L"Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
+        config.tap.displayName = L"Calculator";
+        config.tap.behaviour = LaunchBehaviour::Toggle;
+        config.doubleTap.kind = ActionKind::Hotkey;
+        config.doubleTap.hotkey = L"Ctrl+Shift+Escape";
+        config.doubleTapEnabled = true;
+        config.doubleTapWindowMs = 400;
+
+        AppRule rule;
+        rule.processName = L"chrome";
+        rule.action.kind = ActionKind::MenuKey;
+        config.appRules.push_back(rule);
+
+        KeyAction entry;
+        entry.kind = ActionKind::File;
+        entry.path = L"C:\\Tools\\notes \"quoted\".txt";
+        entry.arguments = L"--flag";
+        entry.workingDirectory = L"C:\\Tools";
+        entry.label = L"Notes \u00e9\u4e2d";
+        config.palette.push_back(entry);
+
+        config.trayIntroShown = true;
+        config.language = L"el";
+        return config;
+    }
+
+    void CheckSameAction(const KeyAction& expected, const KeyAction& actual)
+    {
+        CHECK(expected.kind == actual.kind);
+        CHECK_EQUAL(expected.aumid, actual.aumid);
+        CHECK_EQUAL(expected.displayName, actual.displayName);
+        CHECK_EQUAL(expected.path, actual.path);
+        CHECK_EQUAL(expected.arguments, actual.arguments);
+        CHECK_EQUAL(expected.workingDirectory, actual.workingDirectory);
+        CHECK_EQUAL(expected.hotkey, actual.hotkey);
+        CHECK(expected.behaviour == actual.behaviour);
+        CHECK_EQUAL(expected.label, actual.label);
+    }
+
+    TEST(WhatIsWrittenReadsBackTheSame)
+    {
+        const AppConfig original = FullyPopulated();
+        auto read = AppConfig::FromJson(original.ToJson());
+        CHECK(read.has_value());
+
+        CheckSameAction(original.tap, read->tap);
+        CheckSameAction(original.doubleTap, read->doubleTap);
+        CHECK(read->doubleTapEnabled);
+        CHECK_EQUAL(400, read->doubleTapWindowMs);
+        CHECK_EQUAL(size_t{ 1 }, read->appRules.size());
+        CHECK_EQUAL(std::wstring(L"chrome"), read->appRules[0].processName);
+        CheckSameAction(original.appRules[0].action, read->appRules[0].action);
+        CHECK_EQUAL(size_t{ 1 }, read->palette.size());
+        CheckSameAction(original.palette[0], read->palette[0]);
+        CHECK(read->trayIntroShown);
+        CHECK_EQUAL(std::wstring(L"el"), read->language);
+        CHECK(read->hasBeenSaved);
+    }
+
+    TEST(WritesTheShapeTheDotNetSideWrites)
+    {
+        // The .NET serialiser's defaults: nulls for unset strings, two-space indent, a space after
+        // the colon, an empty list on one line. A file saved here should read as one of its own.
+        const std::string text = AppConfig{}.ToJson();
+        CHECK(text.starts_with("{\n  \"Schema\": 2,\n  \"Tap\": {\n    \"Kind\": \"None\",\n    \"Aumid\": null,"));
+        CHECK(text.find("\"Behaviour\": \"Always\"") != std::string::npos);
+        CHECK(text.find("\"AppRules\": [],") != std::string::npos);
+        CHECK(text.find("\"Palette\": [],") != std::string::npos);
+        CHECK(text.find("\"Language\": null\n}") != std::string::npos);
+        CHECK(text.find("\"DoubleTapWindowMs\": 350") != std::string::npos);
+    }
+
+    TEST(EscapesWhatJsonRequiresAndNothingElse)
+    {
+        const std::string text = FullyPopulated().ToJson();
+        CHECK(text.find("\"Path\": \"C:\\\\Tools\\\\notes \\\"quoted\\\".txt\"") != std::string::npos);
+        // Non-ASCII goes out as UTF-8, not as \u escapes, and comes back intact.
+        CHECK(text.find("\\u00e9") == std::string::npos);
+        auto read = AppConfig::FromJson(text);
+        CHECK(read.has_value());
+        CHECK_EQUAL(std::wstring(L"Notes \u00e9\u4e2d"), read->palette[0].label);
+    }
+
+    TEST(SaveToWritesThroughATemporaryAndLeavesNoneBehind)
+    {
+        wchar_t folder[MAX_PATH]{};
+        GetTempPathW(MAX_PATH, folder);
+        const std::wstring path = std::wstring(folder) + L"antipilot-tests\\config.json";
+
+        AppConfig config = FullyPopulated();
+        CHECK(config.SaveTo(path).empty());
+        CHECK(config.hasBeenSaved);
+        CHECK(GetFileAttributesW(path.c_str()) != INVALID_FILE_ATTRIBUTES);
+        CHECK(GetFileAttributesW((path + L".tmp").c_str()) == INVALID_FILE_ATTRIBUTES);
+
+        auto read = AppConfig::LoadFrom(path);
+        CHECK(read.has_value());
+        CheckSameAction(config.tap, read->tap);
+
+        DeleteFileW(path.c_str());
+        RemoveDirectoryW(Text::DirectoryName(path).c_str());
+    }
 }
 
 int main()
